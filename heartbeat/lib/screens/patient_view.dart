@@ -19,13 +19,72 @@ class _PatientViewState extends State<PatientView> {
     final arg = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            isLabtest = !isLabtest;
-          });
-        },
-        child: Icon(isLabtest ? Icons.text_snippet : Icons.biotech),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (!isLabtest)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton(
+                onPressed: () {},
+                child: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+              ),
+            ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isLabtest = !isLabtest;
+              });
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  color: Colors.blue,
+                ),
+                height: 90,
+                width: 90,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      isLabtest ? Icons.text_snippet : Icons.biotech,
+                      size: 60,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      isLabtest ? 'Prescriptions' : 'Lab results',
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                  ],
+                )
+                // FittedBox(
+                //   child: FloatingActionButton(
+                //     onPressed: () {
+                //       setState(() {
+                //         isLabtest = !isLabtest;
+                //       });
+                //     },
+                //     child: Center(
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Icon(isLabtest ? Icons.text_snippet : Icons.biotech),
+                //           Text(
+                //             isLabtest ? 'Prescriptions' : 'Lab results',
+                //             style: TextStyle(fontSize: 6),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                ),
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: [
