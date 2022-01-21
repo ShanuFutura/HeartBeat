@@ -3,12 +3,13 @@ import 'package:heartbeat/Widgets/carousel.dart';
 import 'package:heartbeat/Widgets/doc_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/patient_lists.dart';
+import 'package:heartbeat/screens/patient_view.dart';
 
 class DocHomePage extends StatelessWidget {
   static const routeName = 'dec home page';
   // const DocHomePage({ Key? key }) : super(key: key);
 
-  final patientsList = PatientLists.patients;
+  final patientsList = PatientLists.patientsList;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,21 @@ class DocHomePage extends StatelessWidget {
               child: ListView.builder(
                   itemCount: patientsList.length,
                   itemBuilder: (context, index) {
-                    return patientsList[index];
+                    return ListTile(
+                      leading: CircleAvatar(),
+                      title: Text(patientsList[index]['patientName']!),
+                      subtitle: Text(patientsList[index]['patientAge']!),
+                      trailing: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                                PatientView.routeName,
+                                arguments: patientsList[index][
+                                    'patientName']); // patient name should replace with unique id
+                          },
+                          child: Text('View')),
+                    );
+
+                    // patientsList[index];
                   }),
             )
           ],
