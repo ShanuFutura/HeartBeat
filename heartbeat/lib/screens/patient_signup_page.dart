@@ -36,7 +36,7 @@ class _LoginCardState extends State<PatientSignupPage> {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
+                return const AlertDialog(
                   title: Text('Something missing'),
                   content: Text('please enter gender'),
                 );
@@ -59,194 +59,207 @@ class _LoginCardState extends State<PatientSignupPage> {
     }
 
     return Scaffold(
-      body: Center(
-        child: ClickableContainer(
-          heit: 700,
-          widt: 350,
-          kalar: Color.fromRGBO(255, 0, 0, .2),
-          kid: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    key: const ValueKey('nm'),
-                    validator: (v) {
-                      if (v!.trim().isEmpty) {
-                        return 'patient name cannot be empty';
-                      } else if (v.trim().length < 3) {
-                        return 'enter a valid name';
-                      }
-                    },
-                    onSaved: (vl) {
-                      _uname = vl!;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      labelStyle: TextStyle(color: Colors.white, fontSize: 12),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/wallpaper.jpg'),
+              fit: BoxFit.fill),
+        ),
+        child: Center(
+          child: ClickableContainer(
+            radius: 20,
+            heit: 700,
+            widt: 350,
+            kalar: const Color.fromRGBO(255, 255, 255, .7),
+            kid: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(color: Colors.black),
+                      key: const ValueKey('nm'),
+                      validator: (v) {
+                        if (v!.trim().isEmpty) {
+                          return 'patient name cannot be empty';
+                        } else if (v.trim().length < 3) {
+                          return 'enter a valid name';
+                        }
+                      },
+                      onSaved: (vl) {
+                        _uname = vl!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        labelStyle:
+                            TextStyle(color: Colors.black, fontSize: 12),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 90,
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          style: const TextStyle(color: Colors.white),
-                          key: const ValueKey('ag'),
-                          validator: (v) {
-                            if (v!.trim().isEmpty) {
-                              return 'age cannot be empty';
-                            } else if (v.trim().length > 2 || v == '0') {
-                              return 'enter a valid age';
-                            }
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: 90,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(color: Colors.black),
+                            key: const ValueKey('ag'),
+                            validator: (v) {
+                              if (v!.trim().isEmpty) {
+                                return 'age cannot be empty';
+                              } else if (v.trim().length > 2 || v == '0') {
+                                return 'enter a valid age';
+                              }
 
-                            return null;
-                          },
-                          onSaved: (v) {
-                            _age = v!;
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'age',
-                            labelStyle:
-                                TextStyle(color: Colors.white, fontSize: 12),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              return null;
+                            },
+                            onSaved: (v) {
+                              _age = v!;
+                            },
+                            decoration: const InputDecoration(
+                              labelText: 'age',
+                              labelStyle:
+                                  TextStyle(color: Colors.black, fontSize: 12),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      DropdownButton(
-                          // style: TextStyle(color: Colors.white),
-                          // focusColor: Colors.white,
-                          hint: Text('gender'),
-                          value: _gender,
-                          items: const [
-                            DropdownMenuItem(
-                              child: Text('male'),
-                              value: 'male',
-                            ),
-                            DropdownMenuItem(
-                              child: Text('female'),
-                              value: 'female',
-                            )
-                          ],
-                          onChanged: (String? val) {
-                            setState(() {
-                              _gender = val;
-                              // _selectedGender = val;
-                            });
-                          })
-                    ],
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    key: const ValueKey('em'),
-                    validator: (v) {
-                      return v!.isEmpty ? 'email cannot be empty' : null;
-                    },
-                    onSaved: (vl) {
-                      _email = vl!;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'email',
-                      labelStyle: TextStyle(color: Colors.white, fontSize: 12),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        DropdownButton(
+                            // style: TextStyle(color: Colors.black),
+                            // focusColor: Colors.black,
+                            hint: const Text('gender'),
+                            value: _gender,
+                            items: const [
+                              DropdownMenuItem(
+                                child: Text('male'),
+                                value: 'male',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('female'),
+                                value: 'female',
+                              )
+                            ],
+                            onChanged: (String? val) {
+                              setState(() {
+                                _gender = val;
+                                // _selectedGender = val;
+                              });
+                            })
+                      ],
+                    ),
+                    TextFormField(
+                      style: const TextStyle(color: Colors.black),
+                      key: const ValueKey('em'),
+                      validator: (v) {
+                        return v!.isEmpty ? 'email cannot be empty' : null;
+                      },
+                      onSaved: (vl) {
+                        _email = vl!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'email',
+                        labelStyle:
+                            TextStyle(color: Colors.black, fontSize: 12),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
                     ),
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(color: Colors.white),
-                    key: const ValueKey('mob'),
-                    validator: (v) {
-                      if (v!.isEmpty) {
-                        return 'phone number cannot be empty';
-                      } else if (v.length < 11 || v.length > 10) {
-                        return 'Enter valid phone number';
-                      }
-                      return null;
-                    },
-                    onSaved: (vl) {
-                      _phone = vl!;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'phone',
-                      labelStyle: TextStyle(color: Colors.white, fontSize: 12),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    style: const TextStyle(color: Colors.white),
-                    key: const ValueKey('pw'),
-                    validator: (v) {
-                      if (v!.trim().isEmpty) {
-                        return 'password cannot be empty';
-                      } else if (v.trim().length < 8) {
-                        return 'password too short';
-                      }
-                      return null;
-                    },
-                    onSaved: (vl) {
-                      _pword = vl!;
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'password',
-                      labelStyle: TextStyle(color: Colors.white, fontSize: 12),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      key: const ValueKey('mob'),
+                      validator: (v) {
+                        if (v!.isEmpty) {
+                          return 'phone number cannot be empty';
+                        } else if (v.length < 11 || v.length > 10) {
+                          return 'Enter valid phone number';
+                        }
+                        return null;
+                      },
+                      onSaved: (vl) {
+                        _phone = vl!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'phone',
+                        labelStyle:
+                            TextStyle(color: Colors.black, fontSize: 12),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ClickableContainer(
-                          heit: 40,
-                          widt: 70,
-                          kalar: Color.fromRGBO(255, 0, 0, .1),
-                          tap: () {
-                            trySubmit();
-                          },
-                          kid: Center(child: Text('Signup'))),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     trySubmit();
-                      //   },
-                      //   child: Text('SignUp'),
-                      // ),
-                    ],
-                  )
-                ],
+                    TextFormField(
+                      obscureText: true,
+                      style: const TextStyle(color: Colors.black),
+                      key: const ValueKey('pw'),
+                      validator: (v) {
+                        if (v!.trim().isEmpty) {
+                          return 'password cannot be empty';
+                        } else if (v.trim().length < 8) {
+                          return 'password too short';
+                        }
+                        return null;
+                      },
+                      onSaved: (vl) {
+                        _pword = vl!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'password',
+                        labelStyle:
+                            TextStyle(color: Colors.black, fontSize: 12),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ClickableContainer(
+                            radius: 20,
+                            heit: 50,
+                            widt: 90,
+                            kalar: Color.fromRGBO(255, 255, 255, 1),
+                            tap: () {
+                              trySubmit();
+                            },
+                            kid: Center(child: Text('Signup'))),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     trySubmit();
+                        //   },
+                        //   child: Text('SignUp'),
+                        // ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/login_card.dart';
+import 'package:heartbeat/screens/doc_home_page.dart';
 // import 'package:heartbeat/Widgets/patient_signup_card.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,20 +17,31 @@ class LoginScreen extends StatelessWidget {
     // String mail,
     String pword,
     // bool iLogin,
+    BuildContext context,
   ) {
     username = uname;
     // email = mail;
     password = pword;
     // isLogin = iLogin;
     print(uname + ' ' + pword);
+    Navigator.of(context).pushReplacementNamed(DocHomePage.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     // final String arg = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      body: Center(
-        child: LoginCard(tryAuth),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                'assets/images/wallpaper.jpg',
+              ),
+              fit: BoxFit.fill),
+        ),
+        child: Center(
+          child: LoginCard(tryAuth),
+        ),
       ),
     );
   }

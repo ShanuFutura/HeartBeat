@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/patient_signup_page.dart';
 // import 'package:heartbeat/screens/login_category.dart';
 import 'package:heartbeat/screens/login_screen.dart';
@@ -15,6 +16,7 @@ class HeartBeat extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (ctx) => LoginScreen(),
         PatientSignupPage.routeName: (ctx) => PatientSignupPage(),
+        DocHomePage.routeName: (ctx) => DocHomePage(),
       },
     );
   }
