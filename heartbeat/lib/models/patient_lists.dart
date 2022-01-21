@@ -26,5 +26,35 @@ class PatientLists {
       subtitle: Text('Subtitle'),
       trailing: TextButton(onPressed: () {}, child: Text('View')),
     ),
+    ListTile(
+      leading: CircleAvatar(),
+      title: Text('title'),
+      subtitle: Text('Subtitle'),
+      trailing: TextButton(onPressed: () {}, child: Text('View')),
+    ),
+    ListTile(
+      leading: CircleAvatar(),
+      title: Text('title'),
+      subtitle: Text('Subtitle'),
+      trailing: TextButton(onPressed: () {}, child: Text('View')),
+    ),
+    ListTile(
+      leading: CircleAvatar(),
+      title: Text('title'),
+      subtitle: Text('Subtitle'),
+      trailing: TextButton(onPressed: () {}, child: Text('View')),
+    ),
+    ListTile(
+      leading: CircleAvatar(),
+      title: Text('title'),
+      subtitle: Text('Subtitle'),
+      trailing: TextButton(onPressed: () {}, child: Text('View')),
+    ),
+    ListTile(
+      leading: CircleAvatar(),
+      title: Text('title'),
+      subtitle: Text('Subtitle'),
+      trailing: TextButton(onPressed: () {}, child: Text('View')),
+    ),
   ];
 }

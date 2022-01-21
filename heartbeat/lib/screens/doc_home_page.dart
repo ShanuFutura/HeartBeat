@@ -15,15 +15,15 @@ class DocHomePage extends StatelessWidget {
     return Scaffold(
       drawer: DocScreenDrawer(),
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            DocScreenDrawer();
-          },
-          icon: Icon(Icons.menu),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     DocScreenDrawer();
+        //   },
+        //   icon: Icon(Icons.menu),
+        // ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: TextButton(
               onPressed: () {},
               child: const Text(
@@ -35,7 +35,7 @@ class DocHomePage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

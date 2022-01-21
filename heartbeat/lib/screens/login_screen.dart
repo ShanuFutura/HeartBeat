@@ -35,9 +35,9 @@ class LoginScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(
-                'assets/images/wallpaper.jpg',
+                'assets/images/heart.png',
               ),
-              fit: BoxFit.fill),
+              fit: BoxFit.cover),
         ),
         child: Center(
           child: LoginCard(tryAuth),

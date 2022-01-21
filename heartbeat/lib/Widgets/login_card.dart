@@ -30,7 +30,7 @@ class LoginCard extends StatelessWidget {
         heit: 500,
         widt: 300,
         padd: 20,
-        kalar: const Color.fromRGBO(255, 255, 255, .7),
+        kalar: const Color.fromRGBO(255, 255, 255, .8),
         kid: Form(
           key: _formKey,
           child: Column(
@@ -87,6 +87,7 @@ class LoginCard extends StatelessWidget {
                 kalar: const Color.fromRGBO(255, 255, 255, 1),
                 tap: () {
                   trySubmit(context);
+                  FocusManager.instance.primaryFocus?.unfocus();
                 },
                 kid: const Center(
                     child: Text(
