@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
+import 'package:heartbeat/screens/doctor_view.dart';
+import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_signup_page.dart';
 // import 'package:heartbeat/screens/login_category.dart';
 import 'package:heartbeat/screens/login_screen.dart';
@@ -19,6 +21,8 @@ class HeartBeat extends StatelessWidget {
         PatientSignupPage.routeName: (ctx) => PatientSignupPage(),
         DocHomePage.routeName: (ctx) => DocHomePage(),
         PatientView.routeName: (ctx) => PatientView(),
+        PatientHomePage.routeName: (ctx) => PatientHomePage(),
+        DoctorView.routeName: (ctx) => DoctorView(),
       },
     );
   }

@@ -12,6 +12,7 @@ class Prescription {
 }
 
 class DummyLists {
+  static List<Prescription> newPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},
     {'content': 'content', 'date': 'date'},
@@ -129,6 +130,13 @@ class DummyLists {
     'test name 4',
     'test name 5',
   ];
-
-  static List<Prescription> newPrescList = [];
+  static const List<String> docsList = [
+    'docName 1',
+    'docName 2',
+    'docName 3',
+    'docName 4',
+    'docName 5',
+    'docName 6',
+    'docName 7',
+  ];
 }

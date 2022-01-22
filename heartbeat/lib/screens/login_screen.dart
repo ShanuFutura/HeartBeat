@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/login_card.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
+import 'package:heartbeat/screens/patient_home_page.dart';
 // import 'package:heartbeat/Widgets/patient_signup_card.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -24,7 +25,8 @@ class LoginScreen extends StatelessWidget {
     password = pword;
     // isLogin = iLogin;
     print(uname + ' ' + pword);
-    Navigator.of(context).pushReplacementNamed(DocHomePage.routeName);
+    // Navigator.of(context).pushReplacementNamed(DocHomePage.routeName);
+    Navigator.of(context).pushNamed(PatientHomePage.routeName);
   }
 
   @override
