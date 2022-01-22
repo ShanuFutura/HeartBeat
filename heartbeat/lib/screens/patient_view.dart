@@ -105,8 +105,12 @@ class _PatientViewState extends State<PatientView> {
                                     ElevatedButton(
                                         onPressed: () {
                                           DummyLists.newPrescList.add(
-                                              Prescription(tempMedicinesList,
-                                                  tempTestsList));
+                                            Prescription(
+                                              tempMedicinesList,
+                                              tempTestsList,
+                                              DateTime.now(),
+                                            ),
+                                          );
                                           print(DummyLists.newPrescList
                                               .toString());
                                           tempMedicinesList.clear();
@@ -248,6 +252,51 @@ class _PatientViewState extends State<PatientView> {
                       return Column(
                         children: [
                           ListTile(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      backgroundColor:
+                                          Colors.black.withOpacity(0),
+                                      child: Card(
+                                        child: Container(
+                                          child: Wrap(
+                                            alignment:
+                                                WrapAlignment.spaceAround,
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 20, 10, 50),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    Text('date'),
+                                                    Text('docName'),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 90, 10, 30),
+                                                child: Text(DummyLists
+                                                    .prescriptionsList[index]
+                                                        ['contents']
+                                                    .toString()),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
                             leading: Text(DummyLists.prescriptionsList[index]
                                 ['PrescriptionId']!),
                             subtitle: Text(DummyLists.prescriptionsList[index]

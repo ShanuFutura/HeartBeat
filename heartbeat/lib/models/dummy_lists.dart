@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class Prescription {
   final List<String> medicines;
   final List<String> labTests;
-  Prescription(this.medicines, this.labTests);
+  final DateTime date;
+  Prescription(
+    this.medicines,
+    this.labTests,
+    this.date,
+  );
 }
 
 class DummyLists {

@@ -11,9 +11,12 @@ class Carousel extends StatelessWidget {
     return CarouselSlider(
       items: itemList,
       options: CarouselOptions(
-        viewportFraction: .6,
+        autoPlay: true,
+        // autoPlayAnimationDuration: Duration(milliseconds: 300),
+
+        viewportFraction: .85,
         aspectRatio: 3 / 4,
-        height: 160.0,
+        height: 260.0,
       ),
     );
   }

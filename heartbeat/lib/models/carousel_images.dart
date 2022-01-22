@@ -8,7 +8,7 @@ class CarouselImages {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: Image.asset(
             'assets/images/doc_tools.jpg',
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
         )),
     Container(
@@ -17,7 +17,7 @@ class CarouselImages {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: Image.asset(
             'assets/images/doc_with_phone.jpg',
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
         )),
     Container(
@@ -26,7 +26,7 @@ class CarouselImages {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           child: Image.asset(
             'assets/images/medicines.jpeg',
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
         )),
   ];
