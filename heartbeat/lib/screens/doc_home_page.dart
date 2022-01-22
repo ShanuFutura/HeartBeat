@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/carousel.dart';
 import 'package:heartbeat/Widgets/doc_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
-import 'package:heartbeat/models/patient_lists.dart';
+import 'package:heartbeat/models/dummy_lists.dart';
+// import 'package:heartbeat/models/patient_lists.dart';
 import 'package:heartbeat/screens/patient_view.dart';
 
 class DocHomePage extends StatelessWidget {
   static const routeName = 'dec home page';
   // const DocHomePage({ Key? key }) : super(key: key);
 
-  final patientsList = PatientLists.patientsList;
+  final patientsList = DummyLists.patientsList;
 
   @override
   Widget build(BuildContext context) {

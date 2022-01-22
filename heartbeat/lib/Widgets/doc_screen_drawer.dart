@@ -41,15 +41,15 @@ class DocScreenDrawer extends StatelessWidget {
                 )),
           ),
           Divider(),
-          ListTile(
-            title: Text('Appoinments'),
-            trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.today,
-                )),
-          ),
-          Divider(),
+          // ListTile(
+          //   title: Text('Appoinments'),
+          //   trailing: IconButton(
+          //       onPressed: () {},
+          //       icon: Icon(
+          //         Icons.today,
+          //       )),
+          // ),
+          // Divider(),
           ListTile(
             title: Text('Apply for Leave'),
             trailing: IconButton(
@@ -57,7 +57,8 @@ class DocScreenDrawer extends StatelessWidget {
                 icon: Icon(
                   Icons.pending_actions,
                 )),
-          )
+          ),
+          Divider(),
         ],
       ),
     );

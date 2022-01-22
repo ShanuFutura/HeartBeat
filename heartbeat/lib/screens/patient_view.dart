@@ -1,6 +1,7 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:heartbeat/models/labtest_report.dart';
-import 'package:heartbeat/models/prescriptions.dart';
+import 'package:heartbeat/models/dummy_lists.dart';
+// import 'package:heartbeat/models/prescriptions.dart';
 
 class PatientView extends StatefulWidget {
   // const PatientView({ Key? key }) : super(key: key);
@@ -13,6 +14,8 @@ class PatientView extends StatefulWidget {
 
 class _PatientViewState extends State<PatientView> {
   var isLabtest = false;
+  final List<String> tempMedicinesList = [];
+  final List<String> tempTestsList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +23,108 @@ class _PatientViewState extends State<PatientView> {
 
     return Scaffold(
       floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (!isLabtest)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
-                onPressed: () {},
-                child: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    elevation: 200,
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(builder: (BuildContext context,
+                          StateSetter setState /*You can rename this!*/) {
+                        return SingleChildScrollView(
+                          child: Wrap(
+                            alignment: WrapAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            // mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: DropdownSearch(
+                                  hint: 'medicines',
+                                  showSearchBox: true,
+                                  items: DummyLists.medicines,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      tempMedicinesList.add(value.toString());
+                                    });
+                                    print(tempMedicinesList.toString());
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ...tempMedicinesList.map((e) {
+                                      return Text(e);
+                                    }),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: DropdownSearch(
+                                  hint: 'tests',
+                                  showSearchBox: true,
+                                  items: DummyLists.tests,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      tempTestsList.add(value.toString());
+                                    });
+                                    print(tempTestsList.toString());
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ...tempTestsList.map((e) {
+                                      return Text(e);
+                                    }),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          DummyLists.newPrescList.add(
+                                              Prescription(tempMedicinesList,
+                                                  tempTestsList));
+                                          print(DummyLists.newPrescList
+                                              .toString());
+                                          tempMedicinesList.clear();
+                                          tempTestsList.clear();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Prescribe')),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      });
+                    },
+                  );
+                },
+                child: Icon(Icons.add),
               ),
             ),
           GestureDetector(
@@ -133,21 +230,30 @@ class _PatientViewState extends State<PatientView> {
           ),
           SliverFillRemaining(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    isLabtest ? 'Labtests' : 'Previous Prescriptions',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Divider(),
                 if (!isLabtest)
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: Prescriptions.prescriptionsList.length,
+                    itemCount: DummyLists.prescriptionsList.length,
                     itemBuilder: (ctx, index) {
                       return Column(
                         children: [
                           ListTile(
-                            leading: Text(Prescriptions.prescriptionsList[index]
+                            leading: Text(DummyLists.prescriptionsList[index]
                                 ['PrescriptionId']!),
-                            subtitle: Text(Prescriptions
-                                .prescriptionsList[index]['PrescriptionDate']!),
-                            trailing: Text(Prescriptions
-                                .prescriptionsList[index]['contents']!),
+                            subtitle: Text(DummyLists.prescriptionsList[index]
+                                ['PrescriptionDate']!),
+                            trailing: Text(DummyLists.prescriptionsList[index]
+                                ['contents']!),
                           ),
                           const Divider(
                             thickness: 2,
@@ -159,16 +265,16 @@ class _PatientViewState extends State<PatientView> {
                 if (isLabtest)
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: LabtestReport.labtestReportsList.length,
+                    itemCount: DummyLists.labtestReportsList.length,
                     itemBuilder: (ctx, index) {
                       return Column(
                         children: [
                           ListTile(
-                            title: Text(LabtestReport.labtestReportsList[index]
+                            title: Text(DummyLists.labtestReportsList[index]
                                 ['content']!),
-                            subtitle: Text(LabtestReport
-                                .labtestReportsList[index]['date']!),
-                            // trailing: Text(Prescriptions
+                            subtitle: Text(
+                                DummyLists.labtestReportsList[index]['date']!),
+                            // trailing: Text(DummyLists
                             //     .prescriptionsList[index]['contents']!),
                           ),
                           const Divider(
