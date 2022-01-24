@@ -144,10 +144,9 @@ class DummyLists {
     'docName 4',
     'docName 5',
     'docName 6',
-    'docName 7docName 7docName 7docName ',
-    'docName 7docName 7docName 7docName ',
-    'docName 7docName 7docName 7docName ',
-    'docName 7docName 7docName 7docName ',
-    'docName 7docName 7docName 7docName ',
+    'docName 7docName 7docName',
+    'docName 7docName 7docName',
+    'docName 7docName 7docName',
+    'docName 7docName 7docName',
   ];
 }

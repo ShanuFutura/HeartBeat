@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/Widgets/feedback.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 
 class DoctorView extends StatelessWidget {
-  // const DoctorView({ Key? key }) : super(key: key);
-
   static const String routeName = 'docview';
 
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments as String;
+    var feedbackText = '';
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        // shadowColor: Colors.white,
         foregroundColor: Colors.black,
       ),
       body: Column(
@@ -28,8 +28,6 @@ class DoctorView extends StatelessWidget {
                 Expanded(
                   flex: 6,
                   child: Container(
-                    // color: Colors.amber,
-                    // width: 250,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -93,7 +91,13 @@ class DoctorView extends StatelessWidget {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FeedbackText();
+                          });
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -131,7 +135,6 @@ class DoctorView extends StatelessWidget {
                           color: Colors.blue,
                         ),
                         height: 200,
-                        // color: Colors.blue,s
                         child: const Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -147,8 +150,6 @@ class DoctorView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // ElevatedButton(onPressed: () {}, child: Text('feedback')),
-                // ElevatedButton(onPressed: () {}, child: Text('book Doc')),
               ],
             ),
           )

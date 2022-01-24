@@ -62,7 +62,7 @@ class _LoginCardState extends State<PatientSignupPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/heart.png'), fit: BoxFit.fill),
+              image: AssetImage('assets/images/heart.png'), fit: BoxFit.cover),
         ),
         child: Center(
           child: ClickableContainer(
