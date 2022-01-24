@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/models/dummy_lists.dart';
 
 class DoctorView extends StatelessWidget {
   // const DoctorView({ Key? key }) : super(key: key);
@@ -24,13 +25,64 @@ class DoctorView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                Expanded(
+                  flex: 6,
+                  child: Container(
                     // color: Colors.amber,
-                    width: 250,
-                    child: Text(arg, style: TextStyle(fontSize: 50))),
-                Text(
-                  'status',
+                    // width: 250,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Doc name',
+                          style: TextStyle(fontSize: 40),
+                        ),
+                        Text('Qualification')
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      Text('status'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('n Appoinments left'),
+                    ],
+                  ),
                 )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Text('Prescriptions by Doc Name'),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  height: 300,
+                  child: ListView.builder(
+                      itemCount: DummyLists.prescriptionsList.length,
+                      itemBuilder: (ctx, index) {
+                        return ListTile(
+                          leading: Text(DummyLists.prescriptionsList[index]
+                              ['PrescriptionId']!),
+                          subtitle: Text(DummyLists.prescriptionsList[index]
+                              ['PrescriptionDate']!),
+                          trailing: Text(
+                              DummyLists.prescriptionsList[index]['contents']!),
+                        );
+                      }),
+                ),
               ],
             ),
           ),
@@ -40,30 +92,56 @@ class DoctorView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: Container(
-                    height: 100,
-                    color: Colors.amber,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Feedback',
-                          style: TextStyle(fontSize: 30),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          color: Colors.amber,
+                        ),
+                        height: 200,
+                        child: const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Feedback',
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    height: 100,
-                    color: Colors.blue,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Book Appoinments',
-                          style: TextStyle(fontSize: 30),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          color: Colors.blue,
+                        ),
+                        height: 200,
+                        // color: Colors.blue,s
+                        child: const Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Book Appoinments',
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.white),
+                            ),
+                          ),
                         ),
                       ),
                     ),
