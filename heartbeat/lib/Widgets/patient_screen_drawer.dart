@@ -37,7 +37,7 @@ class PatientScreenDrawer extends StatelessWidget {
             trailing: IconButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(PatientProfilEditScreen.routeName);
+                      .pushNamed(PatientProfilEditScreen.routeName);
                 },
                 icon: Icon(
                   Icons.account_circle,
