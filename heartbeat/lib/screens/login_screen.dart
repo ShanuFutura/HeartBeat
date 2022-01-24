@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/login_card.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
+import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
+import 'package:heartbeat/screens/patient_view.dart';
 // import 'package:heartbeat/Widgets/patient_signup_card.dart';
 
 class LoginScreen extends StatelessWidget {

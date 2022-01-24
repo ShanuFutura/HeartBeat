@@ -13,30 +13,35 @@ class PatientHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {
-                  // showSearch(context: context, delegate:);
-                },
-                icon: Icon(Icons.search))
-          ],
-        ),
-        body: ListView.builder(
-            itemCount: DummyLists.docsList.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(DoctorView.routeName,
-                          arguments: DummyLists.docsList[index]);
-                    },
-                    title: Text(DummyLists.docsList[index]),
-                  ),
-                  Divider(),
-                ],
-              );
-            }));
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: DropdownButton(
+              underline: Container(),
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              items: [
+                ...DummyLists.docsList
+                    .map((e) => DropdownMenuItem(
+                          child: Container(
+                            child: Text(e),
+                          ),
+                          value: e,
+                        ))
+                    .toList(),
+              ],
+              onChanged: (v) {
+                Navigator.of(context)
+                    .pushReplacementNamed(DoctorView.routeName, arguments: v);
+              },
+            ),
+          )
+        ],
+      ),
+      body: Container(),
+    );
   }
 }
