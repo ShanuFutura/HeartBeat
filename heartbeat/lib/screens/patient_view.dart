@@ -237,10 +237,19 @@ class _PatientViewState extends State<PatientView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    isLabtest ? 'Labtests' : 'Previous Prescriptions',
-                    style: TextStyle(fontSize: 20),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        isLabtest ? 'Labtests' : 'Previous Prescriptions',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      if (!isLabtest)
+                        TextButton(
+                            onPressed: () {},
+                            child: Text('External Prescriptions'))
+                    ],
                   ),
                 ),
                 Divider(),
