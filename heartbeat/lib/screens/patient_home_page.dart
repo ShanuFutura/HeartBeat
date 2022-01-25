@@ -1,19 +1,45 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/carousel.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
-import 'package:heartbeat/screens/doc_home_page.dart';
+// import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
-// import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
-class PatientHomePage extends StatelessWidget {
-  // const PatientHomePage({ Key? key }) : super(key: key);
-
-  // PatientHomePage();
-
+class PatientHomePage extends StatefulWidget {
   static const String routeName = 'patient home';
-  // final SearchBar searchBar = SearchBar();
+
+  @override
+  State<PatientHomePage> createState() => _PatientHomePageState();
+}
+
+class _PatientHomePageState extends State<PatientHomePage> {
+  final picker = ImagePicker();
+
+  File? _storedImage;
+  File? savedImage;
+
+  Future<void> _takePicture() async {
+    final picker = ImagePicker();
+
+    final imageFile =
+        await picker.pickImage(source: ImageSource.camera, maxWidth: 600);
+    if (imageFile == null) return;
+    setState(() {
+      _storedImage = File(imageFile.path);
+    });
+    final appDir = await getApplicationDocumentsDirectory();
+
+    final fileName = basename(imageFile.path);
+
+    final savedImage =
+        await File(imageFile.path).copy('${appDir.path}/$fileName');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +49,13 @@ class PatientHomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),
           child: Text('Upload '),
         ),
-        onPressed: () {},
+        onPressed: () {
+          _takePicture();
+        },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
-              // side: BorderSide(color: Colors.red),
             ),
           ),
         ),
@@ -36,19 +63,13 @@ class PatientHomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       drawer: PatientScreenDrawer(),
       appBar: AppBar(
-        // title: const Text(
-        //   'Heartbeat',
-        //   // style: TextStyle(color: Colors.black),
-        // ),
         elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
         actions: [
-          //
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: DropdownButton(
-              // isExpanded: true,
               underline: Container(),
               icon: const Icon(
                 Icons.search,
