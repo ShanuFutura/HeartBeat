@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/carousel.dart';
+import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
@@ -39,6 +40,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
+    setState(() {
+      DummyLists.oldPrescImages.add(savedImage);
+    });
+    print(DummyLists.oldPrescImages.toString());
   }
 
   @override
@@ -119,19 +124,27 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   border: Border.all(width: .5),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               height: 300,
-              child: ListView.builder(
-                  itemCount: DummyLists.prescriptionsList.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(DummyLists.prescriptionsList[index]
-                              ['PrescriptionId']!),
-                        ),
-                        Divider()
-                      ],
-                    );
-                  }),
+              child: ListView(
+                children: [
+                  PatientPrescListView(),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: DummyLists.oldPrescImages.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: FileImage(
+                              DummyLists.oldPrescImages[index],
+                              // fit: BoxFit.cover,
+                            ),
+                          ),
+                          title: Text('file'),
+                          // onTap: ,
+                        );
+                      }),
+                ],
+              ),
             ),
           ),
         ],

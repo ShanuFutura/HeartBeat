@@ -33,31 +33,36 @@ class PatientScreenDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Patient Profile'),
-            trailing: IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(PatientProfilEditScreen.routeName);
-                },
-                icon: Icon(
-                  Icons.account_circle,
-                )),
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(PatientProfilEditScreen.routeName);
+            },
+            title: const Text('Patient Profile'),
+            trailing: const Icon(
+              Icons.account_circle,
+            ),
           ),
           Divider(),
           ListTile(
-            title: Text('Payments'),
-            trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.paid,
-                )),
+            onTap: () {},
+            title: const Text('Payments'),
+            trailing: Icon(
+              Icons.paid,
+            ),
           ),
           Divider(),
           ListTile(
+            onTap: () {},
             title: Text('Cart'),
-            trailing:
-                IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+            trailing: Icon(Icons.shopping_cart),
           ),
+          Divider(),
+          ListTile(
+            onTap: () {},
+            title: Text('Labtest Booking'),
+            trailing: Icon(Icons.biotech),
+          ),
+          Divider(),
         ],
       ),
     );

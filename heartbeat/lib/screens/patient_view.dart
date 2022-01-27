@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/screens/patient_external_prescription.dart';
 // import 'package:heartbeat/models/prescriptions.dart';
 
 class PatientView extends StatefulWidget {
@@ -247,7 +248,10 @@ class _PatientViewState extends State<PatientView> {
                       ),
                       if (!isLabtest)
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                  PatientExternalPrescriptios.routeName);
+                            },
                             child: Text('External Prescriptions'))
                     ],
                   ),

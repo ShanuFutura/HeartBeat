@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
+import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
 import 'package:heartbeat/screens/patient_signup_page.dart';
@@ -16,7 +17,7 @@ class HeartBeat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DocHomePage(),
+      home: PatientHomePage(),
       routes: {
         LoginScreen.routeName: (ctx) => LoginScreen(),
         PatientSignupPage.routeName: (ctx) => PatientSignupPage(),
@@ -25,6 +26,8 @@ class HeartBeat extends StatelessWidget {
         PatientHomePage.routeName: (ctx) => PatientHomePage(),
         DoctorView.routeName: (ctx) => DoctorView(),
         PatientProfilEditScreen.routeName: (ctx) => PatientProfilEditScreen(),
+        PatientExternalPrescriptios.routeName: (ctx) =>
+            PatientExternalPrescriptios(),
       },
     );
   }

@@ -1,6 +1,10 @@
+// import 'dart:html';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Prescription {
+  // final  List<String> medicines;
   final List<String> medicines;
   final List<String> labTests;
   final DateTime date;
@@ -12,6 +16,8 @@ class Prescription {
 }
 
 class DummyLists {
+  // static Map<String, List<>>
+  static List<File> oldPrescImages = [];
   static List<Prescription> newPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},

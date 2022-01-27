@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/feedback.dart';
+import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 
 class DoctorView extends StatelessWidget {
@@ -63,24 +64,12 @@ class DoctorView extends StatelessWidget {
               children: [
                 Text('Prescriptions by Doc Name'),
                 Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
-                  height: 300,
-                  child: ListView.builder(
-                      itemCount: DummyLists.prescriptionsList.length,
-                      itemBuilder: (ctx, index) {
-                        return ListTile(
-                          leading: Text(DummyLists.prescriptionsList[index]
-                              ['PrescriptionId']!),
-                          subtitle: Text(DummyLists.prescriptionsList[index]
-                              ['PrescriptionDate']!),
-                          trailing: Text(
-                              DummyLists.prescriptionsList[index]['contents']!),
-                        );
-                      }),
-                ),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    height: 300,
+                    child: PatientPrescListView()),
               ],
             ),
           ),
