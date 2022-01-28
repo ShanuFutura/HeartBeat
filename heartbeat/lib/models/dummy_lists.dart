@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class Prescription {
   // final  List<String> medicines;
-  final List<String> medicines;
+  final List<Map<String, Object>> medicines;
   final List<String> labTests;
   final DateTime date;
   Prescription(

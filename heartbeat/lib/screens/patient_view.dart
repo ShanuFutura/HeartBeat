@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:heartbeat/Widgets/quantity_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/patient_external_prescription.dart';
 // import 'package:heartbeat/models/prescriptions.dart';
@@ -15,8 +16,14 @@ class PatientView extends StatefulWidget {
 
 class _PatientViewState extends State<PatientView> {
   var isLabtest = false;
-  final List<String> tempMedicinesList = [];
+  final List<Map<String, Object>> tempMedicinesList = [];
   final List<String> tempTestsList = [];
+  var medicineQuantity = 1;
+
+  void getQuantity(int number) {
+    medicineQuantity = number;
+    print(medicineQuantity.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +61,30 @@ class _PatientViewState extends State<PatientView> {
                                   showSearchBox: true,
                                   items: DummyLists.medicines,
                                   onChanged: (value) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                              backgroundColor:
+                                                  Colors.black.withOpacity(0),
+                                              child: StatefulBuilder(builder:
+                                                  (BuildContext context,
+                                                      StateSetter
+                                                          setState /*You can rename this!*/) {
+                                                return QuantityCard(
+                                                  medicineQuantity: 1,
+                                                  getQuantity: getQuantity,
+                                                );
+                                              }));
+                                        });
                                     setState(() {
-                                      tempMedicinesList.add(value.toString());
+                                      tempMedicinesList.add({
+                                        'medicine': value.toString(),
+                                        'count': medicineQuantity
+                                      });
                                     });
                                     print(tempMedicinesList.toString());
+                                    medicineQuantity = 1;
                                   },
                                 ),
                               ),
@@ -67,7 +94,12 @@ class _PatientViewState extends State<PatientView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ...tempMedicinesList.map((e) {
-                                      return Text(e);
+                                      return Row(
+                                        children: [
+                                          // Text(e['medicine'] as String),
+                                          // Text(e['count'] as String),
+                                        ],
+                                      );
                                     }),
                                   ],
                                 ),
@@ -105,13 +137,13 @@ class _PatientViewState extends State<PatientView> {
                                   children: [
                                     ElevatedButton(
                                         onPressed: () {
-                                          DummyLists.newPrescList.add(
-                                            Prescription(
-                                              tempMedicinesList,
-                                              tempTestsList,
-                                              DateTime.now(),
-                                            ),
-                                          );
+                                          // DummyLists.newPrescList.add(
+                                          //   Prescription(
+                                          //     tempMedicinesList,
+                                          //     tempTestsList,
+                                          //     DateTime.now(),
+                                          //   ),
+                                          // );
                                           print(DummyLists.newPrescList
                                               .toString());
                                           tempMedicinesList.clear();

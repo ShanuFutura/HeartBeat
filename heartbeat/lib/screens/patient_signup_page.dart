@@ -190,7 +190,7 @@ class _LoginCardState extends State<PatientSignupPage> {
                       validator: (v) {
                         if (v!.isEmpty) {
                           return 'phone number cannot be empty';
-                        } else if (v.length < 11 || v.length > 10) {
+                        } else if (v.length != 10) {
                           return 'Enter valid phone number';
                         }
                         return null;
