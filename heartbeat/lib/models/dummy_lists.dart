@@ -3,22 +3,33 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class Prescription {
-  // final  List<String> medicines;
-  final List<Map<String, Object>> medicines;
-  final List<String> labTests;
+class MedicinePrescription {
+  final String medicine;
   final DateTime date;
-  Prescription(
-    this.medicines,
-    this.labTests,
+  final int quantity;
+  MedicinePrescription(
+    this.medicine,
     this.date,
+    this.quantity,
+  );
+}
+
+class TestPrescription {
+  final String test;
+  final DateTime date;
+  // final int quantity;
+  TestPrescription(
+    this.test,
+    this.date,
+    // this.quantity,
   );
 }
 
 class DummyLists {
   // static Map<String, List<>>
   static List<File> oldPrescImages = [];
-  static List<Prescription> newPrescList = [];
+  static List<MedicinePrescription> newMedPrescList = [];
+  static List<TestPrescription> newTestPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},
     {'content': 'content', 'date': 'date'},

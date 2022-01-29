@@ -22,7 +22,7 @@ class _PatientViewState extends State<PatientView> {
 
   void getQuantity(int number) {
     medicineQuantity = number;
-    print(medicineQuantity.toString());
+    // print(medicineQuantity.toString());
   }
 
   @override
@@ -62,28 +62,37 @@ class _PatientViewState extends State<PatientView> {
                                   items: DummyLists.medicines,
                                   onChanged: (value) {
                                     showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Dialog(
-                                              backgroundColor:
-                                                  Colors.black.withOpacity(0),
-                                              child: StatefulBuilder(builder:
-                                                  (BuildContext context,
-                                                      StateSetter
-                                                          setState /*You can rename this!*/) {
-                                                return QuantityCard(
-                                                  medicineQuantity: 1,
-                                                  getQuantity: getQuantity,
-                                                );
-                                              }));
-                                        });
-                                    setState(() {
-                                      tempMedicinesList.add({
-                                        'medicine': value.toString(),
-                                        'count': medicineQuantity
-                                      });
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          backgroundColor:
+                                              Colors.black.withOpacity(0),
+                                          child: StatefulBuilder(
+                                            builder: (BuildContext context,
+                                                StateSetter
+                                                    setState /*You can rename this!*/) {
+                                              return QuantityCard(
+                                                medicineQuantity: 1,
+                                                getQuantity: getQuantity,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ).then((_) {
+                                      setState(
+                                        () {
+                                          tempMedicinesList.add(
+                                            {
+                                              'medicine': value.toString(),
+                                              'count': medicineQuantity
+                                            },
+                                          );
+                                        },
+                                      );
                                     });
-                                    print(tempMedicinesList.toString());
+
+                                    // print(tempMedicinesList.toString());
                                     medicineQuantity = 1;
                                   },
                                 ),
@@ -95,9 +104,17 @@ class _PatientViewState extends State<PatientView> {
                                   children: [
                                     ...tempMedicinesList.map((e) {
                                       return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          // Text(e['medicine'] as String),
-                                          // Text(e['count'] as String),
+                                          Text(e['medicine'] as String),
+                                          Text(
+                                            e['count'] as int > 1
+                                                ? 'x' +
+                                                    e['count'].toString() +
+                                                    ' Nos'
+                                                : 'x' + e['count'].toString(),
+                                          ),
                                         ],
                                       );
                                     }),
@@ -114,7 +131,7 @@ class _PatientViewState extends State<PatientView> {
                                     setState(() {
                                       tempTestsList.add(value.toString());
                                     });
-                                    print(tempTestsList.toString());
+                                    // print(tempTestsList.toString());
                                   },
                                 ),
                               ),
@@ -144,8 +161,29 @@ class _PatientViewState extends State<PatientView> {
                                           //     DateTime.now(),
                                           //   ),
                                           // );
-                                          print(DummyLists.newPrescList
-                                              .toString());
+                                          DummyLists.newMedPrescList.addAll(
+                                              tempMedicinesList
+                                                  .map((e) =>
+                                                      MedicinePrescription(
+                                                          e['medicine']
+                                                              as String,
+                                                          DateTime.now(),
+                                                          e['count'] as int))
+                                                  .toList());
+                                          DummyLists.newTestPrescList
+                                              .addAll(tempTestsList
+                                                  .map((e) => TestPrescription(
+                                                        e,
+                                                        DateTime.now(),
+                                                      ))
+                                                  .toList());
+                                          DummyLists.newMedPrescList.map((e) {
+                                            print(e.medicine);
+                                            print(e.quantity);
+                                            print(e.date);
+                                          });
+                                          // print(DummyLists.newTestPrescList
+                                          //     .toList());
                                           tempMedicinesList.clear();
                                           tempTestsList.clear();
                                           Navigator.pop(context);
