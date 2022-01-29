@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 
 class DocScreenDrawer extends StatelessWidget {
   // const DocScreenDrawer({ Key? key }) : super(key: key);
@@ -35,7 +36,10 @@ class DocScreenDrawer extends StatelessWidget {
           ListTile(
             title: Text('Doc Profile'),
             trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(DocProfileeditScreen.routeName);
+                },
                 icon: Icon(
                   Icons.account_circle,
                 )),

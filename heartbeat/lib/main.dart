@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
+import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
@@ -28,6 +29,7 @@ class HeartBeat extends StatelessWidget {
         PatientProfilEditScreen.routeName: (ctx) => PatientProfilEditScreen(),
         PatientExternalPrescriptios.routeName: (ctx) =>
             PatientExternalPrescriptios(),
+        DocProfileeditScreen.routeName: (ctx) => DocProfileeditScreen(),
       },
     );
   }

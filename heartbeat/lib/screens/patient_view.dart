@@ -179,11 +179,9 @@ class _PatientViewState extends State<PatientView> {
                                                   .toList());
                                           DummyLists.newMedPrescList.map((e) {
                                             print(e.medicine);
-                                            print(e.quantity);
-                                            print(e.date);
                                           });
-                                          // print(DummyLists.newTestPrescList
-                                          //     .toList());
+                                          print(DummyLists.newTestPrescList
+                                              .toList());
                                           tempMedicinesList.clear();
                                           tempTestsList.clear();
                                           Navigator.pop(context);

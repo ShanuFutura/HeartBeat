@@ -175,33 +175,33 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                   ),
                 ),
               ),
-              TextFormField(
-                initialValue: 'ppw',
-                obscureText: true,
-                style: const TextStyle(color: Colors.black),
-                key: const ValueKey('pw'),
-                validator: (v) {
-                  if (v!.trim().isEmpty) {
-                    return 'password cannot be empty';
-                  } else if (v.trim().length < 8) {
-                    return 'password too short';
-                  }
-                  return null;
-                },
-                onSaved: (vl) {
-                  _pword = vl!;
-                },
-                decoration: const InputDecoration(
-                  labelText: 'password',
-                  labelStyle: TextStyle(color: Colors.black, fontSize: 12),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                ),
-              ),
+              // TextFormField(
+              //   initialValue: 'ppw',
+              //   obscureText: true,
+              //   style: const TextStyle(color: Colors.black),
+              //   key: const ValueKey('pw'),
+              //   validator: (v) {
+              //     if (v!.trim().isEmpty) {
+              //       return 'password cannot be empty';
+              //     } else if (v.trim().length < 8) {
+              //       return 'password too short';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (vl) {
+              //     _pword = vl!;
+              //   },
+              //   decoration: const InputDecoration(
+              //     labelText: 'password',
+              //     labelStyle: TextStyle(color: Colors.black, fontSize: 12),
+              //     enabledBorder: UnderlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.black),
+              //     ),
+              //     focusedBorder: UnderlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.black),
+              //     ),
+              //   ),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
