@@ -73,35 +73,63 @@ class _PatientHomePageState extends State<PatientHomePage> {
         backgroundColor: Colors.white,
         actions: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: DropdownButton(
-              underline: Container(),
-              icon: const Icon(
-                Icons.search,
-                color: Colors.black,
+              padding: const EdgeInsets.all(10.0),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: ListView.builder(
+                              itemCount: DummyLists.docsList.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        DoctorView.routeName,
+                                        arguments: DummyLists.docsList[index]);
+                                  },
+                                  title: Text(DummyLists.docsList[index]),
+                                );
+                              }),
+                        );
+                      });
+                },
+                child: Row(
+                  children: [
+                    Text('Search Docs'),
+                    Icon((Icons.search)),
+                  ],
+                ),
+              )
+              // DropdownButton(
+              //   underline: Container(),
+              //   icon: const Icon(
+              //     Icons.search,
+              //     color: Colors.black,
+              //   ),
+              //   items: [
+              //     ...DummyLists.docsList
+              //         .map((e) => DropdownMenuItem(
+              //               child: Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   Container(
+              //                     child: Text(e),z
+              //                   ),
+              //                   Divider(),
+              //                 ],
+              //               ),
+              //               value: e,
+              //             ))
+              //         .toList(),
+              //   ],
+              //   onChanged: (v) {
+              //     Navigator.of(context)
+              //         .pushNamed(DoctorView.routeName, arguments: v);
+              //   },
+              // ),
               ),
-              items: [
-                ...DummyLists.docsList
-                    .map((e) => DropdownMenuItem(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Text(e),
-                              ),
-                              Divider(),
-                            ],
-                          ),
-                          value: e,
-                        ))
-                    .toList(),
-              ],
-              onChanged: (v) {
-                Navigator.of(context)
-                    .pushNamed(DoctorView.routeName, arguments: v);
-              },
-            ),
-          ),
           IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
         ],
       ),
