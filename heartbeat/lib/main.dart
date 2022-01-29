@@ -18,7 +18,7 @@ class HeartBeat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DocHomePage(),
+      home: PatientHomePage(),
       routes: {
         LoginScreen.routeName: (ctx) => LoginScreen(),
         PatientSignupPage.routeName: (ctx) => PatientSignupPage(),

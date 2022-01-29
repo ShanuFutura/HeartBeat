@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/feedback.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
+import 'package:heartbeat/Widgets/time_slot_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 
 class DoctorView extends StatelessWidget {
@@ -113,15 +114,37 @@ class DoctorView extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: DummyLists.docTimeSlots.isEmpty
+                        ? null
+                        : () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return StatefulBuilder(builder:
+                                      (BuildContext context,
+                                          StateSetter setState) {
+                                    return const Dialog(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 60,
+                                          horizontal: 20,
+                                        ),
+                                        child: TimeSlotCard(),
+                                      ),
+                                    );
+                                  });
+                                });
+                          },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(20),
                           ),
-                          color: Colors.blue,
+                          color: DummyLists.docTimeSlots.isEmpty
+                              ? Colors.grey
+                              : Colors.blue,
                         ),
                         height: 200,
                         child: const Center(
