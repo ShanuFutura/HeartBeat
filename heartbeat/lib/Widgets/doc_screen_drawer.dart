@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:heartbeat/screens/doc_leave_application.dart';
 import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 
 class DocScreenDrawer extends StatelessWidget {
@@ -55,7 +56,10 @@ class DocScreenDrawer extends StatelessWidget {
           // ),
           // Divider(),
           ListTile(
-              onTap: () {},
+              onTap: () {
+                // Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(DocLeaveApplication.routeName);
+              },
               title: Text('Apply for Leave'),
               trailing: Icon(
                 Icons.pending_actions,

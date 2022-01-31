@@ -28,6 +28,12 @@ class TestPrescription {
 }
 
 class DummyLists {
+  static List<Map<String, Object>> appliedLeaves = [
+    {'date': DateTime.now(), 'approval': 'waiting'},
+    {'date': DateTime.now(), 'approval': 'approved'},
+    {'date': DateTime.now(), 'approval': 'denied'},
+    {'date': DateTime.now(), 'approval': 'waiting'},
+  ];
   // static Map<String, List<>>
   static List<File> oldPrescImages = [];
   static List<MedicinePrescription> newMedPrescList = [
