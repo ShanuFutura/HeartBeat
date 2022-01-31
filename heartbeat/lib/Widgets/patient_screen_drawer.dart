@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:heartbeat/screens/cart_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
+import 'package:heartbeat/screens/patients_appoinments.dart';
 
 class PatientScreenDrawer extends StatelessWidget {
   @override
@@ -53,7 +55,9 @@ class PatientScreenDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(CartScreen.routeName);
+            },
             title: Text('Cart'),
             trailing: Icon(Icons.shopping_cart),
           ),
@@ -62,6 +66,14 @@ class PatientScreenDrawer extends StatelessWidget {
             onTap: () {},
             title: Text('Labtest Booking'),
             trailing: Icon(Icons.biotech),
+          ),
+          Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed(PatientsAppoinments.routeName);
+            },
+            title: Text('Appoinments'),
+            trailing: Icon(Icons.event),
           ),
           Divider(),
           ListTile(

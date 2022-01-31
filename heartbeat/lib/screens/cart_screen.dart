@@ -12,6 +12,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    // final refreshCallBack = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your cart'),
@@ -24,11 +25,13 @@ class _CartScreenState extends State<CartScreen> {
                 title: Text(DummyLists.kart[index].medicine),
                 trailing:
                     Text('x' + DummyLists.kart[index].quantity.toString()),
-              )
+              ),
+              Divider()
             ]);
           }),
       floatingActionButton: GestureDetector(
         onTap: () {
+          // refreshCallBack;
           setState(() {
             DummyLists.kart.clear();
           });

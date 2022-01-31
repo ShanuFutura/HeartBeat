@@ -7,7 +7,7 @@ import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
-// import 'package:heartbeat/screens/doc_home_page.dart';
+
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -54,7 +54,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: true,
       floatingActionButton: ElevatedButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),
@@ -107,35 +106,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     Icon((Icons.search)),
                   ],
                 ),
-              )
-              // DropdownButton(
-              //   underline: Container(),
-              //   icon: const Icon(
-              //     Icons.search,
-              //     color: Colors.black,
-              //   ),
-              //   items: [
-              //     ...DummyLists.docsList
-              //         .map((e) => DropdownMenuItem(
-              //               child: Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   Container(
-              //                     child: Text(e),z
-              //                   ),
-              //                   Divider(),
-              //                 ],
-              //               ),
-              //               value: e,
-              //             ))
-              //         .toList(),
-              //   ],
-              //   onChanged: (v) {
-              //     Navigator.of(context)
-              //         .pushNamed(DoctorView.routeName, arguments: v);
-              //   },
-              // ),
-              ),
+              )),
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed(CartScreen.routeName);
@@ -188,11 +159,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           leading: CircleAvatar(
                             backgroundImage: FileImage(
                               DummyLists.oldPrescImages[index],
-                              // fit: BoxFit.cover,
                             ),
                           ),
                           title: Text('file'),
-                          // onTap: ,
                         );
                       }),
                 ],

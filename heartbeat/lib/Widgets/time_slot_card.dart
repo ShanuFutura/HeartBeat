@@ -22,8 +22,10 @@ class _TimeSlotCardState extends State<TimeSlotCard> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
+                        DummyLists.appoinments.add({'slot': e, 'doc': 'Dr.X'});
                         DummyLists.docTimeSlots
                             .removeWhere((element) => element == e);
+                        Navigator.of(context).pop();
                       });
                     },
                     child: Container(
