@@ -28,6 +28,7 @@ class TestPrescription {
 }
 
 class DummyLists {
+  static List kart = [];
   static List<Map<String, Object>> appliedLeaves = [
     {'date': DateTime.now(), 'approval': 'waiting'},
     {'date': DateTime.now(), 'approval': 'approved'},

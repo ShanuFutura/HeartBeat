@@ -20,6 +20,10 @@ class PatientHomePage extends StatefulWidget {
 }
 
 class _PatientHomePageState extends State<PatientHomePage> {
+  refresh() {
+    setState(() {});
+  }
+
   final picker = ImagePicker();
 
   File? _storedImage;
@@ -131,7 +135,21 @@ class _PatientHomePageState extends State<PatientHomePage> {
               //   },
               // ),
               ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+          IconButton(
+            onPressed: () {},
+            icon: Stack(alignment: Alignment.topRight, children: [
+              Icon(Icons.shopping_cart),
+              if (!DummyLists.kart.isEmpty)
+                CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 6,
+                  child: Text(
+                    DummyLists.kart.length.toString(),
+                    style: TextStyle(fontSize: 8),
+                  ),
+                ),
+            ]),
+          ),
         ],
       ),
       body: Column(
@@ -155,7 +173,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
               height: 300,
               child: ListView(
                 children: [
-                  PatientPrescListView(),
+                  PatientPrescListView(
+                    notifyParent: refresh,
+                  ),
                   ListView.builder(
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),

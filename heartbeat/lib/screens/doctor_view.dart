@@ -7,6 +7,8 @@ import 'package:heartbeat/models/dummy_lists.dart';
 class DoctorView extends StatelessWidget {
   static const String routeName = 'docview';
 
+  notifyParent() {}
+
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments as String;
@@ -70,7 +72,9 @@ class DoctorView extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20))),
                     height: 300,
-                    child: PatientPrescListView()),
+                    child: PatientPrescListView(
+                      notifyParent: notifyParent,
+                    )),
               ],
             ),
           ),
