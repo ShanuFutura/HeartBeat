@@ -6,6 +6,7 @@ import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/screens/cart_screen.dart';
 // import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:image_picker/image_picker.dart';
@@ -136,7 +137,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
               // ),
               ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartScreen.routeName);
+            },
             icon: Stack(alignment: Alignment.topRight, children: [
               Icon(Icons.shopping_cart),
               if (!DummyLists.kart.isEmpty)
