@@ -49,6 +49,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       floatingActionButton: ElevatedButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/ClickableContainer.dart';
+import 'package:heartbeat/helpers/db_helper.dart';
 
 class PatientSignupPage extends StatefulWidget {
   static const String routeName = 'signup';
@@ -16,6 +17,7 @@ final _formKey = GlobalKey<FormState>();
 // String? _selectedGender;
 
 String _phone = '';
+String _name = '';
 String? _gender;
 String _age = '';
 String _uname = '';
@@ -42,12 +44,15 @@ class _LoginCardState extends State<PatientSignupPage> {
                 );
               });
         } else {
-          print(_uname);
-          print(_age);
-          print(_gender);
-          print(_email);
-          print(_phone);
-          print(_pword);
+          DBHelper.signupCall(
+              _name, _age, _gender!, _email, _phone, _uname, _pword, context);
+          // print(_uname);
+          // print(_age);
+          // print(_gender);
+          // print(_email);
+          // print(_phone);
+          // print(_pword);
+          // print(_name);
         }
 
         // widget.submit!(
@@ -91,10 +96,35 @@ class _LoginCardState extends State<PatientSignupPage> {
                         }
                       },
                       onSaved: (vl) {
-                        _uname = vl!;
+                        _name = vl!;
                       },
                       decoration: const InputDecoration(
                         labelText: 'Name',
+                        labelStyle:
+                            TextStyle(color: Colors.black, fontSize: 12),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    TextFormField(
+                      style: const TextStyle(color: Colors.black),
+                      key: const ValueKey('unm'),
+                      validator: (v) {
+                        if (v!.trim().isEmpty) {
+                          return 'patient name cannot be empty';
+                        } else if (v.trim().length < 3) {
+                          return 'enter a valid user name';
+                        }
+                      },
+                      onSaved: (vl) {
+                        _uname = vl!;
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Username',
                         labelStyle:
                             TextStyle(color: Colors.black, fontSize: 12),
                         enabledBorder: UnderlineInputBorder(

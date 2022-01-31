@@ -4,6 +4,7 @@ import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:heartbeat/Widgets/patient_signup_card.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -15,19 +16,23 @@ class LoginScreen extends StatelessWidget {
   String password = '';
   bool isLogin = false;
   //
-  void tryAuth(
+
+  Future<void> tryAuth(
     String uname,
     // String mail,
     String pword,
     // bool iLogin,
     BuildContext context,
-  ) {
+  ) async {
     username = uname;
     // email = mail;
     password = pword;
     // isLogin = iLogin;
     print(uname + ' ' + pword);
     // Navigator.of(context).pushReplacementNamed(DocHomePage.routeName);
+    final pref = await SharedPreferences.getInstance();
+    pref.setString(
+        'authTok', 'patient'); // PATIENT OR DC HAS TO BE SELECTED DEPENDING
     Navigator.of(context).pushNamed(PatientHomePage.routeName);
   }
 

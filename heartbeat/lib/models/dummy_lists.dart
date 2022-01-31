@@ -7,10 +7,12 @@ class MedicinePrescription {
   final String medicine;
   final DateTime date;
   final int quantity;
+  final String docName;
   MedicinePrescription(
     this.medicine,
     this.date,
     this.quantity,
+    this.docName,
   );
 }
 
@@ -28,7 +30,12 @@ class TestPrescription {
 class DummyLists {
   // static Map<String, List<>>
   static List<File> oldPrescImages = [];
-  static List<MedicinePrescription> newMedPrescList = [];
+  static List<MedicinePrescription> newMedPrescList = [
+    MedicinePrescription('Paracetamol', DateTime.now(), 2, 'Alice'),
+    MedicinePrescription('Antibiotic', DateTime.now(), 2, 'Bob'),
+    MedicinePrescription('medicine', DateTime.now(), 2, 'DocName'),
+    MedicinePrescription('medicine', DateTime.now(), 2, 'DocName'),
+  ];
   static List<TestPrescription> newTestPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},
