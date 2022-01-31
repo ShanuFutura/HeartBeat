@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
     final pref = await SharedPreferences.getInstance();
     pref.setString(
         'authTok', 'patient'); // PATIENT OR DC HAS TO BE SELECTED DEPENDING
-    Navigator.of(context).pushNamed(PatientHomePage.routeName);
+    Navigator.of(context).pushNamed(DocHomePage.routeName);
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/helpers/db_helper.dart';
 import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 
 class DocScreenDrawer extends StatelessWidget {
@@ -34,17 +35,16 @@ class DocScreenDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Doc Profile'),
-            trailing: IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(DocProfileeditScreen.routeName);
-                },
-                icon: Icon(
-                  Icons.account_circle,
-                )),
-          ),
+              onTap: () {
+                Navigator.of(context).pushNamed(DocProfileeditScreen.routeName);
+              },
+              title: Text('Doc Profile'),
+              trailing: Icon(
+                Icons.account_circle,
+              )),
+
           Divider(),
+
           // ListTile(
           //   title: Text('Appoinments'),
           //   trailing: IconButton(
@@ -55,13 +55,22 @@ class DocScreenDrawer extends StatelessWidget {
           // ),
           // Divider(),
           ListTile(
-            title: Text('Apply for Leave'),
-            trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.pending_actions,
-                )),
-          ),
+              onTap: () {},
+              title: Text('Apply for Leave'),
+              trailing: Icon(
+                Icons.pending_actions,
+              )),
+
+          Divider(),
+          ListTile(
+              onTap: () {
+                DBHelper.logout(context);
+              },
+              title: Text('Logout'),
+              trailing: Icon(
+                Icons.logout,
+              )),
+
           Divider(),
         ],
       ),
