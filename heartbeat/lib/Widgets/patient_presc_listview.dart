@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
@@ -136,10 +138,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: FileImage(
-                      DummyLists.oldPrescImages[index],
+                      DummyLists.oldPrescImages[index]['image'] as File,
                     ),
                   ),
-                  title: Text('file'),
+                  title: Text(
+                      (DummyLists.oldPrescImages[index]['date'] as DateTime)
+                          .toString()),
                 );
               },
             )

@@ -1,3 +1,6 @@
+// import 'dart:html';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 
@@ -20,11 +23,13 @@ class PatientExternalPrescriptios extends StatelessWidget {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: FileImage(
-                      DummyLists.oldPrescImages[index],
+                      DummyLists.oldPrescImages[index]['image'] as File,
                       // fit: BoxFit.cover,
                     ),
                   ),
-                  title: Text('file'),
+
+                  // title:
+                  //     Text(DummyLists.oldPrescImages[index]['date'] as String),
                   // onTap: ,
                 );
               }),

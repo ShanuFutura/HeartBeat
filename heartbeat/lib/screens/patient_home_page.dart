@@ -46,7 +46,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
     setState(() {
-      DummyLists.oldPrescImages.add(savedImage);
+      DummyLists.oldPrescImages.add(
+        {'image': savedImage, 'date': DateTime.now()},
+      );
     });
     print(DummyLists.oldPrescImages.toString());
   }
@@ -148,25 +150,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
               child: PatientPrescListView(
                 notifyParent: refresh,
               ),
-              // ListView(
-              //   children: [
-
-              //         ListView.builder(
-              //             shrinkWrap: true,
-              //             physics: ClampingScrollPhysics(),
-              //             itemCount: DummyLists.oldPrescImages.length,
-              //             itemBuilder: (context, index) {
-              //               return ListTile(
-              //                 leading: CircleAvatar(
-              //                   backgroundImage: FileImage(
-              //                     DummyLists.oldPrescImages[index],
-              //                   ),
-              //                 ),
-              //                 title: Text('file'),
-              //               );
-              //             }),
-              //   ],
-              // ),
             ),
           ),
         ],

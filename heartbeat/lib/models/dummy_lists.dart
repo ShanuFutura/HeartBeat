@@ -37,7 +37,7 @@ class DummyLists {
     {'date': DateTime.now(), 'approval': 'waiting'},
   ];
   // static Map<String, List<>>
-  static List<File> oldPrescImages = [];
+  static List<Map<String, Object>> oldPrescImages = [];
   static List<MedicinePrescription> newMedPrescList = [
     MedicinePrescription(
         'Paracetamol', DateTime.now().subtract(Duration(days: 9)), 2, 'Alice'),
