@@ -6,7 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DBHelper extends ChangeNotifier {
   // static bool authTok=false;
-  signupCall(
+
+  String loginId = '';
+
+  bool loginCall(
+    String username,
+    String password,
+  ) {
+//send to backend
+//gets isLOginSuccessful ,login id, userCategory
+    return true;
+  }
+
+  void signupCall(
     String name,
     String age,
     String gender,

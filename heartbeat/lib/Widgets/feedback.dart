@@ -48,7 +48,7 @@ class _FeedbackTextState extends State<FeedbackText> {
                             msg: 'feedback sent', gravity: ToastGravity.CENTER);
                         Navigator.of(context).pop();
 
-                        print(feedbackText);
+                        // print(feedbackText);
                         feedbackText = '';
                       },
                 icon: Icon(Icons.send)),
