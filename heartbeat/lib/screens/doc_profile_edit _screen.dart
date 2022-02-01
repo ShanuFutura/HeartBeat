@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/Widgets/ClickableContainer.dart';
+// import 'package:heartbeat/Widgets/ClickableContainer.dart';
+// import 'package:heartbeat/helpers/db_helper.dart';
+// import 'package:heartbeat/providers/db_helper.dart';
 
 class DocProfileeditScreen extends StatefulWidget {
   static const String routeName = 'doc Profile edit';
@@ -10,7 +12,7 @@ class DocProfileeditScreen extends StatefulWidget {
 class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  var _uname = '';
+  var _name = '';
 
   var _age = '';
 
@@ -23,6 +25,25 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
   var _pword = '';
 
   var _quali = '';
+
+  void trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      if (_gender == null) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialog(
+                title: Text('Something missing'),
+                content: Text('please enter gender'),
+              );
+            });
+      } else {
+        _formKey.currentState!.save();
+        // DBHelper.profUpdate(_name, _age, _gender!, _email, _phone);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +76,7 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
                   }
                 },
                 onSaved: (vl) {
-                  _uname = vl!;
+                  _name = vl!;
                 },
                 decoration: const InputDecoration(
                   labelText: 'Name',
@@ -115,7 +136,7 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
                 validator: (v) {
                   if (v!.isEmpty) {
                     return 'phone number cannot be empty';
-                  } else if (v.length < 11 || v.length > 10) {
+                  } else if (v.length > 11 || v.length < 10) {
                     return 'Enter valid phone number';
                   }
                   return null;
@@ -202,7 +223,7 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('EDIT'))
+                  ElevatedButton(onPressed: trySubmit, child: Text('EDIT'))
                 ],
               ),
             ],

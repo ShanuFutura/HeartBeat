@@ -4,9 +4,9 @@ import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DBHelper {
+class DBHelper extends ChangeNotifier {
   // static bool authTok=false;
-  static signupCall(
+  signupCall(
     String name,
     String age,
     String gender,
@@ -31,9 +31,27 @@ class DBHelper {
     }
   }
 
-  static Future<void> logout(BuildContext context) async {
+  Future<void> logout(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
     pref.setString('authTok', 'nop');
     Navigator.of(context).pushNamed(LoginScreen.routeName);
+  }
+
+  bool patientProfUpdate(
+    // String login_id,
+    String name,
+    String age,
+    String gender,
+    String email,
+    String mobile,
+  ) {
+    print('{$name,$age,$gender,$email,$gender,$mobile,}');
+    return true;
+  }
+
+  // static feedBack
+
+  void feedBackCall(String feed) {
+    print(feed);
   }
 }

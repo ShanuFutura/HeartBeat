@@ -186,23 +186,71 @@ class DummyLists {
     'test name 4',
     'test name 5',
   ];
-  static const List<String> docsList = [
-    'docName 1',
-    'docName 2',
-    'docName 3',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 4',
-    'docName 5',
-    'docName 6',
-    'docName 7docName 7docName',
-    'docName 7docName 7docName',
-    'docName 7docName 7docName',
-    'docName 7docName 7docName',
+
+  static const List<Map<String, Object>> docsList = [
+    {
+      'value': 1,
+      'message': 'successful',
+      'doc_name': 'Alice',
+      'department_id': '2',
+      'qualification': 'MD',
+      'gender': 'male',
+      'email': 'alice@abd.com',
+      'mobile': '99999999',
+      'experience': '3'
+    },
+    {
+      'value': 1,
+      'message': 'successful',
+      'doc_name': 'Alice',
+      'department_id': '2',
+      'qualification': 'MD',
+      'gender': 'male',
+      'email': 'alice@abd.com',
+      'mobile': '99999999',
+      'experience': '3'
+    },
+    {
+      'value': 1,
+      'message': 'successful',
+      'doc_name': 'Alice',
+      'department_id': '2',
+      'qualification': 'MD',
+      'gender': 'male',
+      'email': 'alice@abd.com',
+      'mobile': '99999999',
+      'experience': '3'
+    },
+    {
+      'value': 1,
+      'message': 'successful',
+      'doc_name': 'Alice',
+      'department_id': '2',
+      'qualification': 'MD',
+      'gender': 'male',
+      'email': 'alice@abd.com',
+      'mobile': '99999999',
+      'experience': '3'
+    }
   ];
+
+  // static const List<String> docsList = [
+  //   'docName 1',
+  //   'docName 2',
+  //   'docName 3',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 4',
+  //   'docName 5',
+  //   'docName 6',
+  //   'docName 7docName 7docName',
+  //   'docName 7docName 7docName',
+  //   'docName 7docName 7docName',
+  //   'docName 7docName 7docName',
+  // ];
 }

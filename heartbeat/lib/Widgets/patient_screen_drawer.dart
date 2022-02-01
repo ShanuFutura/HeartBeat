@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/helpers/db_helper.dart';
+// import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
 // import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
 import 'package:heartbeat/screens/patients_appoinments.dart';
+import 'package:provider/provider.dart';
 
 class PatientScreenDrawer extends StatelessWidget {
   @override
@@ -27,6 +29,7 @@ class PatientScreenDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             onTap: () {
+              Navigator.of(context).pop();
               Navigator.of(context)
                   .pushNamed(PatientProfilEditScreen.routeName);
             },
@@ -60,7 +63,7 @@ class PatientScreenDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             onTap: () {
-              DBHelper.logout(context);
+              Provider.of<DBHelper>(context, listen: false).logout(context);
             },
             title: const Text('Logout'),
             trailing: Icon(Icons.logout),

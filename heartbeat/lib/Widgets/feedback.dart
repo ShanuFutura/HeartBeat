@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared';
 
@@ -40,6 +42,8 @@ class _FeedbackTextState extends State<FeedbackText> {
                 onPressed: feedbackText.trim().isEmpty
                     ? null
                     : () {
+                        Provider.of<DBHelper>(context, listen: false)
+                            .feedBackCall(feedbackText);
                         Fluttertoast.showToast(
                             msg: 'feedback sent', gravity: ToastGravity.CENTER);
                         Navigator.of(context).pop();

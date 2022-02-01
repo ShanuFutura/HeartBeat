@@ -56,6 +56,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       floatingActionButton: ElevatedButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),
@@ -94,9 +95,10 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                   onTap: () {
                                     Navigator.of(context).pushNamed(
                                         DoctorView.routeName,
-                                        arguments: DummyLists.docsList[index]);
+                                        arguments: index);
                                   },
-                                  title: Text(DummyLists.docsList[index]),
+                                  title: Text(DummyLists.docsList[index]
+                                      ['doc_name'] as String),
                                 );
                               }),
                         );

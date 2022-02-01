@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+// import 'package:heartbeat/helpers/db_helper.dart';
 import 'package:heartbeat/screens/doc_leave_application.dart';
 import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
+import 'package:provider/provider.dart';
 
 class DocScreenDrawer extends StatelessWidget {
   // const DocScreenDrawer({ Key? key }) : super(key: key);
@@ -68,7 +70,7 @@ class DocScreenDrawer extends StatelessWidget {
           Divider(),
           ListTile(
               onTap: () {
-                DBHelper.logout(context);
+                Provider.of<DBHelper>(context, listen: false).logout(context);
               },
               title: Text('Logout'),
               trailing: Icon(

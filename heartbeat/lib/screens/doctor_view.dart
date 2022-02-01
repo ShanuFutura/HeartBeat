@@ -3,6 +3,8 @@ import 'package:heartbeat/Widgets/feedback.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/time_slot_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 
 class DoctorView extends StatelessWidget {
   static const String routeName = 'docview';
@@ -11,7 +13,7 @@ class DoctorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arg = ModalRoute.of(context)!.settings.arguments as String;
+    final arg = ModalRoute.of(context)!.settings.arguments as int;
     var feedbackText = '';
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -34,12 +36,13 @@ class DoctorView extends StatelessWidget {
                   child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'Doc name',
+                          DummyLists.docsList[arg]['doc_name'] as String,
                           style: TextStyle(fontSize: 40),
                         ),
-                        Text('Qualification')
+                        Text(
+                            DummyLists.docsList[arg]['qualification'] as String)
                       ],
                     ),
                   ),
@@ -65,7 +68,8 @@ class DoctorView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Prescriptions by Doc Name'),
+                Text('Prescriptions by ' +
+                    (DummyLists.docsList[arg]['doc_name'] as String)),
                 Container(
                     decoration: BoxDecoration(
                         border: Border.all(width: 1),

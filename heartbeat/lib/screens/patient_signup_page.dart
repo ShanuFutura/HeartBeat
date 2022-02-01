@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/ClickableContainer.dart';
-import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+// import 'package:heartbeat/helpers/db_helper.dart';
+import 'package:provider/provider.dart';
 
 class PatientSignupPage extends StatefulWidget {
   static const String routeName = 'signup';
@@ -44,7 +46,7 @@ class _LoginCardState extends State<PatientSignupPage> {
                 );
               });
         } else {
-          DBHelper.signupCall(
+          Provider.of<DBHelper>(context, listen: false).signupCall(
               _name, _age, _gender!, _email, _phone, _uname, _pword, context);
           // print(_uname);
           // print(_age);
