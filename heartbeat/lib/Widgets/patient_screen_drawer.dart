@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/helpers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
-import 'package:heartbeat/screens/patient_home_page.dart';
+// import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
 import 'package:heartbeat/screens/patients_appoinments.dart';
 
@@ -12,16 +12,6 @@ class PatientScreenDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            // decoration: BoxDecoration(
-            // gradient: LinearGradient(
-            //   begin: Alignment.topLeft,
-            //   end: Alignment.bottomLeft,
-            //   colors: [
-            //     Theme.of(context).colorScheme.primary,
-            //     Theme.of(context).canvasColor,
-            //   ],
-            // ),
-            // ),
             height: 200,
             width: double.infinity,
             padding: EdgeInsets.all(20),
@@ -43,14 +33,6 @@ class PatientScreenDrawer extends StatelessWidget {
             title: const Text('Patient Profile'),
             trailing: const Icon(
               Icons.account_circle,
-            ),
-          ),
-          Divider(),
-          ListTile(
-            onTap: () {},
-            title: const Text('Payments'),
-            trailing: Icon(
-              Icons.paid,
             ),
           ),
           Divider(),

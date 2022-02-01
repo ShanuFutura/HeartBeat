@@ -145,27 +145,28 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   border: Border.all(width: .5),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               height: 300,
-              child: ListView(
-                children: [
-                  PatientPrescListView(
-                    notifyParent: refresh,
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemCount: DummyLists.oldPrescImages.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: FileImage(
-                              DummyLists.oldPrescImages[index],
-                            ),
-                          ),
-                          title: Text('file'),
-                        );
-                      }),
-                ],
+              child: PatientPrescListView(
+                notifyParent: refresh,
               ),
+              // ListView(
+              //   children: [
+
+              //         ListView.builder(
+              //             shrinkWrap: true,
+              //             physics: ClampingScrollPhysics(),
+              //             itemCount: DummyLists.oldPrescImages.length,
+              //             itemBuilder: (context, index) {
+              //               return ListTile(
+              //                 leading: CircleAvatar(
+              //                   backgroundImage: FileImage(
+              //                     DummyLists.oldPrescImages[index],
+              //                   ),
+              //                 ),
+              //                 title: Text('file'),
+              //               );
+              //             }),
+              //   ],
+              // ),
             ),
           ),
         ],

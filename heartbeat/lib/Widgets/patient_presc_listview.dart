@@ -12,6 +12,14 @@ class PatientPrescListView extends StatefulWidget {
   State<PatientPrescListView> createState() => _PatientPrescListViewState();
 }
 
+final thisWeekList = DummyLists.newMedPrescList.where((element) {
+  return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+}).toList();
+
+final olderList = DummyLists.newMedPrescList.where((element) {
+  return element.date.isBefore(DateTime.now().subtract(Duration(days: 7)));
+}).toList();
+
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
@@ -69,8 +77,6 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                         widget.notifyParent();
                                         DummyLists.kart.add(
                                             DummyLists.newMedPrescList[index]);
-                                        // setState(() {
-                                        // });
                                       },
                                       icon: Icon(Icons.shopping_cart)),
                                 ])),
@@ -85,25 +91,82 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           });
     }
 
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
-        itemCount: DummyLists.newMedPrescList.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              ListTile(
-                onTap: () {
-                  prescCard(index);
-                },
-                title: Text(
-                  DateFormat('dd/mm/yyyy')
-                      .format(DummyLists.newMedPrescList[index].date),
-                ),
-              ),
-              Divider()
-            ],
-          );
-        });
+    return ListView(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      children: [
+        ExpansionTile(
+          title: Text('This week'),
+          children: [
+            ListView.builder(
+              itemCount: thisWeekList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(thisWeekList[index].date.toIso8601String()),
+                );
+              },
+            )
+          ],
+        ),
+        ExpansionTile(
+          title: Text('Older'),
+          children: [
+            ListView.builder(
+              itemCount: olderList.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(olderList[index].date.toIso8601String()),
+                );
+              },
+            )
+          ],
+        ),
+        ExpansionTile(
+          title: Text('Uploaded precripstions'),
+          children: [
+            ListView.builder(
+              itemCount: DummyLists.oldPrescImages.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: FileImage(
+                      DummyLists.oldPrescImages[index],
+                    ),
+                  ),
+                  title: Text('file'),
+                );
+              },
+            )
+          ],
+        ),
+      ],
+    );
+
+    // return ListView.builder(
+    //     shrinkWrap: true,
+    //     physics: ClampingScrollPhysics(),
+    //     itemCount: DummyLists.newMedPrescList.length,
+    //     itemBuilder: (context, index) {
+    //       return Column(
+    //         children: [
+    //           ListTile(
+    //             onTap: () {
+    //               prescCard(index);
+    //             },
+    //             title: Text(
+    //               DateFormat('dd/MM/yyyy')
+    //                   .format(DummyLists.newMedPrescList[index].date),
+    //             ),
+    //           ),
+    //           Divider()
+    //         ],
+    //       );
+    //     });
   }
 }

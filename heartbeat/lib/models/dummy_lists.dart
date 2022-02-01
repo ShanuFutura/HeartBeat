@@ -39,11 +39,16 @@ class DummyLists {
   // static Map<String, List<>>
   static List<File> oldPrescImages = [];
   static List<MedicinePrescription> newMedPrescList = [
-    MedicinePrescription('Paracetamol', DateTime.now(), 2, 'Alice'),
-    MedicinePrescription('Antibiotic', DateTime.now(), 2, 'Bob'),
-    MedicinePrescription('medicine', DateTime.now(), 2, 'DocName'),
-    MedicinePrescription('medicine', DateTime.now(), 2, 'DocName'),
+    MedicinePrescription(
+        'Paracetamol', DateTime.now().subtract(Duration(days: 9)), 2, 'Alice'),
+    MedicinePrescription(
+        'Antibiotic', DateTime.now().subtract(Duration(days: 15)), 2, 'Bob'),
+    MedicinePrescription(
+        'medicine', DateTime.now().subtract(Duration(days: 4)), 2, 'Carl'),
+    MedicinePrescription(
+        'medicine', DateTime.now().subtract(Duration(days: 6)), 2, 'Daisy'),
   ];
+
   static List<TestPrescription> newTestPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},

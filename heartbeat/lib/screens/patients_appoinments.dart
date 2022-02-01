@@ -13,7 +13,10 @@ class PatientsAppoinments extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('You have appoinment with'),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Text('You have appoinment with'),
+            ),
             ...DummyLists.appoinments.map((e) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
