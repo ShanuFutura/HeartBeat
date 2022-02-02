@@ -60,7 +60,10 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
             onPressed: isApply
                 ? () {
                     if (selectedDate == null) {
-                      Fluttertoast.showToast(msg: 'select Date');
+                      setState(() {
+                        isApply = false;
+                      });
+                      Fluttertoast.showToast(msg: 'No date selected');
                     } else {
                       DummyLists.appliedLeaves
                           .add({'date': selectedDate!, 'approval': 'waiting'});

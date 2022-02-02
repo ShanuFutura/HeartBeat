@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 
 class TimeSlotCard extends StatefulWidget {
   const TimeSlotCard({
@@ -22,7 +24,9 @@ class _TimeSlotCardState extends State<TimeSlotCard> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        DummyLists.appoinments.add({'slot': e, 'doc': 'Dr.X'});
+                        Provider.of<DBHelper>(context, listen: false)
+                            .addAppoinment(e);
+
                         DummyLists.docTimeSlots
                             .removeWhere((element) => element == e);
                         Navigator.of(context).pop();

@@ -93,6 +93,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                               itemBuilder: (context, index) {
                                 return ListTile(
                                   onTap: () {
+                                    Navigator.of(context).pop();
                                     Navigator.of(context).pushNamed(
                                         DoctorView.routeName,
                                         arguments: index);

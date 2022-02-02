@@ -66,4 +66,16 @@ class DBHelper extends ChangeNotifier {
   void feedBackCall(String feed) {
     print(feed);
   }
+
+  void addAppoinment(String time_slot) {
+    print(time_slot);
+
+    // return Future.delayed(Duration(seconds: 1)).then((_) {
+    //   return true;
+    // });
+  }
+
+  void applyLeave(DateTime date) {
+    print(date.toString());
+  }
 }

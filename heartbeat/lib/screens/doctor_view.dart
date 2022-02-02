@@ -128,19 +128,15 @@ class DoctorView extends StatelessWidget {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return StatefulBuilder(builder:
-                                      (BuildContext context,
-                                          StateSetter setState) {
-                                    return const Dialog(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 60,
-                                          horizontal: 20,
-                                        ),
-                                        child: TimeSlotCard(),
+                                  return const Dialog(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 60,
+                                        horizontal: 20,
                                       ),
-                                    );
-                                  });
+                                      child: TimeSlotCard(),
+                                    ),
+                                  );
                                 });
                           },
                     child: Padding(

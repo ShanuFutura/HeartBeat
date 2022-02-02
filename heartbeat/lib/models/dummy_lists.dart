@@ -202,7 +202,7 @@ class DummyLists {
     {
       'value': 1,
       'message': 'successful',
-      'doc_name': 'Alice',
+      'doc_name': 'Bob',
       'department_id': '2',
       'qualification': 'MD',
       'gender': 'male',
@@ -213,7 +213,7 @@ class DummyLists {
     {
       'value': 1,
       'message': 'successful',
-      'doc_name': 'Alice',
+      'doc_name': 'Carl',
       'department_id': '2',
       'qualification': 'MD',
       'gender': 'male',
@@ -224,7 +224,7 @@ class DummyLists {
     {
       'value': 1,
       'message': 'successful',
-      'doc_name': 'Alice',
+      'doc_name': 'Daisy',
       'department_id': '2',
       'qualification': 'MD',
       'gender': 'male',
