@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/screens/payment_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -31,9 +32,10 @@ class _CartScreenState extends State<CartScreen> {
           }),
       floatingActionButton: GestureDetector(
         onTap: () {
+          Navigator.of(context).pushNamed(PayemntScreen.routeName);
           // refreshCallBack;
           setState(() {
-            DummyLists.kart.clear();
+            // DummyLists.kart.clear();
           });
         },
         child: Container(

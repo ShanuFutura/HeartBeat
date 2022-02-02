@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 class PatientPrescListView extends StatefulWidget {
   final Function() notifyParent;
+  // final isBuyable;
   const PatientPrescListView({Key? key, required this.notifyParent})
       : super(key: key);
 
@@ -25,7 +26,7 @@ final olderList = DummyLists.newMedPrescList.where((element) {
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
-    void prescCard(int index) {
+    prescCard(int index) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -106,7 +107,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(thisWeekList[index].date.toIso8601String()),
+                  onTap: () {
+                    prescCard(index);
+                  },
+                  title: Text(DateFormat('dd/mm/yyyy')
+                      .format(thisWeekList[index].date)),
                 );
               },
             )
@@ -121,7 +126,9 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(olderList[index].date.toIso8601String()),
+                  onTap: () => prescCard(index),
+                  title: Text(
+                      DateFormat('dd/mm/yyyy').format(olderList[index].date)),
                 );
               },
             )

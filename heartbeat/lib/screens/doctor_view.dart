@@ -8,12 +8,17 @@ import 'package:provider/provider.dart';
 
 class DoctorView extends StatelessWidget {
   static const String routeName = 'docview';
-
   notifyParent() {}
 
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments as int;
+    final docName = DummyLists.docsList[arg]['doc_name'] as String;
+    final isDocThere =
+        Provider.of<DBHelper>(context, listen: false).isDocAvailable(1);
+
+    final appoinmentsCount =
+        Provider.of<DBHelper>(context).availableTimeSlotsCount(docName);
     var feedbackText = '';
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -38,7 +43,7 @@ class DoctorView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          DummyLists.docsList[arg]['doc_name'] as String,
+                          docName,
                           style: TextStyle(fontSize: 40),
                         ),
                         Text(
@@ -52,12 +57,12 @@ class DoctorView extends StatelessWidget {
                   flex: 4,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Text('status'),
-                      SizedBox(
+                    children: [
+                      Text(isDocThere ? 'Doc Available' : 'Doc on Leave'),
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text('n Appoinments left'),
+                      Text(appoinmentsCount.toString() + ' Appoinments left'),
                     ],
                   ),
                 )
@@ -68,8 +73,7 @@ class DoctorView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Prescriptions by ' +
-                    (DummyLists.docsList[arg]['doc_name'] as String)),
+                Text('Prescriptions by ' + (docName)),
                 Container(
                     decoration: BoxDecoration(
                         border: Border.all(width: 1),
@@ -128,13 +132,15 @@ class DoctorView extends StatelessWidget {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const Dialog(
+                                  return Dialog(
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                         vertical: 60,
                                         horizontal: 20,
                                       ),
-                                      child: TimeSlotCard(),
+                                      child: TimeSlotCard(
+                                        doc: docName,
+                                      ),
                                     ),
                                   );
                                 });

@@ -16,16 +16,16 @@ class MedicinePrescription {
   );
 }
 
-class TestPrescription {
-  final String test;
-  final DateTime date;
-  // final int quantity;
-  TestPrescription(
-    this.test,
-    this.date,
-    // this.quantity,
-  );
-}
+// class TestPrescription {
+//   final String test;
+//   final DateTime date;
+// final int quantity;
+// TestPrescription(
+//   this.test,
+//   this.date,
+//   // this.quantity,
+// );
+// }
 
 class DummyLists {
   static List<Map<String, Object>> appoinments = [];
@@ -49,7 +49,7 @@ class DummyLists {
         'medicine', DateTime.now().subtract(Duration(days: 6)), 2, 'Daisy'),
   ];
 
-  static List<TestPrescription> newTestPrescList = [];
+  static List<Map<String, Object>> testPrescList = [];
   static const List<Map<String, String>> labtestReportsList = [
     {'content': 'content', 'date': 'date'},
     {'content': 'content', 'date': 'date'},
@@ -59,22 +59,12 @@ class DummyLists {
   ];
 
   static var docTimeSlots = [
-    '09:00',
-    '09:15',
-    '09:30',
-    '09:45',
-    '10:00',
-    '10:15',
-    '10:30',
-    '10:45',
-    '11:00',
-    '11:15',
-    '11:30',
-    '11:45',
-    '12:00',
-    '12:15',
-    '12:30',
-    '12:45'
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
+    {'doc_name': 'Alice', 'time_slot': '09:00'},
   ];
 
   static const List<Map<String, String>> prescriptionsList = [
@@ -179,12 +169,11 @@ class DummyLists {
     'medicine name 4',
   ];
 
-  static List<String> tests = [
-    'test name 1',
-    'test name 2',
-    'test name 3',
-    'test name 4',
-    'test name 5',
+  static List<Map<String, Object>> tests = [
+    {'test_name': 'blood test', 'price': 200.00},
+    {'test_name': 'corona test', 'price': 250.00},
+    {'test_name': 'cholestrol test', 'price': 150.00},
+    {'test_name': 'sugar test', 'price': 100.00},
   ];
 
   static const List<Map<String, Object>> docsList = [

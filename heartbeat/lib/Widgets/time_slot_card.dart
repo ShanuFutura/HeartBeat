@@ -4,54 +4,61 @@ import 'package:heartbeat/providers/db_helper.dart';
 import 'package:provider/provider.dart';
 
 class TimeSlotCard extends StatefulWidget {
-  const TimeSlotCard({
-    Key? key,
-  }) : super(key: key);
+  final String doc;
+  TimeSlotCard({Key? key, required this.doc}) : super(key: key);
 
   @override
   State<TimeSlotCard> createState() => _TimeSlotCardState();
 }
 
+final isSlotsEmpty = DummyLists.docTimeSlots.isEmpty;
+
 class _TimeSlotCardState extends State<TimeSlotCard> {
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: [
-        ...DummyLists.docTimeSlots
-            .map((e) => Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        Provider.of<DBHelper>(context, listen: false)
-                            .addAppoinment(e);
+    return isSlotsEmpty
+        ? Center(
+            child: Text('No slots left'),
+          )
+        : Wrap(
+            children: [
+              if (!isSlotsEmpty)
+                ...DummyLists.docTimeSlots
+                    .where((element) => element['doc_name'] == widget.doc)
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 6),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Provider.of<DBHelper>(context, listen: false)
+                                    .addAppoinment(e['time_slot']!);
 
-                        DummyLists.docTimeSlots
-                            .removeWhere((element) => element == e);
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        color: Colors.blue,
-                      ),
-                      height: 40,
-                      width: 60,
-                      child: Center(
-                        child: Text(
-                          e,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ))
-            .toList()
-      ],
-    );
+                                DummyLists.docTimeSlots
+                                    .removeWhere((element) => element == e);
+                                Navigator.of(context).pop();
+                              });
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                color: Colors.blue,
+                              ),
+                              height: 40,
+                              width: 60,
+                              child: Center(
+                                child: Text(
+                                  e['time_slot']!,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ))
+                    .toList()
+            ],
+          );
   }
 }

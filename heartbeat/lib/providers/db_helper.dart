@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:path/path.dart';
@@ -77,5 +78,17 @@ class DBHelper extends ChangeNotifier {
 
   void applyLeave(DateTime date) {
     print(date.toString());
+  }
+
+  bool isDocAvailable(int docId) {
+    return true;
+  }
+
+  int availableTimeSlotsCount(String doc) {
+    final tempList = DummyLists.docTimeSlots
+        .where((element) => element['doc_name'] == doc)
+        .toList();
+    print(tempList);
+    return tempList.length;
   }
 }

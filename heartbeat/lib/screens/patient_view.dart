@@ -15,7 +15,7 @@ class PatientView extends StatefulWidget {
 class _PatientViewState extends State<PatientView> {
   var isLabtest = false;
   final List<Map<String, Object>> tempMedicinesList = [];
-  final List<String> tempTestsList = [];
+  final List<Map<String, Object>> tempTestsList = [];
   var medicineQuantity = 1;
 
   void getQuantity(int number) {
@@ -119,10 +119,14 @@ class _PatientViewState extends State<PatientView> {
                                 child: DropdownSearch(
                                   hint: 'tests',
                                   showSearchBox: true,
-                                  items: DummyLists.tests,
+                                  items: DummyLists.tests
+                                      .map((e) => e['test_name'] as String)
+                                      .toList(),
                                   onChanged: (value) {
                                     setState(() {
-                                      tempTestsList.add(value.toString());
+                                      tempTestsList.add(DummyLists.tests
+                                          .firstWhere((element) =>
+                                              element['test_name'] == value));
                                     });
                                   },
                                 ),
@@ -133,7 +137,7 @@ class _PatientViewState extends State<PatientView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ...tempTestsList.map((e) {
-                                      return Text(e);
+                                      return Text(e.toString());
                                     }),
                                   ],
                                 ),
@@ -156,17 +160,12 @@ class _PatientViewState extends State<PatientView> {
                                                           e['count'] as int,
                                                           'Docname'))
                                                   .toList());
-                                          DummyLists.newTestPrescList
-                                              .addAll(tempTestsList
-                                                  .map((e) => TestPrescription(
-                                                        e,
-                                                        DateTime.now(),
-                                                      ))
-                                                  .toList());
+                                          DummyLists.testPrescList.addAll(
+                                              tempMedicinesList.map((e) => e));
                                           DummyLists.newMedPrescList.map((e) {
                                             print(e.medicine);
                                           });
-                                          print(DummyLists.newTestPrescList
+                                          print(DummyLists.testPrescList
                                               .toList());
                                           tempMedicinesList.clear();
                                           tempTestsList.clear();
