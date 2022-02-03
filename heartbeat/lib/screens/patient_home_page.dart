@@ -98,8 +98,16 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                         DoctorView.routeName,
                                         arguments: index);
                                   },
-                                  title: Text(DummyLists.docsList[index]
-                                      ['doc_name'] as String),
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(DummyLists.docsList[index]
+                                          ['doc_name'] as String),
+                                      Text(DummyLists.docsList[index]
+                                          ['qualification'] as String)
+                                    ],
+                                  ),
                                 );
                               }),
                         );

@@ -11,15 +11,15 @@ class TimeSlotCard extends StatefulWidget {
   State<TimeSlotCard> createState() => _TimeSlotCardState();
 }
 
-final isSlotsEmpty = DummyLists.docTimeSlots.isEmpty;
-
 class _TimeSlotCardState extends State<TimeSlotCard> {
   @override
   Widget build(BuildContext context) {
+    final isSlotsEmpty = DummyLists.docTimeSlots
+        .where((element) => element['doc_name'] == widget.doc)
+        .toList()
+        .isEmpty;
     return isSlotsEmpty
-        ? Center(
-            child: Text('No slots left'),
-          )
+        ? Text('No slots left')
         : Wrap(
             children: [
               if (!isSlotsEmpty)
