@@ -3,18 +3,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class MedicinePrescription {
-  final String medicine;
-  final DateTime date;
-  final int quantity;
-  final String docName;
-  MedicinePrescription(
-    this.medicine,
-    this.date,
-    this.quantity,
-    this.docName,
-  );
-}
+// class MedicinePrescription {
+//   final String medicine;
+//   final DateTime date;
+//   final int quantity;
+//   final String docName;
+//   MedicinePrescription(
+//     this.medicine,
+//     this.date,
+//     this.quantity,
+//     this.docName,
+//   );
+// }
 
 // class TestPrescription {
 //   final String test;
@@ -38,25 +38,51 @@ class DummyLists {
   ];
   // static Map<String, List<>>
   static List<Map<String, Object>> oldPrescImages = [];
-  static List<MedicinePrescription> newMedPrescList = [
-    MedicinePrescription(
-        'Paracetamol', DateTime.now().subtract(Duration(days: 9)), 2, 'Alice'),
-    MedicinePrescription(
-        'Antibiotic', DateTime.now().subtract(Duration(days: 15)), 2, 'Bob'),
-    MedicinePrescription(
-        'medicine', DateTime.now().subtract(Duration(days: 4)), 2, 'Carl'),
-    MedicinePrescription(
-        'medicine', DateTime.now().subtract(Duration(days: 6)), 2, 'Daisy'),
+  // static List newPrescList = [];
+
+  static const dummyPrescs = [
+    {
+      'doctor_name': 'Alice',
+      'patient_id': '1',
+      'presc_type': 'test',
+      'prescripton': 'blood test',
+      'date': DateTime.now,
+      'count': '1'
+    },
+    {
+      'doctor_name': 'Bob',
+      'patient_id': '1',
+      'presc_type': 'medicine',
+      'prescripton': 'paracetamol',
+      'date': DateTime.now,
+      'count': '4'
+    },
+    {
+      'doctor_name': 'Carl',
+      'patient_id': '1',
+      'presc_type': 'medicine',
+      'prescripton': 'antibiotic',
+      'date': DateTime.now,
+      'count': '2'
+    },
+    {
+      'doctor_name': 'Daisy',
+      'patient_id': '1',
+      'presc_type': 'test',
+      'prescripton': 'corona',
+      'date': DateTime.now,
+      'count': '1'
+    },
   ];
 
-  static List<Map<String, Object>> testPrescList = [];
-  static const List<Map<String, String>> labtestReportsList = [
-    {'content': 'content', 'date': 'date'},
-    {'content': 'content', 'date': 'date'},
-    {'content': 'content', 'date': 'date'},
-    {'content': 'content', 'date': 'date'},
-    {'content': 'content', 'date': 'date'}
-  ];
+  // static List<Map<String, Object>> testPrescList = [];
+  // static const List<Map<String, String>> labtestReportsList = [
+  //   {'content': 'content', 'date': 'date'},
+  //   {'content': 'content', 'date': 'date'},
+  //   {'content': 'content', 'date': 'date'},
+  //   {'content': 'content', 'date': 'date'},
+  //   {'content': 'content', 'date': 'date'}
+  // ];
 
   static var docTimeSlots = [
     {'doc_name': 'Alice', 'time_slot': '09:00'},
@@ -67,33 +93,33 @@ class DummyLists {
     {'doc_name': 'Alice', 'time_slot': '09:00'},
   ];
 
-  static const List<Map<String, String>> prescriptionsList = [
-    {
-      'PrescriptionId': 'idNo',
-      'PrescriptionDate': 'Date',
-      'contents': 'contents',
-    },
-    {
-      'PrescriptionId': 'idNo',
-      'PrescriptionDate': 'Date',
-      'contents': 'contents',
-    },
-    {
-      'PrescriptionId': 'idNo',
-      'PrescriptionDate': 'Date',
-      'contents': 'contents',
-    },
-    {
-      'PrescriptionId': 'idNo',
-      'PrescriptionDate': 'Date',
-      'contents': 'contents',
-    },
-    {
-      'PrescriptionId': 'idNo',
-      'PrescriptionDate': 'Date',
-      'contents': 'contents',
-    },
-  ];
+  // static const List<Map<String, String>> prescriptionsList = [
+  //   {
+  //     'PrescriptionId': 'idNo',
+  //     'PrescriptionDate': 'Date',
+  //     'contents': 'contents',
+  //   },
+  //   {
+  //     'PrescriptionId': 'idNo',
+  //     'PrescriptionDate': 'Date',
+  //     'contents': 'contents',
+  //   },
+  //   {
+  //     'PrescriptionId': 'idNo',
+  //     'PrescriptionDate': 'Date',
+  //     'contents': 'contents',
+  //   },
+  //   {
+  //     'PrescriptionId': 'idNo',
+  //     'PrescriptionDate': 'Date',
+  //     'contents': 'contents',
+  //   },
+  //   {
+  //     'PrescriptionId': 'idNo',
+  //     'PrescriptionDate': 'Date',
+  //     'contents': 'contents',
+  //   },
+  // ];
 
   static List<Map<String, String>> patientsList = [
     {'patientName': 'patient name', 'patientAge': 'age', 'gender': 'gender'},

@@ -15,12 +15,21 @@ class PatientPrescListView extends StatefulWidget {
   State<PatientPrescListView> createState() => _PatientPrescListViewState();
 }
 
-final thisWeekList = DummyLists.newMedPrescList.where((element) {
-  return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+// final thisWeekList = DummyLists.dummyPrescs.where((element) => false);
+
+final thisWeekList = DummyLists.dummyPrescs.where((element) {
+  // // final date = ;
+  // // return true;
+  return element['date'] == DateTime.now();
+  // return ((element['date'] as DateTime)
+  //     .isAfter(DateTime.now().subtract(Duration(days: 7))));
 }).toList();
 
-final olderList = DummyLists.newMedPrescList.where((element) {
-  return element.date.isBefore(DateTime.now().subtract(Duration(days: 7)));
+final olderList = DummyLists.dummyPrescs.where((element) {
+  return element['date'] == DateTime.now();
+  // final date = ;
+  // return (element['date'] as DateTime)
+  //     .isBefore(DateTime.now().subtract(Duration(days: 7)));
 }).toList();
 
 class _PatientPrescListViewState extends State<PatientPrescListView> {
@@ -43,10 +52,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(DateFormat('dd.MM.yyyy')
-                                .format(DummyLists.newMedPrescList[index].date)
+                                .format(DummyLists.dummyPrescs[index]['date']
+                                    as DateTime)
                                 .toString()),
                             Text('Dr. ' +
-                                DummyLists.newMedPrescList[index].docName),
+                                DummyLists.dummyPrescs[index]['doctor_name']
+                                    .toString()),
                           ],
                         ),
                       ),
@@ -56,13 +67,13 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: Text(DummyLists
-                                  .newMedPrescList[index].medicine
+                              child: Text(DummyLists.dummyPrescs[index]
+                                      ['medicine']
                                   .toString()),
                             ),
                             Expanded(
                               child: Text(' x' +
-                                  DummyLists.newMedPrescList[index].quantity
+                                  DummyLists.dummyPrescs[index]['count']
                                       .toString()),
                             ),
                             Expanded(
@@ -78,8 +89,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                         Fluttertoast.showToast(
                                             msg: 'item added to cart');
                                         widget.notifyParent();
-                                        DummyLists.kart.add(
-                                            DummyLists.newMedPrescList[index]);
+                                        DummyLists.kart
+                                            .add(DummyLists.dummyPrescs[index]);
                                       },
                                       icon: Icon(Icons.shopping_cart)),
                                 ])),
@@ -111,7 +122,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                     prescCard(index);
                   },
                   title: Text(DateFormat('dd/mm/yyyy')
-                      .format(thisWeekList[index].date)),
+                      .format(thisWeekList[index]['date'] as DateTime)),
                 );
               },
             )
@@ -127,8 +138,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () => prescCard(index),
-                  title: Text(
-                      DateFormat('dd/mm/yyyy').format(olderList[index].date)),
+                  title: Text(DateFormat('dd/mm/yyyy')
+                      .format(olderList[index]['date'] as DateTime)),
                 );
               },
             )

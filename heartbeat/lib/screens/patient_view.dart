@@ -150,23 +150,38 @@ class _PatientViewState extends State<PatientView> {
                                   children: [
                                     ElevatedButton(
                                         onPressed: () {
-                                          DummyLists.newMedPrescList.addAll(
-                                              tempMedicinesList
-                                                  .map((e) =>
-                                                      MedicinePrescription(
-                                                          e['medicine']
-                                                              as String,
-                                                          DateTime.now(),
-                                                          e['count'] as int,
-                                                          'Docname'))
-                                                  .toList());
-                                          DummyLists.testPrescList.addAll(
-                                              tempMedicinesList.map((e) => e));
-                                          DummyLists.newMedPrescList.map((e) {
-                                            print(e.medicine);
+                                          DummyLists.dummyPrescs
+                                              .addAll(tempMedicinesList.map(
+                                            (e) => {
+                                              'patient_id': '1',
+                                              'presc_type': 'medicine',
+                                              'prescripton': e['medicine']!,
+                                              'date': DateTime.now,
+                                              'count': e['count']!,
+                                            },
+                                            // MedicinePrescription(
+                                            //     e['medicine']
+                                            //         as String,
+                                            //     DateTime.now(),
+                                            //     e['count'] as int,
+                                            //     'Docname')
+                                          ));
+
+                                          DummyLists.dummyPrescs
+                                              .addAll(tempTestsList.map((e) => {
+                                                    'patient_id': '1',
+                                                    'presc_type': 'test',
+                                                    'prescripton':
+                                                        e['testname']!,
+                                                    'date': DateTime.now,
+                                                    'count': 1,
+                                                  }));
+
+                                          DummyLists.dummyPrescs.map((e) {
+                                            print(e['']);
                                           });
-                                          print(DummyLists.testPrescList
-                                              .toList());
+                                          print(
+                                              DummyLists.dummyPrescs.toList());
                                           tempMedicinesList.clear();
                                           tempTestsList.clear();
                                           Navigator.pop(context);
@@ -285,7 +300,7 @@ class _PatientViewState extends State<PatientView> {
                 if (!isLabtest)
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: DummyLists.newMedPrescList.length,
+                    itemCount: DummyLists.dummyPrescs.length,
                     itemBuilder: (ctx, index) {
                       return Column(
                         children: [
@@ -315,15 +330,15 @@ class _PatientViewState extends State<PatientView> {
                                                     Text(DateFormat(
                                                             'dd.MM.yyyy')
                                                         .format(DummyLists
-                                                            .newMedPrescList[
-                                                                index]
-                                                            .date)
+                                                                    .dummyPrescs[
+                                                                index]['date']
+                                                            as DateTime)
                                                         .toString()),
                                                     Text('Dr. ' +
                                                         DummyLists
-                                                            .newMedPrescList[
-                                                                index]
-                                                            .docName),
+                                                            .dummyPrescs[index]
+                                                                ['doctor_name']
+                                                            .toString()),
                                                   ],
                                                 ),
                                               ),
@@ -336,14 +351,13 @@ class _PatientViewState extends State<PatientView> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(DummyLists
-                                                        .newMedPrescList[index]
-                                                        .medicine
+                                                        .dummyPrescs[index]
+                                                            ['medicine']
                                                         .toString()),
                                                     Text(' x' +
                                                         DummyLists
-                                                            .newMedPrescList[
-                                                                index]
-                                                            .quantity
+                                                            .dummyPrescs[index]
+                                                                ['count']
                                                             .toString())
                                                   ],
                                                 ),
@@ -355,10 +369,12 @@ class _PatientViewState extends State<PatientView> {
                                     );
                                   });
                             },
-                            leading: Text(
-                                DummyLists.newMedPrescList[index].medicine),
+                            leading: Text(DummyLists.dummyPrescs[index]
+                                    ['medicine']
+                                .toString()),
                             subtitle: Text(DateFormat('dd.MM.yyyy')
-                                .format(DummyLists.newMedPrescList[index].date)
+                                .format(DummyLists.dummyPrescs[index]['date']
+                                    as DateTime)
                                 .toString()),
                             // trailing: Text(DummyLists
                             //     .newMedPrescList[index].quantity
@@ -374,15 +390,16 @@ class _PatientViewState extends State<PatientView> {
                 if (isLabtest)
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: DummyLists.labtestReportsList.length,
+                    itemCount: DummyLists.dummyPrescs.length,
                     itemBuilder: (ctx, index) {
                       return Column(
                         children: [
                           ListTile(
-                            title: Text(DummyLists.labtestReportsList[index]
-                                ['content']!),
-                            subtitle: Text(
-                                DummyLists.labtestReportsList[index]['date']!),
+                            title: Text(DummyLists.dummyPrescs[index]
+                                    ['prescription']
+                                .toString()),
+                            subtitle: Text(DummyLists.dummyPrescs[index]['date']
+                                .toString()),
                           ),
                           const Divider(
                             thickness: 2,
