@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:intl/intl.dart';
+// import 'package:collection/collection.dart';
 
 class PatientPrescListView extends StatefulWidget {
   final Function() notifyParent;
-  // final isBuyable;
+
   const PatientPrescListView({Key? key, required this.notifyParent})
       : super(key: key);
 
@@ -15,21 +16,32 @@ class PatientPrescListView extends StatefulWidget {
   State<PatientPrescListView> createState() => _PatientPrescListViewState();
 }
 
-// final thisWeekList = DummyLists.dummyPrescs.where((element) => false);
+// final lastWeek = DateTime.now().subtract(Duration(days: 7));
 
-final thisWeekList = DummyLists.dummyPrescs.where((element) {
-  // // final date = ;
-  // // return true;
-  return element['date'] == DateTime.now();
-  // return ((element['date'] as DateTime)
-  //     .isAfter(DateTime.now().subtract(Duration(days: 7))));
+final todaysList = DummyLists.dummyPrescs.where((element) {
+  final date = element['date'] as DateTime;
+  return date.isAfter(DateTime.now().subtract(Duration(days: 1)));
 }).toList();
 
+final todays_1_List = DummyLists.dummyPrescs.where((element) {
+  final date = element['date'] as DateTime;
+  return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
+      date.isAfter(DateTime.now().subtract(Duration(days: 2)));
+}).toList();
+
+// final todays_2_List = DummyLists.dummyPrescs.where((element) {
+//   final date = element['date'] as DateTime;
+//   return date.isAfter(DateTime.now().subtract(Duration(days: 3)));
+// }).toList();
+
+// final thisWeekList = DummyLists.dummyPrescs.where((element) {
+//   final date = element['date'] as DateTime;
+//   return date.isAfter(lastWeek);
+// }).toList();
+
 final olderList = DummyLists.dummyPrescs.where((element) {
-  return element['date'] == DateTime.now();
-  // final date = ;
-  // return (element['date'] as DateTime)
-  //     .isBefore(DateTime.now().subtract(Duration(days: 7)));
+  final date = element['date'] as DateTime;
+  return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
 }).toList();
 
 class _PatientPrescListViewState extends State<PatientPrescListView> {
@@ -110,10 +122,10 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
       physics: NeverScrollableScrollPhysics(),
       children: [
         ExpansionTile(
-          title: Text('This week'),
+          title: Text('Today'),
           children: [
             ListView.builder(
-              itemCount: thisWeekList.length,
+              itemCount: todaysList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
@@ -121,8 +133,27 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                   onTap: () {
                     prescCard(index);
                   },
-                  title: Text(DateFormat('dd/mm/yyyy')
-                      .format(thisWeekList[index]['date'] as DateTime)),
+                  title: Text(DateFormat('dd/MM/yyyy')
+                      .format(todaysList[index]['date'] as DateTime)),
+                );
+              },
+            )
+          ],
+        ),
+        ExpansionTile(
+          title: Text('yesterday'),
+          children: [
+            ListView.builder(
+              itemCount: todays_1_List.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: () {
+                    prescCard(index);
+                  },
+                  title: Text(DateFormat('dd/MM/yyyy')
+                      .format(todays_1_List[index]['date'] as DateTime)),
                 );
               },
             )
@@ -138,7 +169,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () => prescCard(index),
-                  title: Text(DateFormat('dd/mm/yyyy')
+                  title: Text(DateFormat('dd/MM/yyyy')
                       .format(olderList[index]['date'] as DateTime)),
                 );
               },
@@ -149,18 +180,17 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           title: Text('Uploaded precripstions'),
           children: [
             ListView.builder(
-              itemCount: DummyLists.oldPrescImages.length,
+              itemCount: DummyLists.dummyPrescs.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: FileImage(
-                      DummyLists.oldPrescImages[index]['image'] as File,
-                    ),
+                        DummyLists.dummyPrescs[index]['image'] as File),
                   ),
                   title: Text(
-                      (DummyLists.oldPrescImages[index]['date'] as DateTime)
+                      (DummyLists.dummyPrescs[index]['date'] as DateTime)
                           .toString()),
                 );
               },
@@ -169,26 +199,5 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
         ),
       ],
     );
-
-    // return ListView.builder(
-    //     shrinkWrap: true,
-    //     physics: ClampingScrollPhysics(),
-    //     itemCount: DummyLists.newMedPrescList.length,
-    //     itemBuilder: (context, index) {
-    //       return Column(
-    //         children: [
-    //           ListTile(
-    //             onTap: () {
-    //               prescCard(index);
-    //             },
-    //             title: Text(
-    //               DateFormat('dd/MM/yyyy')
-    //                   .format(DummyLists.newMedPrescList[index].date),
-    //             ),
-    //           ),
-    //           Divider()
-    //         ],
-    //       );
-    //     });
   }
 }

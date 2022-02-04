@@ -40,21 +40,21 @@ class DummyLists {
   static List<Map<String, Object>> oldPrescImages = [];
   // static List newPrescList = [];
 
-  static const dummyPrescs = [
+  static final dummyPrescs = [
     {
       'doctor_name': 'Alice',
       'patient_id': '1',
       'presc_type': 'test',
       'prescripton': 'blood test',
-      'date': DateTime.now,
-      'count': '1'
+      'date': DateTime.now().subtract(Duration(days: 2)),
+      'count': '1',
     },
     {
       'doctor_name': 'Bob',
       'patient_id': '1',
       'presc_type': 'medicine',
       'prescripton': 'paracetamol',
-      'date': DateTime.now,
+      'date': DateTime.now().subtract(Duration(days: 8)),
       'count': '4'
     },
     {
@@ -62,7 +62,7 @@ class DummyLists {
       'patient_id': '1',
       'presc_type': 'medicine',
       'prescripton': 'antibiotic',
-      'date': DateTime.now,
+      'date': DateTime.now(),
       'count': '2'
     },
     {
@@ -70,8 +70,16 @@ class DummyLists {
       'patient_id': '1',
       'presc_type': 'test',
       'prescripton': 'corona',
-      'date': DateTime.now,
+      'date': DateTime.now(),
       'count': '1'
+    },
+    {
+      'doctor_name': 'Edith',
+      'patient_id': '1',
+      'presc_type': 'test',
+      'prescripton': 'blood test',
+      'date': DateTime.now().subtract(Duration(days: 1)),
+      'count': '1',
     },
   ];
 
