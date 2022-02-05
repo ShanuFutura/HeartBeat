@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/quantity_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/patient_external_prescription.dart';
@@ -14,6 +15,7 @@ class PatientView extends StatefulWidget {
 
 class _PatientViewState extends State<PatientView> {
   var isLabtest = false;
+
   final List<Map<String, Object>> tempMedicinesList = [];
   final List<Map<String, Object>> tempTestsList = [];
   var medicineQuantity = 1;
@@ -128,6 +130,7 @@ class _PatientViewState extends State<PatientView> {
                                           .firstWhere((element) =>
                                               element['test_name'] == value));
                                     });
+                                    print(tempTestsList.toString());
                                   },
                                 ),
                               ),
@@ -153,6 +156,7 @@ class _PatientViewState extends State<PatientView> {
                                           DummyLists.dummyPrescs
                                               .addAll(tempMedicinesList.map(
                                             (e) => {
+                                              'doctor_name': 'test',
                                               'patient_id': '1',
                                               'presc_type': 'medicine',
                                               'prescripton': e['medicine']!,
@@ -169,10 +173,11 @@ class _PatientViewState extends State<PatientView> {
 
                                           DummyLists.dummyPrescs
                                               .addAll(tempTestsList.map((e) => {
+                                                    'doctor_name': 'test',
                                                     'patient_id': '1',
                                                     'presc_type': 'test',
                                                     'prescripton':
-                                                        e['testname']!,
+                                                        e['test_name']!,
                                                     'date': DateTime.now,
                                                     'count': 1,
                                                   }));
@@ -274,6 +279,7 @@ class _PatientViewState extends State<PatientView> {
             ),
           ),
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,96 +303,7 @@ class _PatientViewState extends State<PatientView> {
                   ),
                 ),
                 Divider(),
-                if (!isLabtest)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: DummyLists.dummyPrescs.length,
-                    itemBuilder: (ctx, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Dialog(
-                                      backgroundColor:
-                                          Colors.black.withOpacity(0),
-                                      child: Card(
-                                        child: Container(
-                                          child: Wrap(
-                                            alignment:
-                                                WrapAlignment.spaceAround,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 20, 10, 50),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    Text(DateFormat(
-                                                            'dd.MM.yyyy')
-                                                        .format(DummyLists
-                                                                    .dummyPrescs[
-                                                                index]['date']
-                                                            as DateTime)
-                                                        .toString()),
-                                                    Text('Dr. ' +
-                                                        DummyLists
-                                                            .dummyPrescs[index]
-                                                                ['doctor_name']
-                                                            .toString()),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 90, 10, 30),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(DummyLists
-                                                        .dummyPrescs[index]
-                                                            ['medicine']
-                                                        .toString()),
-                                                    Text(' x' +
-                                                        DummyLists
-                                                            .dummyPrescs[index]
-                                                                ['count']
-                                                            .toString())
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            },
-                            leading: Text(DummyLists.dummyPrescs[index]
-                                    ['medicine']
-                                .toString()),
-                            subtitle: Text(DateFormat('dd.MM.yyyy')
-                                .format(DummyLists.dummyPrescs[index]['date']
-                                    as DateTime)
-                                .toString()),
-                            // trailing: Text(DummyLists
-                            //     .newMedPrescList[index].quantity
-                            //     .toString()),
-                          ),
-                          const Divider(
-                            thickness: 2,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                if (!isLabtest) PatientPrescListView(notifyParent: () {}),
                 if (isLabtest)
                   ListView.builder(
                     shrinkWrap: true,

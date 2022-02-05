@@ -32,7 +32,7 @@ class _TimeSlotCardState extends State<TimeSlotCard> {
                             onTap: () {
                               setState(() {
                                 Provider.of<DBHelper>(context, listen: false)
-                                    .addAppoinment(e['time_slot']!);
+                                    .addAppoinment(e['time_slot']!, widget.doc);
 
                                 DummyLists.docTimeSlots
                                     .removeWhere((element) => element == e);

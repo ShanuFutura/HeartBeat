@@ -17,28 +17,31 @@ class PatientsAppoinments extends StatelessWidget {
               padding: EdgeInsets.all(10),
               child: Text('You have appoinment with'),
             ),
-            ...DummyLists.appoinments.map((e) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(e['doc'].toString()),
-                    SizedBox(width: 10),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
+            ...DummyLists.appoinments.map((e) => Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Dr. ' + e['doc_name'].toString()),
+                      SizedBox(width: 10),
+                      Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          color: Colors.blue,
                         ),
-                        color: Colors.blue,
-                      ),
-                      height: 40,
-                      width: 60,
-                      child: Center(
-                        child: Text(
-                          e['slot'].toString(),
-                          style: const TextStyle(color: Colors.white),
+                        height: 40,
+                        width: 60,
+                        child: Center(
+                          child: Text(
+                            e['time_slot'].toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ))
           ],
         ),

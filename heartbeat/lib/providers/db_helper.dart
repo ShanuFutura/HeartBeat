@@ -68,9 +68,10 @@ class DBHelper extends ChangeNotifier {
     print(feed);
   }
 
-  void addAppoinment(String time_slot) {
-    print(time_slot);
-
+  void addAppoinment(String time_slot, String docName) {
+    // print(time_slot);
+    DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docName});
+    print(DummyLists.appoinments.toString());
     // return Future.delayed(Duration(seconds: 1)).then((_) {
     //   return true;
     // });
