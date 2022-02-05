@@ -77,6 +77,10 @@ class DBHelper extends ChangeNotifier {
     // });
   }
 
+  List get dummyPrescs {
+    return DummyLists.dummyPrescs;
+  }
+
   void applyLeave(DateTime date) {
     print(date.toString());
   }

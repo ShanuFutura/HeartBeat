@@ -46,7 +46,7 @@ class DummyLists {
       'patient_id': '1',
       'presc_type': 'test',
       'prescripton': 'blood test',
-      'date': DateTime.now().subtract(Duration(days: 2)),
+      'date': DateTime.now().subtract(Duration(days: 1)),
       'count': '1',
     },
     {
@@ -54,33 +54,34 @@ class DummyLists {
       'patient_id': '1',
       'presc_type': 'medicine',
       'prescripton': 'paracetamol',
-      'date': DateTime.now().subtract(Duration(days: 8)),
+      'date': DateTime.now(),
       'count': '4'
     },
-    {
-      'doctor_name': 'Carl',
-      'patient_id': '1',
-      'presc_type': 'medicine',
-      'prescripton': 'antibiotic',
-      'date': DateTime.now(),
-      'count': '2'
-    },
-    {
-      'doctor_name': 'Daisy',
-      'patient_id': '1',
-      'presc_type': 'test',
-      'prescripton': 'corona',
-      'date': DateTime.now(),
-      'count': '1'
-    },
-    {
-      'doctor_name': 'Edith',
-      'patient_id': '1',
-      'presc_type': 'test',
-      'prescripton': 'blood test',
-      'date': DateTime.now().subtract(Duration(days: 1)),
-      'count': '1',
-    },
+
+    // {
+    //   'doctor_name': 'Carl',
+    //   'patient_id': '1',
+    //   'presc_type': 'medicine',
+    //   'prescripton': 'antibiotic',
+    //   'date': DateTime.now(),
+    //   'count': '2'
+    // },
+    // {
+    //   'doctor_name': 'Daisy',
+    //   'patient_id': '1',
+    //   'presc_type': 'test',
+    //   'prescripton': 'corona',
+    //   'date': DateTime.now(),
+    //   'count': '1'
+    // },
+    // {
+    //   'doctor_name': 'Edith',
+    //   'patient_id': '1',
+    //   'presc_type': 'test',
+    //   'prescripton': 'blood test',
+    //   'date': DateTime.now().subtract(Duration(days: 1)),
+    //   'count': '1',
+    // },
   ];
 
   // static List<Map<String, Object>> testPrescList = [];

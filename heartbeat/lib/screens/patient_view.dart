@@ -160,7 +160,7 @@ class _PatientViewState extends State<PatientView> {
                                               'patient_id': '1',
                                               'presc_type': 'medicine',
                                               'prescripton': e['medicine']!,
-                                              'date': DateTime.now,
+                                              'date': DateTime.now(),
                                               'count': e['count']!,
                                             },
                                             // MedicinePrescription(
@@ -178,7 +178,7 @@ class _PatientViewState extends State<PatientView> {
                                                     'presc_type': 'test',
                                                     'prescripton':
                                                         e['test_name']!,
-                                                    'date': DateTime.now,
+                                                    'date': DateTime.now(),
                                                     'count': 1,
                                                   }));
 
@@ -279,53 +279,56 @@ class _PatientViewState extends State<PatientView> {
             ),
           ),
           SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        isLabtest ? 'Labtests' : 'Previous Prescriptions',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      if (!isLabtest)
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                  PatientExternalPrescriptios.routeName);
-                            },
-                            child: Text('External Prescriptions'))
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          isLabtest ? 'Labtests' : 'Previous Prescriptions',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        if (!isLabtest)
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    PatientExternalPrescriptios.routeName);
+                              },
+                              child: Text('External Prescriptions'))
+                      ],
+                    ),
                   ),
-                ),
-                Divider(),
-                if (!isLabtest) PatientPrescListView(notifyParent: () {}),
-                if (isLabtest)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: DummyLists.dummyPrescs.length,
-                    itemBuilder: (ctx, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            title: Text(DummyLists.dummyPrescs[index]
-                                    ['prescription']
-                                .toString()),
-                            subtitle: Text(DummyLists.dummyPrescs[index]['date']
-                                .toString()),
-                          ),
-                          const Divider(
-                            thickness: 2,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-              ],
+                  Divider(),
+                  if (!isLabtest) PatientPrescListView(notifyParent: () {}),
+                  if (isLabtest)
+                    ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: DummyLists.dummyPrescs.length,
+                      itemBuilder: (ctx, index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(DummyLists.dummyPrescs[index]
+                                      ['prescription']
+                                  .toString()),
+                              subtitle: Text(DummyLists.dummyPrescs[index]
+                                      ['date']
+                                  .toString()),
+                            ),
+                            const Divider(
+                              thickness: 2,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                ],
+              ),
             ),
           )
         ],

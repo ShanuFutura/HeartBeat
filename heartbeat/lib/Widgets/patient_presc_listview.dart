@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
 import 'package:intl/intl.dart';
-// import 'package:collection/collection.dart';
+import 'package:provider/provider.dart';
 
 class PatientPrescListView extends StatefulWidget {
   final Function() notifyParent;
@@ -16,37 +17,28 @@ class PatientPrescListView extends StatefulWidget {
   State<PatientPrescListView> createState() => _PatientPrescListViewState();
 }
 
-// final lastWeek = DateTime.now().subtract(Duration(days: 7));
-
-final todaysList = DummyLists.dummyPrescs.where((element) {
-  final date = element['date'] as DateTime;
-  return date.isAfter(DateTime.now().subtract(Duration(days: 1)));
-}).toList();
-
-final todays_1_List = DummyLists.dummyPrescs.where((element) {
-  final date = element['date'] as DateTime;
-  return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
-      date.isAfter(DateTime.now().subtract(Duration(days: 2)));
-}).toList();
-
-// final todays_2_List = DummyLists.dummyPrescs.where((element) {
-//   final date = element['date'] as DateTime;
-//   return date.isAfter(DateTime.now().subtract(Duration(days: 3)));
-// }).toList();
-
-// final thisWeekList = DummyLists.dummyPrescs.where((element) {
-//   final date = element['date'] as DateTime;
-//   return date.isAfter(lastWeek);
-// }).toList();
-
-final olderList = DummyLists.dummyPrescs.where((element) {
-  final date = element['date'] as DateTime;
-  return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
-}).toList();
-
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
+    final dummyPrescsList = Provider.of<DBHelper>(context).dummyPrescs;
+
+    final todaysList = dummyPrescsList.where((element) {
+      final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
+      print(date + '......');
+      return date == DateFormat('ddmmyy').format(DateTime.now());
+    }).toList();
+
+    final todays_1_List = dummyPrescsList.where((element) {
+      final date = element['date'] as DateTime;
+      return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
+          date.isAfter(DateTime.now().subtract(Duration(days: 2)));
+    }).toList();
+
+    final olderList = dummyPrescsList.where((element) {
+      final date = element['date'] as DateTime;
+      return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
+    }).toList();
+
     prescCard(int index) {
       showDialog(
           context: context,
@@ -64,11 +56,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(DateFormat('dd.MM.yyyy')
-                                .format(DummyLists.dummyPrescs[index]['date']
-                                    as DateTime)
+                                .format(
+                                    dummyPrescsList[index]['date'] as DateTime)
                                 .toString()),
                             Text('Dr. ' +
-                                DummyLists.dummyPrescs[index]['doctor_name']
+                                dummyPrescsList[index]['doctor_name']
                                     .toString()),
                           ],
                         ),
@@ -79,14 +71,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: Text(DummyLists.dummyPrescs[index]
-                                      ['medicine']
+                              child: Text(dummyPrescsList[index]['medicine']
                                   .toString()),
                             ),
                             Expanded(
                               child: Text(' x' +
-                                  DummyLists.dummyPrescs[index]['count']
-                                      .toString()),
+                                  dummyPrescsList[index]['count'].toString()),
                             ),
                             Expanded(
                                 child: Stack(
@@ -102,7 +92,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                             msg: 'item added to cart');
                                         widget.notifyParent();
                                         DummyLists.kart
-                                            .add(DummyLists.dummyPrescs[index]);
+                                            .add(dummyPrescsList[index]);
                                       },
                                       icon: Icon(Icons.shopping_cart)),
                                 ])),
@@ -180,18 +170,17 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           title: Text('Uploaded precripstions'),
           children: [
             ListView.builder(
-              itemCount: DummyLists.dummyPrescs.length,
+              itemCount: dummyPrescsList.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: FileImage(
-                        DummyLists.dummyPrescs[index]['image'] as File),
+                    backgroundImage:
+                        FileImage(dummyPrescsList[index]['image'] as File),
                   ),
                   title: Text(
-                      (DummyLists.dummyPrescs[index]['date'] as DateTime)
-                          .toString()),
+                      (dummyPrescsList[index]['date'] as DateTime).toString()),
                 );
               },
             )
