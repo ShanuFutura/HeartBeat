@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/quantity_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
@@ -23,6 +24,10 @@ class _PatientViewState extends State<PatientView> {
   void getQuantity(int number) {
     medicineQuantity = number;
   }
+
+  final filteredPrescList = DummyLists.dummyPrescs
+      .where((element) => element['presc_type'] == 'test')
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -312,17 +317,92 @@ class _PatientViewState extends State<PatientView> {
                     ListView.builder(
                       physics: ClampingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: DummyLists.dummyPrescs.length,
+                      itemCount: filteredPrescList.length,
                       itemBuilder: (ctx, index) {
                         return Column(
                           children: [
                             ListTile(
-                              title: Text(DummyLists.dummyPrescs[index]
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext ctx) {
+                                      return Dialog(
+                                        backgroundColor:
+                                            Colors.black.withOpacity(0),
+                                        child: Card(
+                                          child: Container(
+                                            child: Wrap(
+                                              alignment:
+                                                  WrapAlignment.spaceAround,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 20, 10, 50),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Text(DateFormat(
+                                                              'dd/MM/yyyy')
+                                                          .format(
+                                                              filteredPrescList[
+                                                                          index]
+                                                                      ['date']
+                                                                  as DateTime)),
+                                                      Text('Dr. ' +
+                                                          filteredPrescList[
+                                                                      index][
+                                                                  'doctor_name']
+                                                              .toString())
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 10, 10, 30),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(),
+                                                    ),
+                                                    padding: EdgeInsets.all(5),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                              filteredPrescList[
+                                                                          index]
+                                                                      [
+                                                                      'prescription']
+                                                                  .toString()),
+                                                        ),
+                                                        Text(' x' +
+                                                            filteredPrescList[
+                                                                        index]
+                                                                    ['count']
+                                                                .toString()),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              title: Text(filteredPrescList[index]
                                       ['prescription']
                                   .toString()),
-                              subtitle: Text(DummyLists.dummyPrescs[index]
-                                      ['date']
-                                  .toString()),
+                              subtitle: Text(DateFormat('dd/MM/yyyy').format(
+                                  filteredPrescList[index]['date']
+                                      as DateTime)),
                             ),
                             const Divider(
                               thickness: 2,

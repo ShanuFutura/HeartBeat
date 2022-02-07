@@ -51,6 +51,14 @@ class DummyLists {
       'count': '1',
     },
     {
+      'doctor_name': 'Alice',
+      'patient_id': '1',
+      'presc_type': 'medicine',
+      'prescription': 'aspirine',
+      'date': DateTime.now().subtract(Duration(days: 1)),
+      'count': '1',
+    },
+    {
       'doctor_name': 'Bob',
       'patient_id': '1',
       'presc_type': 'medicine',
@@ -73,6 +81,14 @@ class DummyLists {
       'prescription': 'paracetamol',
       'date': DateTime.now().subtract(Duration(days: 4)),
       'count': '4'
+    },
+    {
+      'doctor_name': 'David',
+      'patient_id': '1',
+      'presc_type': 'test',
+      'prescription': 'TB test',
+      'date': DateTime.now().subtract(Duration(days: 4)),
+      'count': '1'
     },
     // {
     //   'doctor_name': 'Carl',

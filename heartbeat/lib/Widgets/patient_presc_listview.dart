@@ -73,37 +73,43 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 90, 10, 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text(dummyPrescsList[index]['medicine']
-                                  .toString()),
-                            ),
-                            Expanded(
-                              child: Text(' x' +
+                        padding: const EdgeInsets.fromLTRB(20, 10, 10, 30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          padding: EdgeInsets.all(5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(dummyPrescsList[index]
+                                        ['prescription']
+                                    .toString()),
+                              ),
+                              Text(' x' +
                                   dummyPrescsList[index]['count'].toString()),
-                            ),
-                            Expanded(
-                                child: Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                  const Icon(
-                                    Icons.add_circle,
-                                    color: Colors.blue,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        Fluttertoast.showToast(
-                                            msg: 'item added to cart');
-                                        widget.notifyParent();
-                                        DummyLists.kart
-                                            .add(dummyPrescsList[index]);
-                                      },
-                                      icon: Icon(Icons.shopping_cart)),
-                                ])),
-                          ],
+                              if (!widget.isDoc)
+                                Expanded(
+                                    child: Stack(
+                                        alignment: Alignment.topRight,
+                                        children: [
+                                      const Icon(
+                                        Icons.add_circle,
+                                        color: Colors.blue,
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            Fluttertoast.showToast(
+                                                msg: 'item added to cart');
+                                            widget.notifyParent();
+                                            DummyLists.kart
+                                                .add(dummyPrescsList[index]);
+                                          },
+                                          icon: Icon(Icons.shopping_cart)),
+                                    ])),
+                            ],
+                          ),
                         ),
                       ),
                     ],
