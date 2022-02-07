@@ -134,7 +134,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    prescCard(index);
+                    prescCard(
+                        DummyLists.dummyPrescs.indexOf(todaysList[index]));
                   },
                   title: Row(
                     children: [
@@ -158,7 +159,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    prescCard(index);
+                    prescCard(
+                        DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
                   },
                   title: Row(
                     children: [
@@ -183,7 +185,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
-                  onTap: () => prescCard(index),
+                  onTap: () => prescCard(
+                      DummyLists.dummyPrescs.indexOf(olderList[index])),
                   title: Row(
                     children: [
                       Text(olderList[index]['prescription']),

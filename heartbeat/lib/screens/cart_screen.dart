@@ -23,9 +23,9 @@ class _CartScreenState extends State<CartScreen> {
           itemBuilder: (context, index) {
             return Column(children: [
               ListTile(
-                title: Text(DummyLists.kart[index].medicine),
+                title: Text(DummyLists.kart[index]['prescription']),
                 trailing:
-                    Text('x' + DummyLists.kart[index].quantity.toString()),
+                    Text('x' + DummyLists.kart[index]['count'].toString()),
               ),
               Divider()
             ]);
