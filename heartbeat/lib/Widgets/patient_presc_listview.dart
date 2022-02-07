@@ -21,22 +21,26 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
     final dummyPrescsList = Provider.of<DBHelper>(context).dummyPrescs;
+    // final dummyPrescsList=
+    //HERE FILTER PRESC LIST AS MEDICINE AND TEST FOR EACH VIEW
 
     final todaysList = dummyPrescsList.where((element) {
       final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
-      print(date + '......');
-      return date == DateFormat('ddmmyy').format(DateTime.now());
+      return (date == DateFormat('ddmmyy').format(DateTime.now()) &&
+          element['presc_type'] == 'medicine');
     }).toList();
 
     final todays_1_List = dummyPrescsList.where((element) {
       final date = element['date'] as DateTime;
       return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
-          date.isAfter(DateTime.now().subtract(Duration(days: 2)));
+          date.isAfter(DateTime.now().subtract(Duration(days: 2))) &&
+          element['presc_type'] == 'medicine';
     }).toList();
 
     final olderList = dummyPrescsList.where((element) {
       final date = element['date'] as DateTime;
-      return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
+      return date.isBefore(DateTime.now().subtract(Duration(days: 2))) &&
+          element['presc_type'] == 'medicine';
     }).toList();
 
     prescCard(int index) {
@@ -109,7 +113,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
 
     return ListView(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      // physics: NeverScrollableScrollPhysics(),
       children: [
         ExpansionTile(
           title: Text('Today'),
@@ -123,8 +127,13 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                   onTap: () {
                     prescCard(index);
                   },
-                  title: Text(DateFormat('dd/MM/yyyy')
-                      .format(todaysList[index]['date'] as DateTime)),
+                  title: Row(
+                    children: [
+                      Text(todaysList[index]['prescription']),
+                      Text(' x' + todaysList[index]['count']),
+                    ],
+                  ),
+                  trailing: Text('Dr. ' + todaysList[index]['doctor_name']),
                 );
               },
             )
@@ -142,8 +151,15 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                   onTap: () {
                     prescCard(index);
                   },
-                  title: Text(DateFormat('dd/MM/yyyy')
-                      .format(todays_1_List[index]['date'] as DateTime)),
+                  title: Row(
+                    children: [
+                      Text(todays_1_List[index]['prescription']),
+                      Text(todays_1_List[index]['presc_type'] == 'medicine'
+                          ? ' x' + todays_1_List[index]['count']
+                          : ''),
+                    ],
+                  ),
+                  trailing: Text('Dr. ' + todays_1_List[index]['doctor_name']),
                 );
               },
             )
@@ -159,28 +175,37 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () => prescCard(index),
-                  title: Text(DateFormat('dd/MM/yyyy')
-                      .format(olderList[index]['date'] as DateTime)),
+                  title: Row(
+                    children: [
+                      Text(olderList[index]['prescription']),
+                      Text(olderList[index]['presc_type'] == 'medicine'
+                          ? ' x' + olderList[index]['count']
+                          : ''),
+                    ],
+                  ),
+                  trailing: Text('Dr. ' + olderList[index]['doctor_name']),
+                  subtitle: Text(DateFormat('dd/MM/yyyy')
+                      .format(olderList[index]['date'])),
                 );
               },
             )
           ],
         ),
         ExpansionTile(
-          title: Text('Uploaded precripstions'),
+          title: Text('Uploaded prescriptions'),
           children: [
             ListView.builder(
-              itemCount: dummyPrescsList.length,
+              itemCount: DummyLists.oldPrescImages.length,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage:
-                        FileImage(dummyPrescsList[index]['image'] as File),
+                    backgroundImage: FileImage(
+                        DummyLists.oldPrescImages[index]['image'] as File),
                   ),
-                  title: Text(
-                      (dummyPrescsList[index]['date'] as DateTime).toString()),
+                  title:
+                      Text(DummyLists.oldPrescImages[index]['name'] as String),
                 );
               },
             )

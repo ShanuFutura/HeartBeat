@@ -30,7 +30,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
   File? _storedImage;
   File? savedImage;
 
-  Future<void> _takePicture() async {
+  Future<void> _takePicture(BuildContext context) async {
     final picker = ImagePicker();
 
     final imageFile =
@@ -43,13 +43,48 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final fileName = basename(imageFile.path);
 
+    final txtctrl = TextEditingController();
+
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
-    setState(() {
-      DummyLists.oldPrescImages.add(
-        {'image': savedImage, 'date': DateTime.now()},
-      );
-    });
+
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return Dialog(
+            child: Container(
+              height: 150,
+              width: 150,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: txtctrl,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          DummyLists.oldPrescImages.add(
+                            {
+                              'image': savedImage,
+                              'date': DateTime.now(),
+                              'name': txtctrl.text,
+                            },
+                          );
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Add Name'),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+
     print(DummyLists.oldPrescImages.toString());
   }
 
@@ -63,7 +98,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
           child: Text('Upload '),
         ),
         onPressed: () {
-          _takePicture();
+          _takePicture(context);
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
