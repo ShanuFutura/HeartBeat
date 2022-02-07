@@ -195,6 +195,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
               height: 300,
               child: PatientPrescListView(
                 notifyParent: refresh,
+                isDoc: false,
               ),
             ),
           ),

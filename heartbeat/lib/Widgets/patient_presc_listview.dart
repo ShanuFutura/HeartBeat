@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class PatientPrescListView extends StatefulWidget {
   final Function() notifyParent;
-
-  const PatientPrescListView({Key? key, required this.notifyParent})
+  final bool isDoc;
+  const PatientPrescListView(
+      {Key? key, required this.notifyParent, required this.isDoc})
       : super(key: key);
 
   @override
@@ -20,27 +21,29 @@ class PatientPrescListView extends StatefulWidget {
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
-    final dummyPrescsList = Provider.of<DBHelper>(context).dummyPrescs;
+    final dummyPrescsList = (Provider.of<DBHelper>(context).dummyPrescs)
+        .where((element) =>
+            widget.isDoc ? element['presc_type'] == 'medicine' : true)
+        .toList();
     // final dummyPrescsList=
     //HERE FILTER PRESC LIST AS MEDICINE AND TEST FOR EACH VIEW
 
+// final
+
     final todaysList = dummyPrescsList.where((element) {
       final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
-      return (date == DateFormat('ddmmyy').format(DateTime.now()) &&
-          element['presc_type'] == 'medicine');
+      return (date == DateFormat('ddmmyy').format(DateTime.now()));
     }).toList();
 
     final todays_1_List = dummyPrescsList.where((element) {
       final date = element['date'] as DateTime;
       return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
-          date.isAfter(DateTime.now().subtract(Duration(days: 2))) &&
-          element['presc_type'] == 'medicine';
+          date.isAfter(DateTime.now().subtract(Duration(days: 2)));
     }).toList();
 
     final olderList = dummyPrescsList.where((element) {
       final date = element['date'] as DateTime;
-      return date.isBefore(DateTime.now().subtract(Duration(days: 2))) &&
-          element['presc_type'] == 'medicine';
+      return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
     }).toList();
 
     prescCard(int index) {

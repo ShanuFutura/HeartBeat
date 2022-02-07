@@ -82,6 +82,7 @@ class DoctorView extends StatelessWidget {
                     height: 300,
                     child: PatientPrescListView(
                       notifyParent: notifyParent,
+                      isDoc: false,
                     )),
               ],
             ),
