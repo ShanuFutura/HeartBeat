@@ -24,10 +24,10 @@ class PatientScreenDrawer extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
@@ -39,38 +39,38 @@ class PatientScreenDrawer extends StatelessWidget {
               Icons.account_circle,
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed(CartScreen.routeName);
             },
-            title: Text('Cart'),
-            trailing: Icon(Icons.shopping_cart),
+            title: const Text('Cart'),
+            trailing: const Icon(Icons.shopping_cart),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () =>
                 Navigator.of(context).pushNamed(LabtestBookingScreen.routeName),
-            title: Text('Labtest Booking'),
-            trailing: Icon(Icons.biotech),
+            title: const Text('Labtest Booking'),
+            trailing: const Icon(Icons.biotech),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed(PatientsAppoinments.routeName);
             },
-            title: Text('Appoinments'),
-            trailing: Icon(Icons.event),
+            title: const Text('Appoinments'),
+            trailing: const Icon(Icons.event),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               Provider.of<DBHelper>(context, listen: false).logout(context);
             },
             title: const Text('Logout'),
-            trailing: Icon(Icons.logout),
+            trailing: const Icon(Icons.logout),
           ),
-          Divider(),
+          const Divider(),
         ],
       ),
     );

@@ -49,7 +49,7 @@ class _imageFileInputDialogState extends State<imageFileInputDialog> {
                         });
                         Navigator.of(context).pop();
                       },
-                child: Text('Add Name'),
+                child: const Text('Add Name'),
               )
             ],
           ),

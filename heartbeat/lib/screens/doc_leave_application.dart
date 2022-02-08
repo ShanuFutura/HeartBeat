@@ -53,7 +53,7 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
                   ? Icon(Icons.event)
                   : Text(DateFormat('dd/MM').format(selectedDate!)),
             ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           FloatingActionButton(

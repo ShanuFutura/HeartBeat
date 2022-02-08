@@ -14,7 +14,7 @@ class PatientExternalPrescriptios extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: DummyLists.oldPrescImages.isEmpty
-          ? Center(child: Text('No Old Prescriptions Uploaded'))
+          ? const Center(child: Text('No Old Prescriptions Uploaded'))
           : ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),

@@ -19,7 +19,7 @@ class _TimeSlotCardState extends State<TimeSlotCard> {
         .toList()
         .isEmpty;
     return isSlotsEmpty
-        ? Text('No slots left')
+        ? const Text('No slots left')
         : Wrap(
             children: [
               if (!isSlotsEmpty)

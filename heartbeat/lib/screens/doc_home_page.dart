@@ -44,8 +44,8 @@ class DocHomePage extends StatelessWidget {
           children: [
             Container(),
             Carousel(CarouselImages.itemsList),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Patients',
               style: TextStyle(fontSize: 20),
             ),
@@ -55,7 +55,7 @@ class DocHomePage extends StatelessWidget {
                   itemCount: patientsList.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: CircleAvatar(),
+                      leading: const CircleAvatar(),
                       title: Text(patientsList[index]['patientName']!),
                       subtitle: Text(patientsList[index]['patientAge']!),
                       trailing: TextButton(
@@ -65,7 +65,7 @@ class DocHomePage extends StatelessWidget {
                                 arguments: patientsList[index][
                                     'patientName']); // patient name should replace with unique id
                           },
-                          child: Text('View')),
+                          child: const Text('View')),
                     );
 
                     // patientsList[index];

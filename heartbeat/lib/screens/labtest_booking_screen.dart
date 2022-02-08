@@ -10,7 +10,7 @@ class LabtestBookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('labtests'),
+          title: const Text('labtests'),
         ),
         body: ListView.builder(
             itemCount: DummyLists.lab.length,
@@ -20,10 +20,10 @@ class LabtestBookingScreen extends StatelessWidget {
                   ListTile(
                     title: Text(DummyLists.lab[index]['prescription']),
                     trailing: Container(
-                      child: Text('waiting'),
+                      child: const Text('waiting'),
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                 ],
               );
             }));

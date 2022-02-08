@@ -33,14 +33,14 @@ class _QuantityCardState extends State<QuantityCard> {
     return Card(
       child: Container(
         width: 200,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.spaceAround,
           // mainAxisAlignment:
           //     MainAxisAlignment.spaceAround,
           children: [
-            Text('Quantity'),
+            const Text('Quantity'),
             Container(
               decoration: BoxDecoration(border: Border.all(width: 1)),
               child: Wrap(
@@ -49,11 +49,12 @@ class _QuantityCardState extends State<QuantityCard> {
                 //     MainAxisAlignment
                 //         .center,
                 children: [
-                  IconButton(onPressed: quantityInc, icon: Icon(Icons.add)),
+                  IconButton(
+                      onPressed: quantityInc, icon: const Icon(Icons.add)),
                   Text(medicineQuantity.toString()),
                   IconButton(
                       onPressed: medicineQuantity > 1 ? quantityDec : null,
-                      icon: Icon(Icons.remove)),
+                      icon: const Icon(Icons.remove)),
                 ],
               ),
             ),
@@ -64,7 +65,7 @@ class _QuantityCardState extends State<QuantityCard> {
                     widget.getQuantity(medicineQuantity);
                     Navigator.of(context).pop();
                   },
-                  child: Text('submit')),
+                  child: const Text('submit')),
             )
           ],
         ),

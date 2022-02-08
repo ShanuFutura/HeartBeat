@@ -19,7 +19,7 @@ class DoctorView extends StatelessWidget {
 
     final appoinmentsCount =
         Provider.of<DBHelper>(context).availableTimeSlotsCount(docName);
-    var feedbackText = '';
+    // var feedbackText = '';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -44,7 +44,7 @@ class DoctorView extends StatelessWidget {
                       children: [
                         Text(
                           docName,
-                          style: TextStyle(fontSize: 40),
+                          style: const TextStyle(fontSize: 40),
                         ),
                         Text(
                             DummyLists.docsList[arg]['qualification'] as String)
@@ -52,7 +52,7 @@ class DoctorView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Expanded(
                   flex: 4,
                   child: Column(
@@ -98,7 +98,7 @@ class DoctorView extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return FeedbackText();
+                            return const FeedbackText();
                           });
                     },
                     child: Padding(
@@ -135,7 +135,7 @@ class DoctorView extends StatelessWidget {
                                 builder: (BuildContext context) {
                                   return Dialog(
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                         vertical: 60,
                                         horizontal: 20,
                                       ),
@@ -160,7 +160,7 @@ class DoctorView extends StatelessWidget {
                         height: 200,
                         child: const Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Book Appoinments',
                               textAlign: TextAlign.center,

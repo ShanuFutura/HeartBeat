@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared';
 
 class FeedbackText extends StatefulWidget {
@@ -51,7 +51,7 @@ class _FeedbackTextState extends State<FeedbackText> {
                         // print(feedbackText);
                         feedbackText = '';
                       },
-                icon: Icon(Icons.send)),
+                icon: const Icon(Icons.send)),
           ],
         ),
       ),

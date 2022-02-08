@@ -44,7 +44,7 @@ class HeartBeat extends StatelessWidget {
             if (snap.connectionState == ConnectionState.waiting) {
               print('waiting');
 
-              return LaodingScreen();
+              return const LaodingScreen();
             } else {
               print(snap.data.toString());
               if (snap.data == 'patient') {
@@ -68,12 +68,12 @@ class HeartBeat extends StatelessWidget {
           PatientExternalPrescriptios.routeName: (ctx) =>
               const PatientExternalPrescriptios(),
           DocProfileeditScreen.routeName: (ctx) => DocProfileeditScreen(),
-          DocLeaveApplication.routeName: (ctx) => DocLeaveApplication(),
-          CartScreen.routeName: (ctx) => CartScreen(),
-          PatientsAppoinments.routeName: (ctx) => PatientsAppoinments(),
-          PayemntScreen.routeName: (ctx) => PayemntScreen(),
+          DocLeaveApplication.routeName: (ctx) => const DocLeaveApplication(),
+          CartScreen.routeName: (ctx) => const CartScreen(),
+          PatientsAppoinments.routeName: (ctx) => const PatientsAppoinments(),
+          PayemntScreen.routeName: (ctx) => const PayemntScreen(),
           ImageViewScreen.routeName: (ctx) => ImageViewScreen(),
-          LabtestBookingScreen.routeName: (ctx) => LabtestBookingScreen(),
+          LabtestBookingScreen.routeName: (ctx) => const LabtestBookingScreen(),
 
           // LaodingScreen.routeName: (ctx) => const LaodingScreen(),
         },

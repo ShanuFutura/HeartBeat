@@ -67,7 +67,7 @@ class _LoginCardState extends State<PatientSignupPage> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/heart.png'), fit: BoxFit.cover),
         ),
@@ -276,11 +276,11 @@ class _LoginCardState extends State<PatientSignupPage> {
                             radius: 20,
                             heit: 50,
                             widt: 90,
-                            kalar: Color.fromRGBO(255, 255, 255, 1),
+                            kalar: const Color.fromRGBO(255, 255, 255, 1),
                             tap: () {
                               trySubmit();
                             },
-                            kid: Center(child: Text('Signup'))),
+                            kid: const Center(child: Text('Signup'))),
                         // ElevatedButton(
                         //   onPressed: () {
                         //     trySubmit();

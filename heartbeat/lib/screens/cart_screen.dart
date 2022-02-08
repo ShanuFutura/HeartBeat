@@ -27,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
                 trailing:
                     Text('x' + DummyLists.kart[index]['count'].toString()),
               ),
-              Divider()
+              const Divider()
             ]);
           }),
       floatingActionButton: GestureDetector(

@@ -79,7 +79,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           decoration: BoxDecoration(
                             border: Border.all(),
                           ),
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -144,12 +144,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
       // physics: NeverScrollableScrollPhysics(),
       children: [
         ExpansionTile(
-          title: Text('Today'),
+          title: const Text('Today'),
           children: [
             ListView.builder(
               itemCount: todaysList.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
@@ -174,7 +174,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
             ListView.builder(
               itemCount: todays_1_List.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
@@ -197,12 +197,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           ],
         ),
         ExpansionTile(
-          title: Text('Older'),
+          title: const Text('Older'),
           children: [
             ListView.builder(
               itemCount: olderList.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
@@ -225,12 +225,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           ],
         ),
         ExpansionTile(
-          title: Text('Uploaded prescriptions'),
+          title: const Text('Uploaded prescriptions'),
           children: [
             ListView.builder(
               itemCount: DummyLists.oldPrescImages.length,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {

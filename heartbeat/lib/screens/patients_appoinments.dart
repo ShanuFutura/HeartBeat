@@ -23,7 +23,7 @@ class PatientsAppoinments extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Dr. ' + e['doc_name'].toString()),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(

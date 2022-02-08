@@ -63,7 +63,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: ElevatedButton(
-        child: Padding(
+        child: const Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),
           child: Text('Upload '),
         ),
@@ -126,7 +126,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: [
+                    children: const [
                       Text('Search Docs'),
                       Icon((Icons.search)),
                     ],
@@ -138,14 +138,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
               Navigator.of(context).pushNamed(CartScreen.routeName);
             },
             icon: Stack(alignment: Alignment.topRight, children: [
-              Icon(Icons.shopping_cart),
+              const Icon(Icons.shopping_cart),
               if (!DummyLists.kart.isEmpty)
                 CircleAvatar(
                   backgroundColor: Colors.red,
                   radius: 6,
                   child: Text(
                     DummyLists.kart.length.toString(),
-                    style: TextStyle(fontSize: 8),
+                    style: const TextStyle(fontSize: 8),
                   ),
                 ),
             ]),
@@ -169,7 +169,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
             child: Container(
               decoration: BoxDecoration(
                   border: Border.all(width: .5),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
               height: 300,
               child: PatientPrescListView(
                 notifyParent: refresh,

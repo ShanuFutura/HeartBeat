@@ -26,14 +26,14 @@ class DocScreenDrawer extends StatelessWidget {
             ),
             height: 200,
             width: double.infinity,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             alignment: Alignment.bottomLeft,
             child: Text(
               'DocName',
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Divider(),
@@ -41,12 +41,12 @@ class DocScreenDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushNamed(DocProfileeditScreen.routeName);
               },
-              title: Text('Doc Profile'),
-              trailing: Icon(
+              title: const Text('Doc Profile'),
+              trailing: const Icon(
                 Icons.account_circle,
               )),
 
-          Divider(),
+          const Divider(),
 
           // ListTile(
           //   title: Text('Appoinments'),
@@ -62,22 +62,22 @@ class DocScreenDrawer extends StatelessWidget {
                 // Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(DocLeaveApplication.routeName);
               },
-              title: Text('Apply for Leave'),
-              trailing: Icon(
+              title: const Text('Apply for Leave'),
+              trailing: const Icon(
                 Icons.pending_actions,
               )),
 
-          Divider(),
+          const Divider(),
           ListTile(
               onTap: () {
                 Provider.of<DBHelper>(context, listen: false).logout(context);
               },
-              title: Text('Logout'),
-              trailing: Icon(
+              title: const Text('Logout'),
+              trailing: const Icon(
                 Icons.logout,
               )),
 
-          Divider(),
+          const Divider(),
         ],
       ),
     );

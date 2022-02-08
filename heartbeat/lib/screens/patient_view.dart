@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/quantity_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
@@ -53,7 +53,7 @@ class _PatientViewState extends State<PatientView> {
                           child: Wrap(
                             alignment: WrapAlignment.start,
                             children: <Widget>[
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Padding(
@@ -196,7 +196,7 @@ class _PatientViewState extends State<PatientView> {
                                           tempTestsList.clear();
                                           Navigator.pop(context);
                                         },
-                                        child: Text('Prescribe')),
+                                        child: const Text('Prescribe')),
                                   ],
                                 ),
                               )
@@ -207,7 +207,7 @@ class _PatientViewState extends State<PatientView> {
                     },
                   );
                 },
-                child: Icon(Icons.add),
+                child: const Icon(Icons.add),
               ),
             ),
           GestureDetector(
@@ -217,7 +217,7 @@ class _PatientViewState extends State<PatientView> {
               });
             },
             child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -236,7 +236,7 @@ class _PatientViewState extends State<PatientView> {
                     ),
                     Text(
                       isLabtest ? 'Prescriptions' : 'Lab results',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ],
                 )),
@@ -295,7 +295,7 @@ class _PatientViewState extends State<PatientView> {
                       children: [
                         Text(
                           isLabtest ? 'Labtests' : 'Previous Prescriptions',
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                         ),
                         if (!isLabtest)
                           TextButton(
@@ -303,11 +303,11 @@ class _PatientViewState extends State<PatientView> {
                                 Navigator.of(context).pushNamed(
                                     PatientExternalPrescriptios.routeName);
                               },
-                              child: Text('External Prescriptions'))
+                              child: const Text('External Prescriptions'))
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   if (!isLabtest)
                     PatientPrescListView(
                       notifyParent: () {},
@@ -315,7 +315,7 @@ class _PatientViewState extends State<PatientView> {
                     ),
                   if (isLabtest)
                     ListView.builder(
-                      physics: ClampingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: filteredPrescList.length,
                       itemBuilder: (ctx, index) {

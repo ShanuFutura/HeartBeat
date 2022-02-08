@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DBHelper extends ChangeNotifier {
