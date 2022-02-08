@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/carousel.dart';
+import 'package:heartbeat/Widgets/image_file_input_dialog.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
@@ -26,6 +27,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
   }
 
   final picker = ImagePicker();
+  var initialFileName = '';
+  final txtctrl = TextEditingController();
 
   File? _storedImage;
   File? savedImage;
@@ -43,46 +46,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final fileName = basename(imageFile.path);
 
-    final txtctrl = TextEditingController();
-
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
 
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
-          return Dialog(
-            child: Container(
-              height: 150,
-              width: 150,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: txtctrl,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          DummyLists.oldPrescImages.add(
-                            {
-                              'image': savedImage,
-                              'date': DateTime.now(),
-                              'name': txtctrl.text,
-                            },
-                          );
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Add Name'),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
+          return imageFileInputDialog(savedImage);
         });
 
     print(DummyLists.oldPrescImages.toString());

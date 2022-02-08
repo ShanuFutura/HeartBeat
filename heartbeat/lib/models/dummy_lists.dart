@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 // }
 
 class DummyLists {
+  static List lab = [];
   static List uploadedPrescFiles = [];
   static List<Map<String, Object>> appoinments = [];
   static List kart = [];

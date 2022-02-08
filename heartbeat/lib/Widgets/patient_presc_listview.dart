@@ -102,13 +102,30 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            Fluttertoast.showToast(
-                                                msg: 'item added to cart');
-                                            widget.notifyParent();
-                                            DummyLists.kart.add(
+                                            print(
                                                 DummyLists.dummyPrescs[index]);
+                                            Fluttertoast.showToast(
+                                                msg: DummyLists.dummyPrescs[
+                                                                index]
+                                                            ['presc_type'] !=
+                                                        'medicine'
+                                                    ? 'item added to lab'
+                                                    : 'item added to cart');
+                                            widget.notifyParent();
+                                            DummyLists.dummyPrescs[index]
+                                                        ['presc_type'] ==
+                                                    'test'
+                                                ? DummyLists.lab.add(DummyLists
+                                                    .dummyPrescs[index])
+                                                : DummyLists.kart.add(DummyLists
+                                                    .dummyPrescs[index]);
                                           },
-                                          icon: Icon(Icons.shopping_cart)),
+                                          icon: Icon(
+                                              DummyLists.dummyPrescs[index]
+                                                          ['presc_type'] ==
+                                                      'test'
+                                                  ? Icons.biotech
+                                                  : Icons.shopping_cart)),
                                     ])),
                             ],
                           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:heartbeat/helpers/db_helper.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
+import 'package:heartbeat/screens/labtest_booking_screen.dart';
 // import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
 import 'package:heartbeat/screens/patients_appoinments.dart';
@@ -48,7 +49,8 @@ class PatientScreenDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(LabtestBookingScreen.routeName),
             title: Text('Labtest Booking'),
             trailing: Icon(Icons.biotech),
           ),
