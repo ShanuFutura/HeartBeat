@@ -117,7 +117,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
         actions: [
           Padding(
               padding: const EdgeInsets.all(10.0),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   showDialog(
                       context: context,
@@ -126,33 +126,41 @@ class _PatientHomePageState extends State<PatientHomePage> {
                           child: ListView.builder(
                               itemCount: DummyLists.docsList.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pushNamed(
-                                        DoctorView.routeName,
-                                        arguments: index);
-                                  },
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(DummyLists.docsList[index]
-                                          ['doc_name'] as String),
-                                      Text(DummyLists.docsList[index]
-                                          ['qualification'] as String)
-                                    ],
-                                  ),
+                                return Column(
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pushNamed(
+                                            DoctorView.routeName,
+                                            arguments: index);
+                                      },
+                                      title: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(DummyLists.docsList[index]
+                                              ['doc_name'] as String),
+                                          Text(DummyLists.docsList[index]
+                                              ['department'] as String)
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(),
+                                  ],
                                 );
                               }),
                         );
                       });
                 },
-                child: Row(
-                  children: [
-                    Text('Search Docs'),
-                    Icon((Icons.search)),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text('Search Docs'),
+                      Icon((Icons.search)),
+                    ],
+                  ),
                 ),
               )),
           IconButton(

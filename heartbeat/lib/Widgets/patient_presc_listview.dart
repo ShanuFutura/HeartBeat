@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
+import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -63,11 +64,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(DateFormat('dd.MM.yyyy')
-                                .format(
-                                    dummyPrescsList[index]['date'] as DateTime)
+                                .format(DummyLists.dummyPrescs[index]['date']
+                                    as DateTime)
                                 .toString()),
                             Text('Dr. ' +
-                                dummyPrescsList[index]['doctor_name']
+                                DummyLists.dummyPrescs[index]['doctor_name']
                                     .toString()),
                           ],
                         ),
@@ -83,12 +84,13 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: Text(dummyPrescsList[index]
+                                child: Text(DummyLists.dummyPrescs[index]
                                         ['prescription']
                                     .toString()),
                               ),
                               Text(' x' +
-                                  dummyPrescsList[index]['count'].toString()),
+                                  DummyLists.dummyPrescs[index]['count']
+                                      .toString()),
                               if (!widget.isDoc)
                                 Expanded(
                                     child: Stack(
@@ -103,8 +105,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                             Fluttertoast.showToast(
                                                 msg: 'item added to cart');
                                             widget.notifyParent();
-                                            DummyLists.kart
-                                                .add(dummyPrescsList[index]);
+                                            DummyLists.kart.add(
+                                                DummyLists.dummyPrescs[index]);
                                           },
                                           icon: Icon(Icons.shopping_cart)),
                                     ])),
@@ -159,6 +161,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
+                    print(DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
                     prescCard(
                         DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
                   },
@@ -185,8 +188,9 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
-                  onTap: () => prescCard(
-                      DummyLists.dummyPrescs.indexOf(olderList[index])),
+                  onTap: () {
+                    prescCard(DummyLists.dummyPrescs.indexOf(olderList[index]));
+                  },
                   title: Row(
                     children: [
                       Text(olderList[index]['prescription']),
@@ -212,6 +216,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ImageViewScreen.routeName,
+                        arguments: DummyLists.oldPrescImages[index]['image']);
+                    // ImageViewScreen();
+                    print('tap');
+                  },
                   leading: CircleAvatar(
                     backgroundImage: FileImage(
                         DummyLists.oldPrescImages[index]['image'] as File),

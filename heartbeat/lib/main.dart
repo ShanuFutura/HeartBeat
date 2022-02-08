@@ -6,6 +6,7 @@ import 'package:heartbeat/screens/doc_home_page.dart';
 import 'package:heartbeat/screens/doc_leave_application.dart';
 import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
+import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:heartbeat/screens/loading_screen.dart';
 import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
@@ -70,6 +71,8 @@ class HeartBeat extends StatelessWidget {
           CartScreen.routeName: (ctx) => CartScreen(),
           PatientsAppoinments.routeName: (ctx) => PatientsAppoinments(),
           PayemntScreen.routeName: (ctx) => PayemntScreen(),
+          ImageViewScreen.routeName: (ctx) => ImageViewScreen(),
+
           // LaodingScreen.routeName: (ctx) => const LaodingScreen(),
         },
       ),
