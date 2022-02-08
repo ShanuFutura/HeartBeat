@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/quantity_card.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
-import 'package:heartbeat/screens/patient_external_prescription.dart';
+// import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:intl/intl.dart';
 
 class PatientView extends StatefulWidget {
@@ -297,13 +297,6 @@ class _PatientViewState extends State<PatientView> {
                           isLabtest ? 'Labtests' : 'Previous Prescriptions',
                           style: const TextStyle(fontSize: 20),
                         ),
-                        if (!isLabtest)
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    PatientExternalPrescriptios.routeName);
-                              },
-                              child: const Text('External Prescriptions'))
                       ],
                     ),
                   ),

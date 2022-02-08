@@ -22,6 +22,11 @@ class PatientPrescListView extends StatefulWidget {
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
+    refresh() {
+      setState(() {});
+    }
+
+    final imagePresc = Provider.of<DBHelper>(context).imagePresc;
     final dummyPrescsList = (Provider.of<DBHelper>(context).dummyPrescs)
         .where((element) =>
             widget.isDoc ? element['presc_type'] == 'medicine' : true)
@@ -228,23 +233,22 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           title: const Text('Uploaded prescriptions'),
           children: [
             ListView.builder(
-              itemCount: DummyLists.oldPrescImages.length,
+              itemCount: imagePresc.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
                     Navigator.of(context).pushNamed(ImageViewScreen.routeName,
-                        arguments: DummyLists.oldPrescImages[index]['image']);
+                        arguments: imagePresc[index]['image']);
                     // ImageViewScreen();
                     print('tap');
                   },
                   leading: CircleAvatar(
-                    backgroundImage: FileImage(
-                        DummyLists.oldPrescImages[index]['image'] as File),
+                    backgroundImage:
+                        FileImage(imagePresc[index]['image'] as File),
                   ),
-                  title:
-                      Text(DummyLists.oldPrescImages[index]['name'] as String),
+                  title: Text(imagePresc[index]['name'] as String),
                 );
               },
             )

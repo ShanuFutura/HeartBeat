@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
@@ -75,6 +77,22 @@ class DBHelper extends ChangeNotifier {
     // return Future.delayed(Duration(seconds: 1)).then((_) {
     //   return true;
     // });
+  }
+
+  addImagePresc(File img, DateTime timestamp, String name) {
+    DummyLists.oldPrescImages.add(
+      {
+        'image': img,
+        'date': timestamp,
+        'name': name,
+      },
+    );
+    notifyListeners();
+  }
+
+  List get imagePresc {
+    return DummyLists.oldPrescImages;
+    // notifyListeners();
   }
 
   List get dummyPrescs {

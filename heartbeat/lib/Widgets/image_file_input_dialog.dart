@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 
 class imageFileInputDialog extends StatefulWidget {
   final File savedImage;
@@ -38,15 +40,18 @@ class _imageFileInputDialogState extends State<imageFileInputDialog> {
                 onPressed: initialFileName.isEmpty
                     ? null
                     : () {
-                        setState(() {
-                          DummyLists.oldPrescImages.add(
-                            {
-                              'image': widget.savedImage,
-                              'date': DateTime.now(),
-                              'name': initialFileName,
-                            },
-                          );
-                        });
+                        Provider.of<DBHelper>(context, listen: false)
+                            .addImagePresc(widget.savedImage, DateTime.now(),
+                                initialFileName);
+                        // setState(() {
+                        //   DummyLists.oldPrescImages.add(
+                        //     {
+                        //       'image': widget.savedImage,
+                        //       'date': DateTime.now(),
+                        //       'name': initialFileName,
+                        //     },
+                        //   );
+                        // });
                         Navigator.of(context).pop();
                       },
                 child: const Text('Add Name'),

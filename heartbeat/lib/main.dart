@@ -9,7 +9,7 @@ import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:heartbeat/screens/labtest_booking_screen.dart';
 import 'package:heartbeat/screens/loading_screen.dart';
-import 'package:heartbeat/screens/patient_external_prescription.dart';
+// import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
 import 'package:heartbeat/screens/patient_signup_page.dart';
@@ -65,8 +65,8 @@ class HeartBeat extends StatelessWidget {
           PatientHomePage.routeName: (ctx) => PatientHomePage(),
           DoctorView.routeName: (ctx) => DoctorView(),
           PatientProfilEditScreen.routeName: (ctx) => PatientProfilEditScreen(),
-          PatientExternalPrescriptios.routeName: (ctx) =>
-              const PatientExternalPrescriptios(),
+          // PatientExternalPrescriptios.routeName: (ctx) =>
+          //     const PatientExternalPrescriptios(),
           DocProfileeditScreen.routeName: (ctx) => DocProfileeditScreen(),
           DocLeaveApplication.routeName: (ctx) => const DocLeaveApplication(),
           CartScreen.routeName: (ctx) => const CartScreen(),
