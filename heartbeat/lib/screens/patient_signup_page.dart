@@ -48,7 +48,7 @@ class _LoginCardState extends State<PatientSignupPage> {
         } else {
           Provider.of<DBHelper>(context, listen: false).signupCall(
               _name, _age, _gender!, _email, _phone, _uname, _pword, context);
-          // print(_uname);
+          print(_uname);
           // print(_age);
           // print(_gender);
           // print(_email);

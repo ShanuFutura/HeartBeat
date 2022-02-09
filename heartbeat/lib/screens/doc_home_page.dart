@@ -17,24 +17,25 @@ class DocHomePage extends StatelessWidget {
     return Scaffold(
       drawer: DocScreenDrawer(),
       appBar: AppBar(
+        title: Text('HeartBeat'),
         // leading: IconButton(
         //   onPressed: () {
         //     DocScreenDrawer();
         //   },
         //   icon: Icon(Icons.menu),
         // ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Appoinments',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        //     child: TextButton(
+        //       onPressed: () {},
+        //       child: const Text(
+        //         'Appoinments',
+        //         style: TextStyle(color: Colors.white, fontSize: 20),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),

@@ -37,9 +37,14 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
 // final
 
     final todaysList = dummyPrescsList.where((element) {
-      final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
-      return (date == DateFormat('ddmmyy').format(DateTime.now()));
+      final date = element['date'] as DateTime;
+      return date.isAfter(DateTime.now().subtract(Duration(days: 1)));
     }).toList();
+
+    // final todaysList = dummyPrescsList.where((element) {
+    //   final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
+    //   return (date == DateFormat('ddmmyy').format(DateTime.now()));
+    // }).toList();
 
     final todays_1_List = dummyPrescsList.where((element) {
       final date = element['date'] as DateTime;
@@ -201,6 +206,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
               itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
+                    // print(todaysList);
                     print(DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
                     prescCard(
                         DummyLists.dummyPrescs.indexOf(todays_1_List[index]));

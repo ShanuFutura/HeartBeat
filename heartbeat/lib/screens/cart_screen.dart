@@ -18,32 +18,38 @@ class _CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         title: const Text('Your cart'),
       ),
-      body: ListView.builder(
-          itemCount: DummyLists.kart.length,
-          itemBuilder: (context, index) {
-            return Column(children: [
-              ListTile(
-                title: Text(DummyLists.kart[index]['prescription']),
-                trailing:
-                    Text('x' + DummyLists.kart[index]['count'].toString()),
-              ),
-              const Divider()
-            ]);
-          }),
+      body: DummyLists.kart.isEmpty
+          ? Center(
+              child: Text('Cart is empty'),
+            )
+          : ListView.builder(
+              itemCount: DummyLists.kart.length,
+              itemBuilder: (context, index) {
+                return Column(children: [
+                  ListTile(
+                    title: Text(DummyLists.kart[index]['prescription']),
+                    trailing:
+                        Text('x' + DummyLists.kart[index]['count'].toString()),
+                  ),
+                  const Divider()
+                ]);
+              }),
       floatingActionButton: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(PayemntScreen.routeName);
-          // refreshCallBack;
-          setState(() {
-            // DummyLists.kart.clear();
-          });
-        },
+        onTap: DummyLists.kart.isEmpty
+            ? null
+            : () {
+                Navigator.of(context).pushNamed(PayemntScreen.routeName);
+                // refreshCallBack;
+                setState(() {
+                  // DummyLists.kart.clear();
+                });
+              },
         child: Container(
           height: 50,
           width: 150,
           alignment: Alignment.bottomRight,
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: DummyLists.kart.isEmpty ? Colors.grey : Colors.blue,
             borderRadius: BorderRadius.circular(20),
           ),
           child: const Center(

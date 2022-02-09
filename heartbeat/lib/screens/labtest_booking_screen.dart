@@ -12,20 +12,22 @@ class LabtestBookingScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('labtests'),
         ),
-        body: ListView.builder(
-            itemCount: DummyLists.lab.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    title: Text(DummyLists.lab[index]['prescription']),
-                    trailing: Container(
-                      child: const Text('waiting'),
-                    ),
-                  ),
-                  const Divider(),
-                ],
-              );
-            }));
+        body: DummyLists.lab.isEmpty
+            ? Center(child: Text('No tests pending empty'))
+            : ListView.builder(
+                itemCount: DummyLists.lab.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      ListTile(
+                        title: Text(DummyLists.lab[index]['prescription']),
+                        trailing: Container(
+                          child: const Text('waiting'),
+                        ),
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                }));
   }
 }

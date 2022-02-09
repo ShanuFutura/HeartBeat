@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
+import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+final urlS = 'http://192.168.29.78/Doctor_Patient/api/';
+
+// final url = Uri.parse('http://192.168.29.78/Doctor_patient/api/');
 
 class DBHelper extends ChangeNotifier {
   // static bool authTok=false;
@@ -23,7 +29,7 @@ class DBHelper extends ChangeNotifier {
     return true;
   }
 
-  void signupCall(
+  Future<void> signupCall(
     String name,
     String age,
     String gender,
@@ -32,7 +38,18 @@ class DBHelper extends ChangeNotifier {
     String username,
     String password,
     BuildContext context,
-  ) {
+  ) async {
+    final url = Uri.parse(urlS + 'register.php');
+    final res = await post(url, body: {
+      'name': name,
+      'age': age,
+      'gender': gender,
+      'email': email,
+      'mobile': mobile,
+      'username': username,
+      'password': password,
+    });
+    print(res.body);
     print(
       '{$username, $gender, $age, $email, $mobile, $name, $password}',
     );

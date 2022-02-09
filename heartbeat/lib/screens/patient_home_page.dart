@@ -44,8 +44,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final imageFile =
         await picker.pickImage(source: ImageSource.camera, maxWidth: 600);
-    if (imageFile == null) return;
+    if (imageFile == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
     setState(() {
+      // isLoading = false;
       _storedImage = File(imageFile.path);
     });
     final appDir = await getApplicationDocumentsDirectory();
@@ -78,7 +84,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
         onPressed: () {
           // Provider.of<DBHelper>(context, listen: false)
           //         .isImagePoppedWithoutName ==
-          true;
+          // true;
           _takePicture(context);
         },
         style: ButtonStyle(

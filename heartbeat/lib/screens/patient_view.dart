@@ -164,7 +164,7 @@ class _PatientViewState extends State<PatientView> {
                                               'doctor_name': 'test',
                                               'patient_id': '1',
                                               'presc_type': 'medicine',
-                                              'prescripton': e['medicine']!,
+                                              'prescription': e['medicine']!,
                                               'date': DateTime.now(),
                                               'count': e['count']!,
                                             },
@@ -181,7 +181,7 @@ class _PatientViewState extends State<PatientView> {
                                                     'doctor_name': 'test',
                                                     'patient_id': '1',
                                                     'presc_type': 'test',
-                                                    'prescripton':
+                                                    'prescription':
                                                         e['test_name']!,
                                                     'date': DateTime.now(),
                                                     'count': 1,
