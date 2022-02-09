@@ -90,6 +90,8 @@ class DBHelper extends ChangeNotifier {
     notifyListeners();
   }
 
+  // bool isImagePoppedWithoutName = true;
+
   List get imagePresc {
     return DummyLists.oldPrescImages;
     // notifyListeners();

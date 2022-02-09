@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ClickableContainer extends StatelessWidget {
@@ -23,17 +25,22 @@ class ClickableContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: tap,
-      child: Container(
-        height: heit,
-        width: widt,
-        padding: EdgeInsets.all(padd),
-        decoration: BoxDecoration(
-          color: kalar,
-          borderRadius: BorderRadius.all(
-            Radius.circular(radius),
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+          child: Container(
+            height: heit,
+            width: widt,
+            padding: EdgeInsets.all(padd),
+            decoration: BoxDecoration(
+              color: kalar,
+              borderRadius: BorderRadius.all(
+                Radius.circular(radius),
+              ),
+            ),
+            child: kid,
           ),
         ),
-        child: kid,
       ),
     );
   }

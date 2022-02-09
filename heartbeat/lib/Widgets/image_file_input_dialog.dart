@@ -37,9 +37,12 @@ class _imageFileInputDialogState extends State<imageFileInputDialog> {
                 },
               ),
               ElevatedButton(
-                onPressed: initialFileName.isEmpty
+                onPressed: initialFileName.trim().isEmpty
                     ? null
                     : () {
+                        // Provider.of<DBHelper>(context, listen: false)
+                        //         .isImagePoppedWithoutName ==
+                        //     false;
                         Provider.of<DBHelper>(context, listen: false)
                             .addImagePresc(widget.savedImage, DateTime.now(),
                                 initialFileName);
@@ -52,6 +55,8 @@ class _imageFileInputDialogState extends State<imageFileInputDialog> {
                         //     },
                         //   );
                         // });
+                        initialFileName = '';
+
                         Navigator.of(context).pop();
                       },
                 child: const Text('Add Name'),

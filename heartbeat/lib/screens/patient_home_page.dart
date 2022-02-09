@@ -1,18 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/Widgets/carousel.dart';
 import 'package:heartbeat/Widgets/image_file_input_dialog.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
 import 'package:heartbeat/models/carousel_images.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
 
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class PatientHomePage extends StatefulWidget {
   static const String routeName = 'patient home';
@@ -32,8 +35,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
   File? _storedImage;
   File? savedImage;
-
+  bool isLoading = false;
   Future<void> _takePicture(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
     final picker = ImagePicker();
 
     final imageFile =
@@ -48,7 +54,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
-
+    setState(() {
+      isLoading = false;
+    });
     showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -68,6 +76,9 @@ class _PatientHomePageState extends State<PatientHomePage> {
           child: Text('Upload '),
         ),
         onPressed: () {
+          // Provider.of<DBHelper>(context, listen: false)
+          //         .isImagePoppedWithoutName ==
+          true;
           _takePicture(context);
         },
         style: ButtonStyle(
@@ -152,33 +163,38 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              'Heartbeat',
-              style: TextStyle(fontSize: 40),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Heartbeat',
+                    style: TextStyle(fontSize: 40),
+                  ),
+                ),
+                Carousel(CarouselImages.itemsList),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(width: .5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    height: 300,
+                    child: PatientPrescListView(
+                      notifyParent: refresh,
+                      isDoc: false,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Carousel(CarouselImages.itemsList),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(width: .5),
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
-              height: 300,
-              child: PatientPrescListView(
-                notifyParent: refresh,
-                isDoc: false,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
