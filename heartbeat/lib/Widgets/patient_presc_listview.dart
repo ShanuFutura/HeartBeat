@@ -107,23 +107,41 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                       ),
                                       IconButton(
                                           onPressed: () {
+                                            final price = Provider.of<DBHelper>(
+                                                    context,
+                                                    listen: false)
+                                                .getPrices('item');
+                                            Provider.of<DBHelper>(context,
+                                                    listen: false)
+                                                .paymentProfile
+                                                .add({
+                                              'item': DummyLists
+                                                      .dummyPrescs[index]
+                                                  ['prescription'] as String,
+                                              'count':
+                                                  DummyLists.dummyPrescs[index]
+                                                      ['count'] as int,
+                                              'price': price *
+                                                  (DummyLists.dummyPrescs[index]
+                                                      ['count'] as int)
+                                            });
+
+                                            if (DummyLists.dummyPrescs[index]
+                                                    ['presc_type'] ==
+                                                'test') {
+                                              Fluttertoast.showToast(
+                                                  msg: 'item added to lab');
+                                              DummyLists.lab.add(DummyLists
+                                                  .dummyPrescs[index]);
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg: 'item added to cart');
+                                              DummyLists.kart.add(DummyLists
+                                                  .dummyPrescs[index]);
+                                            }
                                             print(
                                                 DummyLists.dummyPrescs[index]);
-                                            Fluttertoast.showToast(
-                                                msg: DummyLists.dummyPrescs[
-                                                                index]
-                                                            ['presc_type'] !=
-                                                        'medicine'
-                                                    ? 'item added to lab'
-                                                    : 'item added to cart');
                                             widget.notifyParent();
-                                            DummyLists.dummyPrescs[index]
-                                                        ['presc_type'] ==
-                                                    'test'
-                                                ? DummyLists.lab.add(DummyLists
-                                                    .dummyPrescs[index])
-                                                : DummyLists.kart.add(DummyLists
-                                                    .dummyPrescs[index]);
                                           },
                                           icon: Icon(
                                               DummyLists.dummyPrescs[index]
@@ -164,7 +182,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                   title: Row(
                     children: [
                       Text(todaysList[index]['prescription']),
-                      Text(' x' + todaysList[index]['count']),
+                      Text(' x' + todaysList[index]['count'].toString()),
                     ],
                   ),
                   trailing: Text('Dr. ' + todaysList[index]['doctor_name']),
@@ -191,7 +209,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                     children: [
                       Text(todays_1_List[index]['prescription']),
                       Text(todays_1_List[index]['presc_type'] == 'medicine'
-                          ? ' x' + todays_1_List[index]['count']
+                          ? ' x' + todays_1_List[index]['count'].toString()
                           : ''),
                     ],
                   ),
@@ -217,7 +235,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                     children: [
                       Text(olderList[index]['prescription']),
                       Text(olderList[index]['presc_type'] == 'medicine'
-                          ? ' x' + olderList[index]['count']
+                          ? ' x' + olderList[index]['count'].toString()
                           : ''),
                     ],
                   ),

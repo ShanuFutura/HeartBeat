@@ -12,6 +12,8 @@ class DBHelper extends ChangeNotifier {
 
   String loginId = '';
 
+  List<Map<String, Object>> paymentProfile = [];
+
   bool loginCall(
     String username,
     String password,
@@ -115,5 +117,9 @@ class DBHelper extends ChangeNotifier {
         .toList();
     print(tempList);
     return tempList.length;
+  }
+
+  double getPrices(String item) {
+    return 25.0;
   }
 }
