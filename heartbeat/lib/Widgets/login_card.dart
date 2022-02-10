@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/ClickableContainer.dart';
 import 'package:heartbeat/screens/patient_signup_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginCard extends StatelessWidget {
   // const LoginCard({ Key? key }) : super(key: key);
@@ -85,7 +86,9 @@ class LoginCard extends StatelessWidget {
                 heit: 50,
                 widt: 90,
                 kalar: const Color.fromRGBO(255, 255, 255, 1),
-                tap: () {
+                tap: () async {
+                  // final pref = await SharedPreferences.getInstance();
+                  // pref.clear();
                   trySubmit(context);
                   FocusManager.instance.primaryFocus?.unfocus();
                 },

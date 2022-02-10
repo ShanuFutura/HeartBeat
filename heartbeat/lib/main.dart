@@ -46,12 +46,14 @@ class HeartBeat extends StatelessWidget {
 
               return const LaodingScreen();
             } else {
-              print(snap.data.toString());
+              print(snap.data.toString() + '!!!!');
               if (snap.data == 'patient') {
                 return PatientHomePage();
               } else if (snap.data == 'doc') {
+                print(snap.data.toString() + '!!!!');
                 return DocHomePage();
               } else {
+                print(snap.data.toString() + '!!!!');
                 return LoginScreen();
               }
             }

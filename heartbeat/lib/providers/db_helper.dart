@@ -20,16 +20,34 @@ class DBHelper extends ChangeNotifier {
 
   List<Map<String, Object>> paymentProfile = [];
 
-  bool loginCall(
+  Future<bool> loginCall(
     String username,
     String password,
-  ) {
-//send to backend
-//gets isLOginSuccessful ,login id, userCategory
-    return true;
+  ) async {
+    final url = Uri.parse(urlS + 'Login.php');
+    final res =
+        await post(url, body: {'username': username, 'password': password});
+    print(json.decode(res.body)['message']);
+
+    if (json.decode(res.body)['message'] == 'User Successfully LoggedIn') {
+      if (json.decode(res.body)['type'] == 'patient') {
+        print(json.decode(res.body)['type']);
+
+        final pref = await SharedPreferences.getInstance();
+        pref.setString('authTok', 'patient');
+      } else {
+        print(json.decode(res.body)['type']);
+
+        final pref = await SharedPreferences.getInstance();
+        pref.setString('authTok', 'doc');
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  Future<void> signupCall(
+  Future<String> signupCall(
     String name,
     String age,
     String gender,
@@ -40,28 +58,34 @@ class DBHelper extends ChangeNotifier {
     BuildContext context,
   ) async {
     final url = Uri.parse(urlS + 'register.php');
-    final res = await post(url, body: {
-      'name': name,
-      'age': age,
-      'gender': gender,
-      'email': email,
-      'mobile': mobile,
-      'username': username,
-      'password': password,
-    });
-    print(res.body);
-    print(
-      '{$username, $gender, $age, $email, $mobile, $name, $password}',
-    );
-    Future<void> setToken() async {
-      final pref = await SharedPreferences.getInstance();
-      pref.setString('authTok', 'patient');
-    }
+    try {
+      final res = await post(url, body: {
+        'name': name,
+        'age': age,
+        'gender': gender,
+        'email': email,
+        'mobile': mobile,
+        'username': username,
+        'password': password,
+      });
+      print(res.body);
+      // print(
+      //   '{$username, $gender, $age, $email, $mobile, $name, $password}',
+      // );
+      Future<void> setToken() async {
+        final pref = await SharedPreferences.getInstance();
+        pref.setString('authTok', 'patient');
+      }
 
-    if (true) {
-      setToken();
+      if (res.body == 'Registration Successfull...') {
+        setToken();
 
-      Navigator.of(context).pushNamed(PatientHomePage.routeName);
+        Navigator.of(context).pushNamed(PatientHomePage.routeName);
+      }
+      return 'ok';
+    } catch (error) {
+      print(error.toString());
+      return error.toString();
     }
   }
 
@@ -69,6 +93,17 @@ class DBHelper extends ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     pref.setString('authTok', 'nop');
     Navigator.of(context).pushNamed(LoginScreen.routeName);
+  }
+
+  fetchAndSetDoctorsList() async {
+    final url = await Uri.parse(urlS + 'doctor_list.php');
+    final res = await get(url);
+    // print(res.body);
+    final tempList = jsonDecode(res.body) as List;
+    print(tempList.length.toString());
+    DummyLists.docsList.addAll(tempList);
+    print(DummyLists.docsList);
+    // print(json.decode(res.body)[1]['doc_name']);
   }
 
   bool patientProfUpdate(

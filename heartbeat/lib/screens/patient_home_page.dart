@@ -73,7 +73,14 @@ class _PatientHomePageState extends State<PatientHomePage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Provider.of<DBHelper>(context, listen: false).fetchAndSetDoctorsList();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: ElevatedButton(
@@ -129,7 +136,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                           Text(DummyLists.docsList[index]
                                               ['doc_name'] as String),
                                           Text(DummyLists.docsList[index]
-                                              ['department'] as String)
+                                              ['department_name'] as String)
                                         ],
                                       ),
                                     ),

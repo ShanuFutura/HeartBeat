@@ -244,51 +244,51 @@ class DummyLists {
     {'test_name': 'sugar test', 'price': 100.00},
   ];
 
-  static const List<Map<String, Object>> docsList = [
-    {
-      'value': 1,
-      'message': 'successful',
-      'doc_name': 'Alice',
-      'department': 'Nuerology',
-      'qualification': 'MD',
-      'gender': 'male',
-      'email': 'alice@abd.com',
-      'mobile': '99999999',
-      'experience': '3'
-    },
-    {
-      'value': 1,
-      'message': 'successful',
-      'doc_name': 'Bob',
-      'department': 'Cardiology',
-      'qualification': 'MD',
-      'gender': 'male',
-      'email': 'alice@abd.com',
-      'mobile': '99999999',
-      'experience': '3'
-    },
-    {
-      'value': 1,
-      'message': 'successful',
-      'doc_name': 'Carl',
-      'department': 'Gynacology',
-      'qualification': 'MD',
-      'gender': 'male',
-      'email': 'alice@abd.com',
-      'mobile': '99999999',
-      'experience': '3'
-    },
-    {
-      'value': 1,
-      'message': 'successful',
-      'doc_name': 'Daisy',
-      'department': 'Orthology',
-      'qualification': 'MD',
-      'gender': 'male',
-      'email': 'alice@abd.com',
-      'mobile': '99999999',
-      'experience': '3'
-    }
+  static List docsList = [
+    // {
+    //   'value': 1,
+    //   'message': 'successful',
+    //   'doc_name': 'Alice',
+    //   'department': 'Nuerology',
+    //   'qualification': 'MD',
+    //   'gender': 'male',
+    //   'email': 'alice@abd.com',
+    //   'mobile': '99999999',
+    //   'experience': '3'
+    // },
+    // {
+    //   'value': 1,
+    //   'message': 'successful',
+    //   'doc_name': 'Bob',
+    //   'department': 'Cardiology',
+    //   'qualification': 'MD',
+    //   'gender': 'male',
+    //   'email': 'alice@abd.com',
+    //   'mobile': '99999999',
+    //   'experience': '3'
+    // },
+    // {
+    //   'value': 1,
+    //   'message': 'successful',
+    //   'doc_name': 'Carl',
+    //   'department': 'Gynacology',
+    //   'qualification': 'MD',
+    //   'gender': 'male',
+    //   'email': 'alice@abd.com',
+    //   'mobile': '99999999',
+    //   'experience': '3'
+    // },
+    // {
+    //   'value': 1,
+    //   'message': 'successful',
+    //   'doc_name': 'Daisy',
+    //   'department': 'Orthology',
+    //   'qualification': 'MD',
+    //   'gender': 'male',
+    //   'email': 'alice@abd.com',
+    //   'mobile': '99999999',
+    //   'experience': '3'
+    // }
   ];
 
   // static const List<String> docsList = [
