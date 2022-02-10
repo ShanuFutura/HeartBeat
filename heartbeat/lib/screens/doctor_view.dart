@@ -6,16 +6,22 @@ import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:provider/provider.dart';
 
-class DoctorView extends StatelessWidget {
+class DoctorView extends StatefulWidget {
   static const String routeName = 'docview';
+
+  @override
+  State<DoctorView> createState() => _DoctorViewState();
+}
+
+class _DoctorViewState extends State<DoctorView> {
   notifyParent() {}
+
+  var isDocThere = '';
 
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments as int;
     final docName = DummyLists.docsList[arg]['doc_name'] as String;
-    final isDocThere =
-        Provider.of<DBHelper>(context, listen: false).isDocAvailable(1);
 
     final appoinmentsCount =
         Provider.of<DBHelper>(context).availableTimeSlotsCount(docName);
@@ -58,7 +64,16 @@ class DoctorView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(isDocThere ? 'Doc Available' : 'Doc on Leave'),
+                      FutureBuilder(
+                          future:
+                              Provider.of<DBHelper>(context).isDocAvailable(2),
+                          builder: (context, snap) {
+                            if (snap.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text('loading...');
+                            } else
+                              return Text(snap.data.toString());
+                          }), //Text(isDocThere),
                       const SizedBox(
                         height: 10,
                       ),
@@ -95,6 +110,8 @@ class DoctorView extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
+                      Provider.of<DBHelper>(context, listen: false)
+                          .isDocAvailable(2);
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {

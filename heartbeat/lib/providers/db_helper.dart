@@ -159,8 +159,11 @@ class DBHelper extends ChangeNotifier {
     print(date.toString());
   }
 
-  bool isDocAvailable(int docId) {
-    return true;
+  Future<String> isDocAvailable(int docId) async {
+    final url = Uri.parse(urlS + 'leave_status_view.php');
+    final res = await post(url, body: {'doctor_id': docId.toString()});
+    print(res.body.toString());
+    return jsonDecode(res.body)['message'];
   }
 
   int availableTimeSlotsCount(String doc) {
