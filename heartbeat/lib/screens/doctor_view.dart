@@ -23,8 +23,8 @@ class _DoctorViewState extends State<DoctorView> {
     final arg = ModalRoute.of(context)!.settings.arguments as int;
     final docName = DummyLists.docsList[arg]['doc_name'] as String;
 
-    final appoinmentsCount =
-        Provider.of<DBHelper>(context).availableTimeSlotsCount(docName);
+    // final appoinmentsCount =
+    //     Provider.of<DBHelper>(context).availableTimeSlotsCount(docName);
     // var feedbackText = '';
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -71,13 +71,26 @@ class _DoctorViewState extends State<DoctorView> {
                             if (snap.connectionState ==
                                 ConnectionState.waiting) {
                               return Text('loading...');
-                            } else
+                            } else {
+                              print(snap.data);
                               return Text(snap.data.toString());
+                            }
                           }), //Text(isDocThere),
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(appoinmentsCount.toString() + ' Appoinments left'),
+                      FutureBuilder(
+                          future: Provider.of<DBHelper>(context)
+                              .availableTimeSlotsCount(2),
+                          builder: (context, snap) {
+                            if (snap.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text('loading...');
+                            } else {
+                              return Text(snap.data.toString());
+                            }
+                          }),
+                      // Text(appoinmentsCount.toString() + ' Appoinments left'),
                     ],
                   ),
                 )

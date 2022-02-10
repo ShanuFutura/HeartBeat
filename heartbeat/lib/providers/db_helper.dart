@@ -166,12 +166,12 @@ class DBHelper extends ChangeNotifier {
     return jsonDecode(res.body)['message'];
   }
 
-  int availableTimeSlotsCount(String doc) {
-    final tempList = DummyLists.docTimeSlots
-        .where((element) => element['doc_name'] == doc)
-        .toList();
+  Future<int> availableTimeSlotsCount(int doc) async {
+    final url = Uri.parse(urlS + 'appoinment_view.php');
+    final res = await get(url);
+    final tempList = jsonDecode(res.body) as List;
     print(tempList);
-    return tempList.length;
+    return 3;
   }
 
   double getPrices(String item) {
