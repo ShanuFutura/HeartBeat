@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final urlS = 'http://192.168.29.78/Doctor_Patient/api/';
+final urlS = 'http://192.168.29.77/Doctor_Patient/api/';
 
 // final url = Uri.parse('http://192.168.29.78/Doctor_patient/api/');
 
@@ -167,11 +167,11 @@ class DBHelper extends ChangeNotifier {
   }
 
   Future<int> availableTimeSlotsCount(int doc) async {
-    final url = Uri.parse(urlS + 'appoinment_view.php');
-    final res = await get(url);
+    final url = Uri.parse(urlS + 'appointment_view.php');
+    final res = await post(url, body: {'doctor_id': doc.toString()});
     final tempList = jsonDecode(res.body) as List;
     print(tempList);
-    return 3;
+    return tempList.length;
   }
 
   double getPrices(String item) {

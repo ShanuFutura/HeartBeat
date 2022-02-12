@@ -87,7 +87,9 @@ class _DoctorViewState extends State<DoctorView> {
                                 ConnectionState.waiting) {
                               return Text('loading...');
                             } else {
-                              return Text(snap.data.toString());
+                              return Text(snap.data as int > 1
+                                  ? snap.data.toString() + ' slots left'
+                                  : snap.data.toString() + ' slot left');
                             }
                           }),
                       // Text(appoinmentsCount.toString() + ' Appoinments left'),
