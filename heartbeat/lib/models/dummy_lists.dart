@@ -126,14 +126,7 @@ class DummyLists {
   //   {'content': 'content', 'date': 'date'}
   // ];
 
-  static var docTimeSlots = [
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-    {'doc_name': 'Alice', 'time_slot': '09:00'},
-  ];
+  static var docTimeSlots = [];
 
   // static const List<Map<String, String>> prescriptionsList = [
   //   {

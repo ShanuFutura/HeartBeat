@@ -73,12 +73,6 @@ class _PatientHomePageState extends State<PatientHomePage> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     Provider.of<DBHelper>(context, listen: false).fetchAndSetDoctorsList();
     return Scaffold(
@@ -148,14 +142,23 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: const [
-                      Text('Search Docs'),
-                      Icon((Icons.search)),
-                    ],
-                  ),
-                ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                      future: Provider.of<DBHelper>(context)
+                          .fetchAndSetDoctorsList(),
+                      builder: (ctx, snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return Text('loading...');
+                        } else {
+                          return Row(
+                            children: const [
+                              Text('Search Docs'),
+                              Icon((Icons.search)),
+                            ],
+                          );
+                        }
+                      },
+                    )),
               )),
           IconButton(
             onPressed: () {

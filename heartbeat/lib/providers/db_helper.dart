@@ -27,24 +27,38 @@ class DBHelper extends ChangeNotifier {
     final url = Uri.parse(urlS + 'Login.php');
     final res =
         await post(url, body: {'username': username, 'password': password});
-    print(json.decode(res.body)['message']);
+    print('=======' + json.decode(res.body).toString());
 
     if (json.decode(res.body)['message'] == 'User Successfully LoggedIn') {
+      loginId = json.decode(res.body)['id'];
+      print(loginId);
+      final pref = await SharedPreferences.getInstance();
+
       if (json.decode(res.body)['type'] == 'patient') {
         print(json.decode(res.body)['type']);
 
-        final pref = await SharedPreferences.getInstance();
+        // final pref = await SharedPreferences.getInstance();
         pref.setString('authTok', 'patient');
       } else {
         print(json.decode(res.body)['type']);
 
-        final pref = await SharedPreferences.getInstance();
+        // final pref = await SharedPreferences.getInstance();
         pref.setString('authTok', 'doc');
       }
       return true;
     } else {
       return false;
     }
+  }
+
+  // var isFetchingBool = false;
+
+  // bool get isFetching {
+  // return isFetchingBool;
+  // }
+
+  String get login_id {
+    return loginId;
   }
 
   Future<String> signupCall(
@@ -95,15 +109,21 @@ class DBHelper extends ChangeNotifier {
     Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
-  fetchAndSetDoctorsList() async {
-    final url = await Uri.parse(urlS + 'doctor_list.php');
+  Future<List> fetchAndSetDoctorsList() async {
+    // isFetchingBool = true;
+    final url = Uri.parse(urlS + 'doctor_list.php');
     final res = await get(url);
+    // isFetchingBool = false;
     // print(res.body);
     final tempList = jsonDecode(res.body) as List;
     print(tempList.length.toString());
     DummyLists.docsList.addAll(tempList);
     print(DummyLists.docsList);
+    return tempList;
+    // notifyListeners();
     // print(json.decode(res.body)[1]['doc_name']);
+
+    // final url2 = Uri.parse(urlS + 'appointment_view');
   }
 
   bool patientProfUpdate(
@@ -120,12 +140,19 @@ class DBHelper extends ChangeNotifier {
 
   // static feedBack
 
-  void feedBackCall(String feed) {
-    print(feed);
+  Future<void> feedBackCall(String feed) async {
+    final url = Uri.parse(urlS + 'send_feedback.php');
+    final res = await post(url,
+        body: {'login_id': login_id.toString(), 'feedback': feed});
+    print(res.body);
+    // print(feed);
   }
 
-  void addAppoinment(String time_slot, String docName) {
-    // print(time_slot);
+  void addAppoinment(String time_slot, String docName) async {
+    final url = Uri.parse(urlS + 'add_appointment.php');
+    post(url, body: {
+      "login_id": login_id,
+    });
     DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docName});
     print(DummyLists.appoinments.toString());
     // return Future.delayed(Duration(seconds: 1)).then((_) {
@@ -170,7 +197,10 @@ class DBHelper extends ChangeNotifier {
     final url = Uri.parse(urlS + 'appointment_view.php');
     final res = await post(url, body: {'doctor_id': doc.toString()});
     final tempList = jsonDecode(res.body) as List;
-    print(tempList);
+    print('tempList' + tempList.toString());
+    // DummyLists.docTimeSlots.addAll(tempList);
+    DummyLists.docTimeSlots = tempList;
+    print(DummyLists.docTimeSlots.toString());
     return tempList.length;
   }
 

@@ -158,52 +158,83 @@ class _DoctorViewState extends State<DoctorView> {
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: DummyLists.docTimeSlots.isEmpty
-                        ? null
-                        : () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Dialog(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 60,
-                                        horizontal: 20,
-                                      ),
-                                      child: TimeSlotCard(
-                                        doc: docName,
-                                      ),
-                                    ),
-                                  );
-                                });
-                          },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          color: DummyLists.docTimeSlots.isEmpty
-                              ? Colors.grey
-                              : Colors.blue,
-                        ),
-                        height: 200,
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Book Appoinments',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
+                  child: FutureBuilder(
+                      future: Provider.of<DBHelper>(context)
+                          .availableTimeSlotsCount(2),
+                      builder: (ctx, snap) {
+                        if (snap.connectionState == ConnectionState.waiting) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  color: Colors.grey),
+                              height: 200,
+                              child: const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'loading...',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 25, color: Colors.white),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: DummyLists.docTimeSlots.isEmpty
+                                ? null
+                                : () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 60,
+                                                horizontal: 20,
+                                              ),
+                                              child: TimeSlotCard(
+                                                doc: docName,
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  color: DummyLists.docTimeSlots.isEmpty
+                                      ? Colors.grey
+                                      : Colors.blue,
+                                ),
+                                height: 200,
+                                child: const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Book Appoinments',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 25, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                 ),
               ],
             ),
