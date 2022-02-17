@@ -72,9 +72,12 @@ class _PatientHomePageState extends State<PatientHomePage> {
     print(DummyLists.oldPrescImages.toString());
   }
 
+  var fetchResponse;
   @override
   Widget build(BuildContext context) {
-    Provider.of<DBHelper>(context, listen: false).fetchAndSetDoctorsList();
+    Provider.of<DBHelper>(context, listen: false)
+        .fetchAndSetDoctorsList(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: ElevatedButton(
@@ -145,7 +148,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: FutureBuilder(
                       future: Provider.of<DBHelper>(context)
-                          .fetchAndSetDoctorsList(),
+                          .fetchAndSetDoctorsList(context),
                       builder: (ctx, snap) {
                         if (snap.connectionState == ConnectionState.waiting) {
                           return Text('loading...');
@@ -168,7 +171,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
               const Icon(Icons.shopping_cart),
               if (!DummyLists.kart.isEmpty)
                 CircleAvatar(
-                  backgroundColor: Colors.red,
+                  backgroundColor: Color.fromARGB(255, 212, 14, 0),
                   radius: 6,
                   child: Text(
                     DummyLists.kart.length.toString(),
@@ -183,34 +186,38 @@ class _PatientHomePageState extends State<PatientHomePage> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Heartbeat',
-                    style: TextStyle(fontSize: 40),
+          : fetchResponse == true
+              ? Text('connection error')
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'Heartbeat',
+                          style: TextStyle(fontSize: 40),
+                        ),
+                      ),
+                      Carousel(CarouselImages.itemsList),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: .5),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20))),
+                          height: 300,
+                          child: PatientPrescListView(
+                            notifyParent: refresh,
+                            isDoc: false,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Carousel(CarouselImages.itemsList),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: .5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    height: 300,
-                    child: PatientPrescListView(
-                      notifyParent: refresh,
-                      isDoc: false,
-                    ),
-                  ),
-                ),
-              ],
-            ),
     );
   }
 }

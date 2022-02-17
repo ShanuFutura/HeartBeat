@@ -14,17 +14,13 @@ class TimeSlotCard extends StatefulWidget {
 class _TimeSlotCardState extends State<TimeSlotCard> {
   @override
   Widget build(BuildContext context) {
-    final isSlotsEmpty = DummyLists.docTimeSlots
-        .where((element) => element['doc_name'] == widget.doc)
-        .toList()
-        .isEmpty;
+    final isSlotsEmpty = DummyLists.docTimeSlots.isEmpty;
     return isSlotsEmpty
         ? const Text('No slots left')
         : Wrap(
             children: [
               if (!isSlotsEmpty)
                 ...DummyLists.docTimeSlots
-                    .where((element) => element['doc_name'] == widget.doc)
                     .map((e) => Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 2, horizontal: 6),

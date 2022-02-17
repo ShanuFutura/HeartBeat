@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
@@ -9,7 +11,7 @@ import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final urlS = 'http://192.168.29.77/Doctor_Patient/api/';
+final urlS = 'http://192.168.29.78/Doctor_Patient/api/';
 
 // final url = Uri.parse('http://192.168.29.78/Doctor_patient/api/');
 
@@ -109,17 +111,29 @@ class DBHelper extends ChangeNotifier {
     Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
-  Future<List> fetchAndSetDoctorsList() async {
+  Future<List?> fetchAndSetDoctorsList(BuildContext context) async {
     // isFetchingBool = true;
-    final url = Uri.parse(urlS + 'doctor_list.php');
-    final res = await get(url);
-    // isFetchingBool = false;
-    // print(res.body);
-    final tempList = jsonDecode(res.body) as List;
-    print(tempList.length.toString());
-    DummyLists.docsList.addAll(tempList);
-    print(DummyLists.docsList);
-    return tempList;
+    try {
+      final url = Uri.parse(urlS + 'doctor_list.php');
+      final res = await get(url);
+      // isFetchingBool = false;
+      // print(res.body);
+      final tempList = jsonDecode(res.body) as List;
+      print(tempList.length.toString());
+      DummyLists.docsList.addAll(tempList);
+      print(DummyLists.docsList);
+      return tempList;
+    } on SocketException catch (error) {
+      print('connnection error--' + error.message);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('CONNECTION ERROR'),
+            );
+          }).then((value) => null);
+    }
+
     // notifyListeners();
     // print(json.decode(res.body)[1]['doc_name']);
 
@@ -194,14 +208,37 @@ class DBHelper extends ChangeNotifier {
   }
 
   Future<int> availableTimeSlotsCount(int doc) async {
+    DummyLists.docTimeSlots = [
+      {'time_slot': '09:00'},
+      {'time_slot': '09:15'},
+      {'time_slot': '09:20'},
+      {'time_slot': '09:25'},
+      {'time_slot': '09:30'},
+      {'time_slot': '09:35'},
+      {'time_slot': '09:45'},
+      {'time_slot': '10:00'},
+    ];
+    print('docId' + doc.toString());
     final url = Uri.parse(urlS + 'appointment_view.php');
     final res = await post(url, body: {'doctor_id': doc.toString()});
-    final tempList = jsonDecode(res.body) as List;
-    print('tempList' + tempList.toString());
+    final bookedSlots = jsonDecode(res.body) as List;
+    // final bookedSlots=bookedSlotsTemp.w
+    print('tempList' + bookedSlots.toString());
+    // final tempList = DummyLists.docTimeSlots.where((el) {
+    //   return bookedSlots
+    //       .any((element) => element['time_slot'] != el['time_slot']);
+    // });
+    // bookedSlots.map((e) => DummyLists.docTimeSlots
+    //     .removeWhere((element) => element['time_slot'] == e['time_slot']));
+    DummyLists.docTimeSlots.removeWhere((ele) => (bookedSlots
+        .any((element) => ele['time_slot'] == element['time_slot'])));
+    final tempList = [];
+    // DummyLists.docTimeSlots.map((e) {});
+
     // DummyLists.docTimeSlots.addAll(tempList);
-    DummyLists.docTimeSlots = tempList;
-    print(DummyLists.docTimeSlots.toString());
-    return tempList.length;
+    // DummyLists.docTimeSlots = tempList;
+    print('-----' + DummyLists.docTimeSlots.toString());
+    return DummyLists.docTimeSlots.length;
   }
 
   double getPrices(String item) {
