@@ -14,6 +14,7 @@ class DocHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       drawer: DocScreenDrawer(),
       appBar: AppBar(
@@ -43,15 +44,15 @@ class DocHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(),
-            Carousel(CarouselImages.itemsList),
+            // Container(),
+            Carousel(CarouselImages.itemsList, partHeight: fullHeight * .5),
             const SizedBox(height: 10),
             const Text(
               'Patients',
               style: TextStyle(fontSize: 20),
             ),
             Container(
-              height: 400,
+              height: fullHeight * .4,
               child: ListView.builder(
                   itemCount: patientsList.length,
                   itemBuilder: (context, index) {

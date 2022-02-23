@@ -75,8 +75,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
   var fetchResponse;
   @override
   Widget build(BuildContext context) {
-    Provider.of<DBHelper>(context, listen: false)
-        .fetchAndSetDoctorsList(context);
+    // Provider.of<DBHelper>(context, listen: false)
+    //     .fetchAndSetDoctorsList(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -203,7 +203,7 @@ class _DoctorViewState extends State<DoctorView> {
                                                   horizontal: 20,
                                                 ),
                                                 child: TimeSlotCard(
-                                                  doc: docName,
+                                                  doc: docId,
                                                 ),
                                               ),
                                             );

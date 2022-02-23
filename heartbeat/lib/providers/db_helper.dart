@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
@@ -33,16 +33,16 @@ class DBHelper extends ChangeNotifier {
 
     if (json.decode(res.body)['message'] == 'User Successfully LoggedIn') {
       loginId = json.decode(res.body)['id'];
-      print(loginId);
+      print('loginId' + loginId);
       final pref = await SharedPreferences.getInstance();
 
       if (json.decode(res.body)['type'] == 'patient') {
-        print(json.decode(res.body)['type']);
+        print('user type:' + json.decode(res.body)['type']);
 
         // final pref = await SharedPreferences.getInstance();
         pref.setString('authTok', 'patient');
       } else {
-        print(json.decode(res.body)['type']);
+        print('user type :' + json.decode(res.body)['type']);
 
         // final pref = await SharedPreferences.getInstance();
         pref.setString('authTok', 'doc');
@@ -84,7 +84,7 @@ class DBHelper extends ChangeNotifier {
         'username': username,
         'password': password,
       });
-      print(res.body);
+      print('signup_res:' + res.body);
       // print(
       //   '{$username, $gender, $age, $email, $mobile, $name, $password}',
       // );
@@ -93,14 +93,15 @@ class DBHelper extends ChangeNotifier {
         pref.setString('authTok', 'patient');
       }
 
-      if (res.body == 'Registration Successfull...') {
+      // print(res.body);
+      if (jsonDecode(res.body)['message'] == 'registration successfull') {
         setToken();
 
         Navigator.of(context).pushNamed(PatientHomePage.routeName);
       }
       return 'ok';
     } catch (error) {
-      print(error.toString());
+      print('error' + error.toString());
       return error.toString();
     }
   }
@@ -112,6 +113,8 @@ class DBHelper extends ChangeNotifier {
   }
 
   Future<List?> fetchAndSetDoctorsList(BuildContext context) async {
+    DummyLists.docsList.clear();
+    print('fetching docs');
     // isFetchingBool = true;
     try {
       final url = Uri.parse(urlS + 'doctor_list.php');
@@ -119,7 +122,7 @@ class DBHelper extends ChangeNotifier {
       // isFetchingBool = false;
       // print(res.body);
       final tempList = jsonDecode(res.body) as List;
-      print(tempList.length.toString());
+      print('doctor list length:' + tempList.length.toString());
       DummyLists.docsList.addAll(tempList);
       print(DummyLists.docsList);
       return tempList;
@@ -140,14 +143,19 @@ class DBHelper extends ChangeNotifier {
     // final url2 = Uri.parse(urlS + 'appointment_view');
   }
 
-  bool patientProfUpdate(
+  Future<bool> patientProfUpdate(
     // String login_id,
     String name,
     String age,
     String gender,
     String email,
     String mobile,
-  ) {
+  ) async {
+    final url = Uri.parse(urlS + 'profile_update.php');
+    final res =
+        await post(url, body: {loginId, name, age, gender, email, mobile});
+    print(res.body);
+    //FILL THE POST BODY....!!!!!
     print('{$name,$age,$gender,$email,$gender,$mobile,}');
     return true;
   }
@@ -158,17 +166,21 @@ class DBHelper extends ChangeNotifier {
     final url = Uri.parse(urlS + 'send_feedback.php');
     final res = await post(url,
         body: {'login_id': login_id.toString(), 'feedback': feed});
-    print(res.body);
+    print('feedback res:' + res.body);
     // print(feed);
   }
 
-  void addAppoinment(String time_slot, String docName) async {
+  void addAppoinment(String time_slot, String docId) async {
     final url = Uri.parse(urlS + 'add_appointment.php');
-    post(url, body: {
+    print('docName:' + docId);
+    final res = await post(url, body: {
       "login_id": login_id,
+      'doctor_id': docId,
+      'time_slot': time_slot
     });
-    DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docName});
-    print(DummyLists.appoinments.toString());
+    print('book timeslot res:' + res.body);
+    DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docId});
+    print('appointments in prvider:' + DummyLists.appoinments.toString());
     // return Future.delayed(Duration(seconds: 1)).then((_) {
     //   return true;
     // });
@@ -196,16 +208,20 @@ class DBHelper extends ChangeNotifier {
     return DummyLists.dummyPrescs;
   }
 
-  void applyLeave(DateTime date) {
-    print(date.toString());
+  void applyLeave(String date) async {
+    final url = Uri.parse(urlS + 'leave_request.php');
+    final res = await post(url, body: {'doctor_id': '2', 'date': 'date'});
+    print('leave request response:' + res.body);
   }
 
   Future<String> isDocAvailable(int docId) async {
     final url = Uri.parse(urlS + 'leave_status_view.php');
     final res = await post(url, body: {'doctor_id': docId.toString()});
-    print(res.body.toString());
+    print('is doc available res:' + res.body.toString());
     return jsonDecode(res.body)['message'];
   }
+
+  Future<void> bookedSlots() async {}
 
   Future<int> availableTimeSlotsCount(int doc) async {
     DummyLists.docTimeSlots = [
@@ -221,6 +237,7 @@ class DBHelper extends ChangeNotifier {
     print('docId' + doc.toString());
     final url = Uri.parse(urlS + 'appointment_view.php');
     final res = await post(url, body: {'doctor_id': doc.toString()});
+    print(res.body);
     final bookedSlots = jsonDecode(res.body) as List;
     // final bookedSlots=bookedSlotsTemp.w
     print('tempList' + bookedSlots.toString());

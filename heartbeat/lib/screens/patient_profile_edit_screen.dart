@@ -43,7 +43,8 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
         _formKey.currentState!.save();
         final done = Provider.of<DBHelper>(context, listen: false)
             .patientProfUpdate(_name, _age, _gender!, _email, _phone);
-        if (done) {
+        if (true) {
+          //DO THIS!!!!!
           Navigator.of(context).pop();
         }
       }

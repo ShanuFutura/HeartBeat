@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class DocLeaveApplication extends StatefulWidget {
   const DocLeaveApplication({Key? key}) : super(key: key);
@@ -69,6 +71,8 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
                           .add({'date': selectedDate!, 'approval': 'waiting'});
                       final slDate =
                           DateFormat('DD/MM/yyyy').format(selectedDate!);
+                      Provider.of<DBHelper>(context, listen: false)
+                          .applyLeave(slDate);
                       Fluttertoast.showToast(msg: 'leave applied for  $slDate');
                       setState(() {
                         isApply = false;

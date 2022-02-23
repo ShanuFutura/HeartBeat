@@ -54,7 +54,7 @@ class _LoginCardState extends State<PatientSignupPage> {
               .signupCall(_name, _age, _gender!, _email, _phone, _uname, _pword,
                   context);
           if (res == 'ok') {
-            print(res);
+            print('response from signup page : ' + res);
             setState(() {
               isLoading = false;
             });
