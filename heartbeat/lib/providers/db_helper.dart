@@ -17,8 +17,8 @@ final urlS = 'http://192.168.29.78/Doctor_Patient/api/';
 
 class DBHelper extends ChangeNotifier {
   // static bool authTok=false;
-
-  String loginId = '';
+  var prescForPatients;
+  var loginId;
 
   List<Map<String, Object>> paymentProfile = [];
 
@@ -151,9 +151,15 @@ class DBHelper extends ChangeNotifier {
     String email,
     String mobile,
   ) async {
-    final url = Uri.parse(urlS + 'profile_update.php');
-    final res =
-        await post(url, body: {loginId, name, age, gender, email, mobile});
+    final url = Uri.parse(urlS + 'patient_profile_edit.php');
+    final res = await post(url, body: {
+      'patient_id': loginId,
+      'name': name,
+      'email': email,
+      'phone': mobile,
+      'gender': gender,
+      'age': age,
+    });
     print(res.body);
     //FILL THE POST BODY....!!!!!
     print('{$name,$age,$gender,$email,$gender,$mobile,}');
@@ -174,16 +180,13 @@ class DBHelper extends ChangeNotifier {
     final url = Uri.parse(urlS + 'add_appointment.php');
     print('docName:' + docId);
     final res = await post(url, body: {
-      "login_id": login_id,
+      'login_id': login_id,
       'doctor_id': docId,
       'time_slot': time_slot
     });
     print('book timeslot res:' + res.body);
     DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docId});
     print('appointments in prvider:' + DummyLists.appoinments.toString());
-    // return Future.delayed(Duration(seconds: 1)).then((_) {
-    //   return true;
-    // });
   }
 
   addImagePresc(File img, DateTime timestamp, String name) {
@@ -260,5 +263,13 @@ class DBHelper extends ChangeNotifier {
 
   double getPrices(String item) {
     return 25.0;
+  }
+
+  Future<dynamic> getPrescForPatient() async {
+    final res = await post(Uri.parse(urlS + 'priscription_list.php'),
+        body: {'patient_id': '2'});
+    print('presc' + res.body);
+    prescForPatients = jsonDecode(res.body) as List;
+    return jsonDecode(res.body);
   }
 }

@@ -302,10 +302,10 @@ class _PatientViewState extends State<PatientView> {
                   ),
                   const Divider(),
                   if (!isLabtest)
-                    PatientPrescListView(
-                      notifyParent: () {},
-                      isDoc: true,
-                    ),
+                    // PatientPrescListView(
+                    //   notifyParent: () {},
+                    //   isDoc: true,
+                    // ),
                   if (isLabtest)
                     ListView.builder(
                       physics: const ClampingScrollPhysics(),

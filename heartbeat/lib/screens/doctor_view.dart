@@ -112,10 +112,11 @@ class _DoctorViewState extends State<DoctorView> {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20))),
                       height: 300,
-                      child: PatientPrescListView(
-                        notifyParent: notifyParent,
-                        isDoc: false,
-                      )),
+                      // child: PatientPrescListView(
+                      //   notifyParent: notifyParent,
+                      //   isDoc: false,
+                      // ),
+                      ),
                 ],
               ),
             ),
