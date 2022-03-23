@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/ClickableContainer.dart';
 import 'package:heartbeat/providers/db_helper.dart';
+import 'package:heartbeat/screens/login_screen.dart';
 // import 'package:heartbeat/helpers/db_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -138,31 +139,6 @@ class _LoginCardState extends State<PatientSignupPage> {
                               ),
                             ),
                           ),
-                          TextFormField(
-                            style: const TextStyle(color: Colors.black),
-                            key: const ValueKey('unm'),
-                            validator: (v) {
-                              if (v!.trim().isEmpty) {
-                                return 'patient name cannot be empty';
-                              } else if (v.trim().length < 3) {
-                                return 'enter a valid user name';
-                              }
-                            },
-                            onSaved: (vl) {
-                              _uname = vl!;
-                            },
-                            decoration: const InputDecoration(
-                              labelText: 'Username',
-                              labelStyle:
-                                  TextStyle(color: Colors.black, fontSize: 12),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                            ),
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -274,6 +250,31 @@ class _LoginCardState extends State<PatientSignupPage> {
                             ),
                           ),
                           TextFormField(
+                            style: const TextStyle(color: Colors.black),
+                            key: const ValueKey('unm'),
+                            validator: (v) {
+                              if (v!.trim().isEmpty) {
+                                return 'patient name cannot be empty';
+                              } else if (v.trim().length < 3) {
+                                return 'enter a valid user name';
+                              }
+                            },
+                            onSaved: (vl) {
+                              _uname = vl!;
+                            },
+                            decoration: const InputDecoration(
+                              labelText: 'Username',
+                              labelStyle:
+                                  TextStyle(color: Colors.black, fontSize: 12),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TextFormField(
                             obscureText: true,
                             style: const TextStyle(color: Colors.black),
                             key: const ValueKey('pw'),
@@ -319,6 +320,16 @@ class _LoginCardState extends State<PatientSignupPage> {
                               //   child: Text('SignUp'),
                               // ),
                             ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: InkWell(
+                              child: Text('Login instead'),
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(LoginScreen.routeName);
+                              },
+                            ),
                           )
                         ],
                       ),

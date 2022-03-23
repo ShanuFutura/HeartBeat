@@ -188,34 +188,57 @@ class _PatientHomePageState extends State<PatientHomePage> {
             )
           : fetchResponse == true
               ? Text('connection error')
-              : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          'Heartbeat',
-                          style: TextStyle(fontSize: 40),
-                        ),
-                      ),
-                      Carousel(CarouselImages.itemsList),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(width: .5),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20))),
-                          height: 300,
-                          child: PatientPrescListView(
-                            notifyParent: refresh,
-                            isDoc: false,
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    await refresh();
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Heartbeat',
+                            style: TextStyle(fontSize: 40),
                           ),
                         ),
-                      ),
-                    ],
+                        Carousel(CarouselImages.itemsList),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(width: .5),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(20))),
+                            height: 300,
+                            child: FutureBuilder(
+                                future: Provider.of<DBHelper>(context)
+                                    .getPrescForPatient(),
+                                builder: (context, snap) {
+                                  if (snap.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if ((snap.data as dynamic)[0]
+                                          ['message'] ==
+                                      'failed') {
+                                    return Center(
+                                      child: Text('No datas'),
+                                    );
+                                  } else {
+                                    return PatientPrescListView(
+                                      notifyParent: refresh,
+                                      isDoc: false,
+                                    );
+                                  }
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
     );

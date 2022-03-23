@@ -22,7 +22,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:provider';
 
-void main() => runApp(HeartBeat());
+void main() {
+  runApp(HeartBeat());
+}
 
 class HeartBeat extends StatelessWidget {
   const HeartBeat({Key? key}) : super(key: key);
@@ -79,6 +81,7 @@ class HeartBeat extends StatelessWidget {
 
           // LaodingScreen.routeName: (ctx) => const LaodingScreen(),
         },
+        debugShowCheckedModeBanner: true,
       ),
     );
   }

@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error Loging in'),
+              title: Text('Error Loging in',),
               content: Text('Couldn\'t log you in please check credentials'),
             );
           });
@@ -68,8 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
+      
       body: Container(
+      
         decoration: const BoxDecoration(
+          
           image: DecorationImage(
               image: AssetImage(
                 'assets/images/heart.png',

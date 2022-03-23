@@ -4,12 +4,18 @@ import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/doc_leave_application.dart';
 import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DocScreenDrawer extends StatelessWidget {
   // const DocScreenDrawer({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    getDocName() async {
+      final spref = await SharedPreferences.getInstance();
+      spref.getString('docName');
+    }
+
     return Drawer(
       child: Column(
         children: [
@@ -28,10 +34,17 @@ class DocScreenDrawer extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             alignment: Alignment.bottomLeft,
-            child: Text(
-              'DocName',
-              style: Theme.of(context).textTheme.headline6,
-            ),
+            child: FutureBuilder(
+                future: getDocName(),
+                builder: (context, snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return Center(child:Text('.'));
+                  }else{return Text(
+                    'DocName',
+                    style: Theme.of(context).textTheme.headline6,
+                  );}
+                  
+                }),
           ),
           const SizedBox(
             height: 20,

@@ -27,34 +27,27 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
     }
 
     final imagePresc = Provider.of<DBHelper>(context).imagePresc;
-    final dummyPrescsList = (Provider.of<DBHelper>(context).dummyPrescs)
-        .where((element) =>
-            widget.isDoc ? element['presc_type'] == 'medicine' : true)
-        .toList();
-    // final dummyPrescsList=
-    //HERE FILTER PRESC LIST AS MEDICINE AND TEST FOR EACH VIEW
-
-// final
+    final dummyPrescsList = Provider.of<DBHelper>(context).dummyPrescs;
 
     final todaysList = dummyPrescsList.where((element) {
-      final date = element['date'] as DateTime;
-      return date.isAfter(DateTime.now().subtract(Duration(days: 1)));
+      final date =
+          DateFormat('ddMMyyyy').format(DateTime.parse(element['date']));
+      return date == DateFormat('ddMMyyyy').format(DateTime.now());
     }).toList();
 
-    // final todaysList = dummyPrescsList.where((element) {
-    //   final date = DateFormat('ddmmyy').format(element['date'] as DateTime);
-    //   return (date == DateFormat('ddmmyy').format(DateTime.now()));
-    // }).toList();
-
     final todays_1_List = dummyPrescsList.where((element) {
-      final date = element['date'] as DateTime;
-      return date.isBefore(DateTime.now().subtract(Duration(days: 1))) &&
-          date.isAfter(DateTime.now().subtract(Duration(days: 2)));
+      final date =
+          DateFormat('ddMMyyyy').format(DateTime.parse(element['date']));
+      return date ==
+          DateFormat('ddMMyyyy')
+              .format(DateTime.now().subtract(Duration(days: 1)));
     }).toList();
 
     final olderList = dummyPrescsList.where((element) {
-      final date = element['date'] as DateTime;
-      return date.isBefore(DateTime.now().subtract(Duration(days: 2)));
+      final date = DateTime.parse(
+          DateFormat('ddMMyyy').format(DateTime.parse(element['date'])));
+      return date.isBefore(DateTime.parse(DateFormat('ddMMyyyy')
+          .format(DateTime.now().subtract(Duration(days: 1)))));
     }).toList();
 
     prescCard(int index) {
@@ -74,11 +67,12 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(DateFormat('dd.MM.yyyy')
-                                .format(DummyLists.dummyPrescs[index]['date']
+                                .format(DateTime.parse(
+                                        DummyLists.dummyPrescs[index]['date'])
                                     as DateTime)
                                 .toString()),
                             Text('Dr. ' +
-                                DummyLists.dummyPrescs[index]['doctor_name']
+                                DummyLists.dummyPrescs[index]['doctor']
                                     .toString()),
                           ],
                         ),
@@ -95,7 +89,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                             children: [
                               Expanded(
                                 child: Text(DummyLists.dummyPrescs[index]
-                                        ['prescription']
+                                        ['name']
                                     .toString()),
                               ),
                               Text(' x' +
@@ -120,9 +114,9 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                                     listen: false)
                                                 .paymentProfile
                                                 .add({
-                                              'item': DummyLists
-                                                      .dummyPrescs[index]
-                                                  ['prescription'] as String,
+                                              'item':
+                                                  DummyLists.dummyPrescs[index]
+                                                      ['name'] as String,
                                               'count':
                                                   DummyLists.dummyPrescs[index]
                                                       ['count'] as int,
@@ -167,118 +161,133 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           });
     }
 
-    return ListView(
-      shrinkWrap: true,
-      // physics: NeverScrollableScrollPhysics(),
-      children: [
-        ExpansionTile(
-          title: const Text('Today'),
-          children: [
-            ListView.builder(
-              itemCount: todaysList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    prescCard(
-                        DummyLists.dummyPrescs.indexOf(todaysList[index]));
-                  },
-                  title: Row(
-                    children: [
-                      Text(todaysList[index]['prescription']),
-                      Text(' x' + todaysList[index]['count'].toString()),
-                    ],
-                  ),
-                  trailing: Text('Dr. ' + todaysList[index]['doctor_name']),
-                );
-              },
-            )
-          ],
-        ),
-        ExpansionTile(
-          title: Text('yesterday'),
-          children: [
-            ListView.builder(
-              itemCount: todays_1_List.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    // print(todaysList);
-                    print(DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
-                    prescCard(
-                        DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
-                  },
-                  title: Row(
-                    children: [
-                      Text(todays_1_List[index]['prescription']),
-                      Text(todays_1_List[index]['presc_type'] == 'medicine'
-                          ? ' x' + todays_1_List[index]['count'].toString()
-                          : ''),
-                    ],
-                  ),
-                  trailing: Text('Dr. ' + todays_1_List[index]['doctor_name']),
-                );
-              },
-            )
-          ],
-        ),
-        ExpansionTile(
-          title: const Text('Older'),
-          children: [
-            ListView.builder(
-              itemCount: olderList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    prescCard(DummyLists.dummyPrescs.indexOf(olderList[index]));
-                  },
-                  title: Row(
-                    children: [
-                      Text(olderList[index]['prescription']),
-                      Text(olderList[index]['presc_type'] == 'medicine'
-                          ? ' x' + olderList[index]['count'].toString()
-                          : ''),
-                    ],
-                  ),
-                  trailing: Text('Dr. ' + olderList[index]['doctor_name']),
-                  subtitle: Text(DateFormat('dd/MM/yyyy')
-                      .format(olderList[index]['date'])),
-                );
-              },
-            )
-          ],
-        ),
-        ExpansionTile(
-          title: const Text('Uploaded prescriptions'),
-          children: [
-            ListView.builder(
-              itemCount: imagePresc.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ImageViewScreen.routeName,
-                        arguments: imagePresc[index]['image']);
-                    // ImageViewScreen();
-                    print('tap');
-                  },
-                  leading: CircleAvatar(
-                    backgroundImage:
-                        FileImage(imagePresc[index]['image'] as File),
-                  ),
-                  title: Text(imagePresc[index]['name'] as String),
-                );
-              },
-            )
-          ],
-        ),
-      ],
-    );
+    if (dummyPrescsList.isEmpty) {
+      return Center(
+        child: Text('no data'),
+      );
+    } else
+      return ListView(
+        shrinkWrap: true,
+        children: [
+          ExpansionTile(
+            title: const Text('Today'),
+            children: [
+              ListView.builder(
+                itemCount: todaysList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      prescCard(
+                          DummyLists.dummyPrescs.indexOf(todaysList[index]));
+                    },
+                    title: Row(
+                      children: [
+                        Text(todaysList[index]['name']),
+                        Text(todaysList[index]['type'] == 'medicine'
+                            ? ' x' + todaysList[index]['count'].toString()
+                            : ''),
+                      ],
+                    ),
+                    trailing: Text('Dr. ' + todaysList[index]['doctor']),
+                    subtitle: Text(DateFormat('dd/MM/yyyy')
+                        .format(DateTime.parse(todaysList[index]['date']))),
+                  );
+                },
+              )
+            ],
+          ),
+          ExpansionTile(
+            title: Text('yesterday'),
+            children: [
+              ListView.builder(
+                itemCount: todays_1_List.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      print(
+                          DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
+                      prescCard(
+                          DummyLists.dummyPrescs.indexOf(todays_1_List[index]));
+                    },
+                    title: Row(
+                      children: [
+                        Text(todays_1_List[index]['name']),
+                        Text(todays_1_List[index]['type'] == 'medicine'
+                            ? ' x' + todays_1_List[index]['count'].toString()
+                            : ''),
+                      ],
+                    ),
+                    trailing: Text('Dr. ' + todays_1_List[index]['doctor']),
+                    subtitle: Text(DateFormat('dd/MM/yyyy')
+                        .format(DateTime.parse(todays_1_List[index]['date']))),
+                  );
+                },
+              )
+            ],
+          ),
+          ExpansionTile(
+            title: const Text('Older'),
+            children: [
+              ListView.builder(
+                itemCount: olderList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      prescCard(
+                          DummyLists.dummyPrescs.indexOf(olderList[index]));
+                    },
+                    title: Row(
+                      children: [
+                        Text(olderList[index]['name']),
+                        Text(olderList[index]['type'] == 'medicine'
+                            ? ' x' + olderList[index]['count'].toString()
+                            : ''),
+                      ],
+                    ),
+                    trailing: Text('Dr. ' + olderList[index]['doctor']),
+                    subtitle: Text(DateFormat('dd/MM/yyyy')
+                        .format(DateTime.parse(olderList[index]['date']))),
+                  );
+                },
+              )
+            ],
+          ),
+          ExpansionTile(
+            title: const Text('Uploaded prescriptions'),
+            children: [
+              ListView.builder(
+                itemCount: imagePresc.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ImageViewScreen.routeName,
+                          arguments: imagePresc[index]['image']);
+
+                      print('tap');
+                    },
+                    leading: CircleAvatar(
+                      backgroundImage:
+                          FileImage(imagePresc[index]['image'] as File),
+                    ),
+                    title: Text(imagePresc[index]['name'] as String),
+                    subtitle: Text(DateFormat('dd/MM/yyyy')
+                        .format(imagePresc[index]['date'])),
+                    trailing: Text(
+                        DateFormat('h:m').format(imagePresc[index]['date'])),
+                  );
+                },
+              )
+            ],
+          ),
+        ],
+      );
   }
 }

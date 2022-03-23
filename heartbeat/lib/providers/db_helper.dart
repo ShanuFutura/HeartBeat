@@ -11,9 +11,9 @@ import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final urlS = 'http://192.168.29.78/Doctor_Patient/api/';
+final urlS = 'http://192.168.29.77/Doctor_Patient/api/';
 
-// final url = Uri.parse('http://192.168.29.78/Doctor_patient/api/');
+// final url = Uri.parse('http://192.168.29.77/Doctor_patient/api/');
 
 class DBHelper extends ChangeNotifier {
   // static bool authTok=false;
@@ -27,25 +27,30 @@ class DBHelper extends ChangeNotifier {
     String password,
   ) async {
     final url = Uri.parse(urlS + 'Login.php');
-    final res =
+    final loginResponse =
         await post(url, body: {'username': username, 'password': password});
-    print('=======' + json.decode(res.body).toString());
+    print('login res' + json.decode(loginResponse.body).toString());
 
-    if (json.decode(res.body)['message'] == 'User Successfully LoggedIn') {
-      loginId = json.decode(res.body)['id'];
-      print('loginId' + loginId);
-      final pref = await SharedPreferences.getInstance();
-
-      if (json.decode(res.body)['type'] == 'patient') {
-        print('user type:' + json.decode(res.body)['type']);
+    if (json.decode(loginResponse.body)['message'] ==
+        'User Successfully LoggedIn') {
+      final spref = await SharedPreferences.getInstance();
+      if (json.decode(loginResponse.body)['type'] == 'patient') {
+        spref.setString(
+            'patient_id', json.decode(loginResponse.body)['patient_id']);
+        //  print('id' + loginId);
+        print('user type:' + json.decode(loginResponse.body)['type']);
 
         // final pref = await SharedPreferences.getInstance();
-        pref.setString('authTok', 'patient');
+        spref.setString('authTok', 'patient');
       } else {
-        print('user type :' + json.decode(res.body)['type']);
-
-        // final pref = await SharedPreferences.getInstance();
-        pref.setString('authTok', 'doc');
+        getDocDetails();
+        print('user type :' + json.decode(loginResponse.body)['type']);
+        spref.setString('authTok', 'doc');
+        final resp = await post(Uri.parse(urlS + 'login_to_doctor.php'),
+            body: {'login_id': json.decode(loginResponse.body)['patient_id']});
+        print('convrted doc id ' + resp.body);
+        spref.setString(
+            'doc_id', (jsonDecode(resp.body) as dynamic)['doctor_id']);
       }
       return true;
     } else {
@@ -162,6 +167,7 @@ class DBHelper extends ChangeNotifier {
     });
     print(res.body);
     //FILL THE POST BODY....!!!!!
+
     print('{$name,$age,$gender,$email,$gender,$mobile,}');
     return true;
   }
@@ -169,9 +175,10 @@ class DBHelper extends ChangeNotifier {
   // static feedBack
 
   Future<void> feedBackCall(String feed) async {
+    final spref = await SharedPreferences.getInstance();
+    final id = spref.getString('patient_id');
     final url = Uri.parse(urlS + 'send_feedback.php');
-    final res = await post(url,
-        body: {'login_id': login_id.toString(), 'feedback': feed});
+    final res = await post(url, body: {'login_id': id, 'feedback': feed});
     print('feedback res:' + res.body);
     // print(feed);
   }
@@ -179,6 +186,7 @@ class DBHelper extends ChangeNotifier {
   void addAppoinment(String time_slot, String docId) async {
     final url = Uri.parse(urlS + 'add_appointment.php');
     print('docName:' + docId);
+    print('LOgin id' + login_id);
     final res = await post(url, body: {
       'login_id': login_id,
       'doctor_id': docId,
@@ -212,8 +220,10 @@ class DBHelper extends ChangeNotifier {
   }
 
   void applyLeave(String date) async {
+    final spref = await SharedPreferences.getInstance();
     final url = Uri.parse(urlS + 'leave_request.php');
-    final res = await post(url, body: {'doctor_id': '2', 'date': 'date'});
+    final res = await post(url,
+        body: {'doctor_id': spref.getString('doc_id'), 'date': 'date'});
     print('leave request response:' + res.body);
   }
 
@@ -227,6 +237,9 @@ class DBHelper extends ChangeNotifier {
   Future<void> bookedSlots() async {}
 
   Future<int> availableTimeSlotsCount(int doc) async {
+    final spref = await SharedPreferences.getInstance();
+    loginId = spref.getString('patient_id');
+
     DummyLists.docTimeSlots = [
       {'time_slot': '09:00'},
       {'time_slot': '09:15'},
@@ -266,10 +279,58 @@ class DBHelper extends ChangeNotifier {
   }
 
   Future<dynamic> getPrescForPatient() async {
+    final spref = await SharedPreferences.getInstance();
+    final id = spref.getString('patient_id');
     final res = await post(Uri.parse(urlS + 'priscription_list.php'),
-        body: {'patient_id': '2'});
+        body: {'patient_id': id});
     print('presc' + res.body);
     prescForPatients = jsonDecode(res.body) as List;
+    DummyLists.dummyPrescs = jsonDecode(res.body) as List;
     return jsonDecode(res.body);
+  }
+
+  Future<dynamic> appointmentPatients() async {
+    try {
+      final spref = await SharedPreferences.getInstance();
+      final res = await post(Uri.parse(urlS + 'appointment_patient_list.php'),
+          body: {'doctor_id': spref.getString('doc_id')});
+      print(res.body);
+      // DummyLists.patientsList = jsonDecode(res.body);
+      // print(jsonDecode(res.body));
+      return jsonDecode(res.body);
+    } on Exception catch (err) {
+      print(err);
+    }
+  }
+
+  Future<dynamic> viewPatient(String id) async {
+    final spref = await SharedPreferences.getInstance();
+    final id = spref.getString('patient_id');
+    final res = await post(Uri.parse(urlS + 'patient_view.php'),
+        body: {'patient_id': id});
+    print(res.body);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> getDocDetails() async {
+    final spref = await SharedPreferences.getInstance();
+    print('docId:' + spref.getString('doc_id')!);
+    final res = await post(Uri.parse(urlS + 'doctor_view.php'),
+        body: {'doctor_id': spref.getString('doc_id')});
+    print(res);
+    spref.setString('docName', jsonDecode(res.body)['doc_name']);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> docProfileUpdate(
+      String name, String email, String mobile) async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'profile_update.php'), body: {
+      'doctor_id': spref.getString('doc_id'),
+      'name': name,
+      'email': email,
+      'mobile': mobile,
+    });
+    print(res.body);
   }
 }
