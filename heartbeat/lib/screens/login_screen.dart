@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heartbeat/Widgets/ip_dialog.dart';
 import 'package:heartbeat/Widgets/login_card.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/doc_home_page.dart';
@@ -50,7 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error Loging in',),
+              title: Text(
+                'Error Loging in',
+              ),
               content: Text('Couldn\'t log you in please check credentials'),
             );
           });
@@ -68,11 +71,18 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      
+      floatingActionButton: TextButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (contex) {
+                return IPDialog();
+              });
+        },
+        child: Icon(Icons.info_outline),
+      ),
       body: Container(
-      
         decoration: const BoxDecoration(
-          
           image: DecorationImage(
               image: AssetImage(
                 'assets/images/heart.png',

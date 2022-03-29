@@ -11,11 +11,11 @@ import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final urlS = 'http://192.168.29.77/Doctor_Patient/api/';
 
 // final url = Uri.parse('http://192.168.29.77/Doctor_patient/api/');
 
 class DBHelper extends ChangeNotifier {
+var urlS = 'http://192.168.29.77/Doctor_Patient/api/';
   // static bool authTok=false;
   var prescForPatients;
   var loginId;

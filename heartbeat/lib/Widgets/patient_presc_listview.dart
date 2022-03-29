@@ -161,7 +161,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           });
     }
 
-    if (dummyPrescsList.isEmpty) {
+    if (dummyPrescsList.isEmpty ) {
       return Center(
         child: Text('no data'),
       );

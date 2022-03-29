@@ -9,6 +9,7 @@ import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:heartbeat/screens/labtest_booking_screen.dart';
 import 'package:heartbeat/screens/loading_screen.dart';
+
 // import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
@@ -27,8 +28,8 @@ void main() {
 }
 
 class HeartBeat extends StatelessWidget {
-  const HeartBeat({Key? key}) : super(key: key);
-
+  HeartBeat({Key? key}) : super(key: key);
+  var connectivityStat;
   Future<String> isAuth() async {
     final pref = await SharedPreferences.getInstance();
     final tok = pref.getString('authTok');
@@ -51,7 +52,10 @@ class HeartBeat extends StatelessWidget {
               return const LaodingScreen();
             } else {
               print(snap.data.toString() + '!!!!');
+
               if (snap.data == 'patient') {
+                return LoginScreen();
+
                 return PatientHomePage();
               } else if (snap.data == 'doc') {
                 print(snap.data.toString() + '!!!!');

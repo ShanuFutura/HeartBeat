@@ -51,6 +51,7 @@ dependencies:
   http: ^0.13.4
   convert: ^3.0.1
   
+  
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +83,10 @@ flutter:
     - assets/images/medicines.jpeg
     - assets/images/heart.png
     - assets/heart_gif.gif
+    - assets/offline.png
+    - assets/closed_door.png
+
+
     
     
 
