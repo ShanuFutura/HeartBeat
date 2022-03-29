@@ -16,15 +16,11 @@ class PatientScreenDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 200,
-            width: double.infinity,
-            padding: EdgeInsets.all(20),
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              'Patient Name',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ),
+              height: 200,
+              width: double.infinity,
+              padding: EdgeInsets.all(20),
+              alignment: Alignment.bottomLeft,
+              child: Center(child: Image.asset('assets/heart_gif.gif'))),
           const SizedBox(
             height: 20,
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 
 class PatientsAppoinments extends StatelessWidget {
   const PatientsAppoinments({Key? key}) : super(key: key);
@@ -7,45 +9,25 @@ class PatientsAppoinments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: Text('You have appoinment with'),
-            ),
-            ...DummyLists.appoinments.map((e) => Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Dr. ' + e['doc_name'].toString()),
-                      const SizedBox(width: 10),
-                      Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          color: Colors.blue,
-                        ),
-                        height: 40,
-                        width: 60,
-                        child: Center(
-                          child: Text(
-                            e['time_slot'].toString(),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-          ],
-        ),
-      ),
-    );
+        appBar: AppBar(),
+        body: FutureBuilder(
+          future: Provider.of<DBHelper>(context).viewPatientAppoinments(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Text((snapshot.data as dynamic)['doc_name']),
+                      trailing: Text((snapshot.data as dynamic)['time_slot']),
+                    );
+                  });
+            }
+          },
+        ));
   }
 }

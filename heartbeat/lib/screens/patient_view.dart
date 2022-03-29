@@ -245,7 +245,7 @@ class _PatientViewState extends State<PatientView> {
       //   ],
       // ),
       body: FutureBuilder(
-          future: Provider.of<DBHelper>(context).viewPatient(arg),
+          future: Provider.of<DBHelper>(context).viewPatientWithId(arg),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -318,12 +318,18 @@ class _PatientViewState extends State<PatientView> {
                           const Divider(),
                           FutureBuilder(
                               future: Provider.of<DBHelper>(context)
-                                  .getPrescForPatient(),
+                                  .getPrescForPatientWithId(arg),
                               builder: (context, snap) {
                                 if (snap.connectionState ==
                                     ConnectionState.waiting) {
                                   return const Center(
                                     child: CircularProgressIndicator(),
+                                  );
+                                } else if ((snap.data as dynamic)[0]
+                                        ['message'] ==
+                                    'failed') {
+                                  return Center(
+                                    child: Text('No data available'),
                                   );
                                 } else {
                                   return PatientPrescListView(

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class DummyLists {
   static List lab = [];
 
-  static List<Map<String, Object>> appoinments = [];
+  // static List<Map<String, Object>> appoinments = [];
   static List kart = [];
-  static List<Map<String, Object>> appliedLeaves = [];
+  // static List<Map<String, Object>> appliedLeaves = [];
 
   static List<Map<String, Object>> oldPrescImages = [];
 

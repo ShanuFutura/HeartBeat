@@ -193,8 +193,8 @@ class DBHelper extends ChangeNotifier {
       'time_slot': time_slot
     });
     print('book timeslot res:' + res.body);
-    DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docId});
-    print('appointments in prvider:' + DummyLists.appoinments.toString());
+    // DummyLists.appoinments.add({'time_slot': time_slot, 'doc_name': docId});
+    // print('appointments in prvider:' + DummyLists.appoinments.toString());
   }
 
   addImagePresc(File img, DateTime timestamp, String name) {
@@ -278,6 +278,17 @@ class DBHelper extends ChangeNotifier {
     return 25.0;
   }
 
+  Future<dynamic> getPrescForPatientWithId(String id) async {
+    // final spref = await SharedPreferences.getInstance();
+    // final id = spref.getString('patient_id');
+    final res = await post(Uri.parse(urlS + 'priscription_list.php'),
+        body: {'patient_id': id});
+    print('presc' + res.body);
+    prescForPatients = jsonDecode(res.body) as List;
+    DummyLists.dummyPrescs = jsonDecode(res.body) as List;
+    return jsonDecode(res.body);
+  }
+
   Future<dynamic> getPrescForPatient() async {
     final spref = await SharedPreferences.getInstance();
     final id = spref.getString('patient_id');
@@ -303,7 +314,16 @@ class DBHelper extends ChangeNotifier {
     }
   }
 
-  Future<dynamic> viewPatient(String id) async {
+  Future<dynamic> viewPatientWithId(String id) async {
+    final spref = await SharedPreferences.getInstance();
+    // final id = spref.getString('patient_id');
+    final res = await post(Uri.parse(urlS + 'patient_view.php'),
+        body: {'patient_id': id});
+    print(res.body);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> viewPatient() async {
     final spref = await SharedPreferences.getInstance();
     final id = spref.getString('patient_id');
     final res = await post(Uri.parse(urlS + 'patient_view.php'),
@@ -332,5 +352,29 @@ class DBHelper extends ChangeNotifier {
       'mobile': mobile,
     });
     print(res.body);
+  }
+
+  Future<dynamic> viewPatientAppoinments() async {
+    final spref = await SharedPreferences.getInstance();
+
+    final res = await post(Uri.parse(urlS + 'appointment_patient.php'),
+        body: {'patient_id': spref.getString('patient_id')});
+    print('appoinments ' + res.body);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> getLeaveStatus() async {
+    final spref = await SharedPreferences.getInstance();
+    final docId = spref.getString('doc_id');
+    print(docId);
+
+      final res = await post(Uri.parse(urlS + 'doctor_status.php'),
+          body: {'doctor_id': '2'});
+      print(res.body);
+    
+      print('getting leave status');
+      // print(err);
+    
+    // print('leave statuc' + res.body);
   }
 }

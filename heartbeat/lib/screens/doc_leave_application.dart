@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,26 +23,36 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 28)));
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
         print(selectedDate!.toIso8601String());
       });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ListView.builder(
-          itemCount: DummyLists.appliedLeaves.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text(DummyLists.appliedLeaves[index]['date'].toString()),
-              trailing:
-                  Text(DummyLists.appliedLeaves[index]['approval'].toString()),
+      body: FutureBuilder(
+        future: Provider.of<DBHelper>(context).getLeaveStatus(),
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          } else if (!snap.hasData) {
+            return const Center(
+              child: Text('No data'),
+            );
+          } else {
+            return ListView.builder(itemBuilder: ((context, index) {
+              return ListTile();
+            }));
+          }
+        },
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -67,8 +77,6 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
                       });
                       Fluttertoast.showToast(msg: 'No date selected');
                     } else {
-                      DummyLists.appliedLeaves
-                          .add({'date': selectedDate!, 'approval': 'waiting'});
                       final slDate =
                           DateFormat('DD/MM/yyyy').format(selectedDate!);
                       Provider.of<DBHelper>(context, listen: false)
@@ -85,7 +93,7 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
                       isApply = true;
                     });
                   },
-            child: Icon(isApply ? Icons.send : Icons.edit),
+            child: Icon(isApply ? Icons.send : Icons.add),
           ),
         ],
       ),

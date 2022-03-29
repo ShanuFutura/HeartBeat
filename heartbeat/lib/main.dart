@@ -40,7 +40,9 @@ class HeartBeat extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => DBHelper(),
       child: MaterialApp(
-        home: FutureBuilder(
+        home:
+            //  PatientHomePage(),
+            FutureBuilder(
           future: isAuth(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {

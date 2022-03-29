@@ -217,24 +217,23 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                 future: Provider.of<DBHelper>(context)
                                     .getPrescForPatient(),
                                 builder: (context, snap) {
-                                  if (snap.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if ((snap.data as dynamic)[0]
-                                          ['message'] ==
-                                      'failed') {
-                                    return Center(
-                                      child: Text('No datas'),
-                                    );
-                                  } else {
-                                    return PatientPrescListView(
-                                      notifyParent: refresh,
-                                      isDoc: false,
-                                    );
-                                  }
-                                }),
+                              if (snap.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if ((snap.data as dynamic)[0]['message'] ==
+                                  'failed') {
+                                return Center(
+                                  child: Text('No datas'),
+                                );
+                              } else {
+                                return PatientPrescListView(
+                                  notifyParent: refresh,
+                                  isDoc: false,
+                                );
+                              }
+                            }),
                           ),
                         ),
                       ],
