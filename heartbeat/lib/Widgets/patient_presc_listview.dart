@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:intl/intl.dart';
@@ -92,9 +93,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                         ['name']
                                     .toString()),
                               ),
-                              Text(' x' +
-                                  DummyLists.dummyPrescs[index]['count']
-                                      .toString()),
+                              if (DummyLists.dummyPrescs[index]['type'] ==
+                                  'medicine')
+                                Text(' x' +
+                                    DummyLists.dummyPrescs[index]['count']
+                                        .toString()),
                               if (!widget.isDoc)
                                 Expanded(
                                     child: Stack(
@@ -106,47 +109,47 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            final price = Provider.of<DBHelper>(
-                                                    context,
-                                                    listen: false)
-                                                .getPrices('item');
-                                            Provider.of<DBHelper>(context,
-                                                    listen: false)
-                                                .paymentProfile
-                                                .add({
-                                              'item':
-                                                  DummyLists.dummyPrescs[index]
-                                                      ['name'] as String,
-                                              'count':
-                                                  DummyLists.dummyPrescs[index]
-                                                      ['count'] as int,
-                                              'price': price *
-                                                  (DummyLists.dummyPrescs[index]
-                                                      ['count'] as int)
-                                            });
+                                            // final price = Provider.of<DBHelper>(
+                                            //         context,
+                                            //         listen: false)
+                                            //     .getPrices('item');
+                                            // Provider.of<DBHelper>(context,
+                                            //         listen: false)
+                                            //     .paymentProfile
+                                            //     .add({
+                                            //   'item':
+                                            //       DummyLists.dummyPrescs[index]
+                                            //           ['name'] as String,
+                                            //   'count':
+                                            //       DummyLists.dummyPrescs[index]
+                                            //           ['count'] as int,
+                                            //   'price': price *
+                                            //       (DummyLists.dummyPrescs[index]
+                                            //           ['count'] as int)
+                                            // });
 
-                                            if (DummyLists.dummyPrescs[index]
-                                                    ['presc_type'] ==
-                                                'test') {
-                                              Fluttertoast.showToast(
-                                                  msg: 'item added to lab');
-                                              DummyLists.lab.add(DummyLists
-                                                  .dummyPrescs[index]);
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg: 'item added to cart');
-                                              DummyLists.kart.add(DummyLists
-                                                  .dummyPrescs[index]);
-                                            }
-                                            print(
-                                                DummyLists.dummyPrescs[index]);
-                                            widget.notifyParent();
+                                            // if (DummyLists.dummyPrescs[index]
+                                            //         ['presc_type'] ==
+                                            //     'test') {
+                                            //   Fluttertoast.showToast(
+                                            //       msg: 'item added to lab');
+                                            //   DummyLists.lab.add(DummyLists
+                                            //       .dummyPrescs[index]);
+                                            // } else {
+                                            //   Fluttertoast.showToast(
+                                            //       msg: 'item added to cart');
+                                            //   DummyLists.kart.add(DummyLists
+                                            //       .dummyPrescs[index]);
+                                            // }
+                                            // print(
+                                            //     DummyLists.dummyPrescs[index]);
+                                            // widget.notifyParent();
                                           },
                                           icon: Icon(
                                               DummyLists.dummyPrescs[index]
-                                                          ['presc_type'] ==
+                                                          ['type'] ==
                                                       'test'
-                                                  ? Icons.biotech
+                                                  ? Icons.book_online
                                                   : Icons.shopping_cart)),
                                     ])),
                             ],
@@ -161,7 +164,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           });
     }
 
-    if (dummyPrescsList.isEmpty ) {
+    if (dummyPrescsList.isEmpty) {
       return Center(
         child: Text('no data'),
       );

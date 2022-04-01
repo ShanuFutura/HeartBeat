@@ -15,9 +15,9 @@ class DummyLists {
 
   static List<Map<String, String>> patientsList = [];
 
-  static List<String> medicines = [];
+  static dynamic medicines = [];
 
-  static List<Map<String, Object>> tests = [];
+  static dynamic tests = [];
 
   static List docsList = [];
 }

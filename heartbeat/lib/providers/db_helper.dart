@@ -3,19 +3,19 @@ import 'dart:io';
 
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
 // import 'package:flutter/services.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:http/http.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 // final url = Uri.parse('http://192.168.29.77/Doctor_patient/api/');
 
 class DBHelper extends ChangeNotifier {
-var urlS = 'http://192.168.29.77/Doctor_Patient/api/';
+  var urlS = 'http://192.168.29.78/Doctor_Patient/api/';
   // static bool authTok=false;
   var prescForPatients;
   var loginId;
@@ -26,6 +26,7 @@ var urlS = 'http://192.168.29.77/Doctor_Patient/api/';
     String username,
     String password,
   ) async {
+    print('inside login page');
     final url = Uri.parse(urlS + 'Login.php');
     final loginResponse =
         await post(url, body: {'username': username, 'password': password});
@@ -368,13 +369,30 @@ var urlS = 'http://192.168.29.77/Doctor_Patient/api/';
     final docId = spref.getString('doc_id');
     print(docId);
 
-      final res = await post(Uri.parse(urlS + 'doctor_status.php'),
-          body: {'doctor_id': '2'});
-      print(res.body);
-    
-      print('getting leave status');
-      // print(err);
-    
+    final res = await post(Uri.parse(urlS + 'doctor_status.php'),
+        body: {'doctor_id': '2'});
+    print(res.body);
+
+    print('getting leave status');
+    // print(err);
+
     // print('leave statuc' + res.body);
+  }
+
+  getTestsAndMedicines() async {
+    final testRes = await post(Uri.parse(urlS + 'test_list.php'));
+    final medRes = await post(Uri.parse(urlS + 'medicine_list.php'));
+    DummyLists.tests = jsonDecode(testRes.body);
+    DummyLists.medicines = jsonDecode(medRes.body);
+  }
+
+  prescribe(List presc) async {
+    presc.map((e) async {
+      // print(e);
+      final res = await post(Uri.parse(urlS + 'add_priscription.php'), body: e);
+      print(res.body);
+    }).toList();
+    // final res = await post(Uri.parse(urlS + 'prescriprions.php'),
+    // body: {'prescriptions': presc});
   }
 }

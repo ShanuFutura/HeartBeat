@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 
 class LabtestBookingScreen extends StatelessWidget {
   const LabtestBookingScreen({Key? key}) : super(key: key);

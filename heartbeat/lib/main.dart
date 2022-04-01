@@ -54,11 +54,12 @@ class HeartBeat extends StatelessWidget {
               print(snap.data.toString() + '!!!!');
 
               if (snap.data == 'patient') {
-                return LoginScreen();
+                // return LoginScreen();
 
                 return PatientHomePage();
               } else if (snap.data == 'doc') {
                 print(snap.data.toString() + '!!!!');
+                Provider.of<DBHelper>(context).getTestsAndMedicines();
                 return DocHomePage();
               } else {
                 print(snap.data.toString() + '!!!!');

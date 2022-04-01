@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/quantity_card.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 // import 'package:heartbeat/screens/patient_external_prescription.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientView extends StatefulWidget {
   static const String routeName = 'patientView';
@@ -22,6 +24,7 @@ class _PatientViewState extends State<PatientView> {
   final List<Map<String, Object>> tempMedicinesList = [];
   final List<Map<String, Object>> tempTestsList = [];
   var medicineQuantity = 1;
+  List<Map<String, Object>> tempPrescList = [];
 
   void getQuantity(int number) {
     medicineQuantity = number;
@@ -60,7 +63,9 @@ class _PatientViewState extends State<PatientView> {
                         child: DropdownSearch(
                           hint: 'medicines',
                           showSearchBox: true,
-                          items: DummyLists.medicines,
+                          items: (DummyLists.medicines as List)
+                              .map((e) => e['name'].toString())
+                              .toList(),
                           onChanged: (value) {
                             showDialog(
                               context: context,
@@ -122,13 +127,20 @@ class _PatientViewState extends State<PatientView> {
                         child: DropdownSearch(
                           hint: 'tests',
                           showSearchBox: true,
-                          items: DummyLists.tests
-                              .map((e) => e['test_name'] as String)
+                          items: (DummyLists.tests as List)
+                              .map((e) => e['test'].toString())
                               .toList(),
+                          // (DummyLists.tests as dynamic)
+                          //     .map((e) => e['test'] as String)
+                          //     .toList(),
                           onChanged: (value) {
                             setState(() {
-                              tempTestsList.add(DummyLists.tests.firstWhere(
-                                  (element) => element['test_name'] == value));
+                              tempTestsList.add(
+                                  // DummyLists.tests.firstWhere(
+                                  //   (element) => element['test'] == value)
+                                  {
+                                    'test_name': value.toString(),
+                                  });
                             });
                             print(tempTestsList.toString());
                           },
@@ -140,7 +152,7 @@ class _PatientViewState extends State<PatientView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ...tempTestsList.map((e) {
-                              return Text(e.toString());
+                              return Text(e['test_name'].toString());
                             }),
                           ],
                         ),
@@ -152,16 +164,18 @@ class _PatientViewState extends State<PatientView> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ElevatedButton(
-                                onPressed: () {
-                                  DummyLists.dummyPrescs
-                                      .addAll(tempMedicinesList.map(
+                                onPressed: () async {
+                                  final pref =
+                                      await SharedPreferences.getInstance();
+                                  final docId =pref.getString('doc_id');
+                                  tempPrescList.addAll(tempMedicinesList.map(
                                     (e) => {
-                                      'doctor_name': 'test',
-                                      'patient_id': '1',
-                                      'presc_type': 'medicine',
-                                      'prescription': e['medicine']!,
-                                      'date': DateTime.now(),
-                                      'count': e['count']!,
+                                      'doctor_id': docId??'',
+                                      'patient_id': arg,
+                                      'type': 'medicine',
+                                      'name': e['medicine']!,
+                                      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()) ,
+                                      'count': e['count']!.toString(),
                                     },
                                     // MedicinePrescription(
                                     //     e['medicine']
@@ -171,22 +185,24 @@ class _PatientViewState extends State<PatientView> {
                                     //     'Docname')
                                   ));
 
-                                  DummyLists.dummyPrescs
+                                  tempPrescList
                                       .addAll(tempTestsList.map((e) => {
-                                            'doctor_name': 'test',
-                                            'patient_id': '1',
-                                            'presc_type': 'test',
-                                            'prescription': e['test_name']!,
-                                            'date': DateTime.now(),
-                                            'count': 1,
+                                            'doctor_id': docId??'',
+                                            'patient_id': arg,
+                                            'type': 'test',
+                                            'name': e['test_name']!,
+                                            'date': DateFormat('yyyy-MM-dd').format(DateTime.now()) ,
+                                            'count': '1',
                                           }));
 
-                                  DummyLists.dummyPrescs.map((e) {
+                                  tempPrescList.map((e) {
                                     print(e['']);
                                   });
-                                  print(DummyLists.dummyPrescs.toList());
+                                  // print(tempPrescList.toList());
                                   tempMedicinesList.clear();
                                   tempTestsList.clear();
+                                  Provider.of<DBHelper>(context, listen: false)
+                                      .prescribe(tempPrescList);
                                   Navigator.pop(context);
                                 },
                                 child: const Text('Prescribe')),
@@ -267,7 +283,28 @@ class _PatientViewState extends State<PatientView> {
                       background: Stack(
                         alignment: Alignment.topRight,
                         children: [
-                          Container(),
+                          Container(
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/medicines.jpeg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SafeArea(
+                            child: Container(
+                              height: 200,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white.withOpacity(0),
+                                      Colors.grey[50]!
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter),
+                              ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 70, horizontal: 20),
@@ -278,14 +315,14 @@ class _PatientViewState extends State<PatientView> {
                                   (snap.data as dynamic)['gender'],
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Colors.white,
+                                    color: Colors.indigo,
                                   ),
                                 ),
                                 Text(
                                   (snap.data as dynamic)['age'],
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Colors.white,
+                                    color: Colors.indigo,
                                   ),
                                 ),
                               ],
@@ -293,7 +330,10 @@ class _PatientViewState extends State<PatientView> {
                           ),
                         ],
                       ),
-                      title: Text((snap.data as dynamic)['name']),
+                      title: Text(
+                        (snap.data as dynamic)['name'],
+                        style: TextStyle(color: Colors.indigo),
+                      ),
                     ),
                   ),
                   SliverFillRemaining(
@@ -310,7 +350,8 @@ class _PatientViewState extends State<PatientView> {
                                   isLabtest
                                       ? 'Labtests'
                                       : 'Previous Prescriptions',
-                                  style: const TextStyle(fontSize: 20),
+                                  style: const TextStyle(
+                                      fontSize: 20, color: Colors.indigo),
                                 ),
                               ],
                             ),

@@ -92,6 +92,7 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
                           _name = vl!;
                         },
                         decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
                           labelText: 'Name',
                           labelStyle:
                               TextStyle(color: Colors.black, fontSize: 12),

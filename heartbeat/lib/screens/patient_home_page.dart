@@ -6,8 +6,10 @@ import 'package:heartbeat/Widgets/carousel.dart';
 import 'package:heartbeat/Widgets/image_file_input_dialog.dart';
 import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/patient_screen_drawer.dart';
-import 'package:heartbeat/models/carousel_images.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/constants/carousel_images.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
+// import 'package:heartbeat/models/carousel_images.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
 

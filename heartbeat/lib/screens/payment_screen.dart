@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/models/dummy_lists.dart';
+import 'package:heartbeat/constants/dummy_lists.dart';
+// import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:provider/provider.dart';
