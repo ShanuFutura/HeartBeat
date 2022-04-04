@@ -1,66 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:heartbeat/constants/dummy_lists.dart';
-// import 'package:heartbeat/models/dummy_lists.dart';
-import 'package:heartbeat/screens/payment_screen.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
-  static String routeName = 'cart screen';
 
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
+  static const String routeName = 'cart screen';
 
-class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    // final refreshCallBack = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your cart'),
-      ),
-      body: DummyLists.kart.isEmpty
-          ? Center(
-              child: Text('Cart is empty'),
-            )
-          : ListView.builder(
-              itemCount: DummyLists.kart.length,
-              itemBuilder: (context, index) {
-                return Column(children: [
-                  ListTile(
-                    title: Text(DummyLists.kart[index]['prescription']),
-                    trailing:
-                        Text('x' + DummyLists.kart[index]['count'].toString()),
-                  ),
-                  const Divider()
-                ]);
-              }),
-      floatingActionButton: GestureDetector(
-        onTap: DummyLists.kart.isEmpty
-            ? null
-            : () {
-                Navigator.of(context).pushNamed(PayemntScreen.routeName);
-                // refreshCallBack;
-                setState(() {
-                  // DummyLists.kart.clear();
-                });
-              },
-        child: Container(
-          height: 50,
-          width: 150,
-          alignment: Alignment.bottomRight,
-          decoration: BoxDecoration(
-            color: DummyLists.kart.isEmpty ? Colors.grey : Colors.blue,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: const Center(
-            child: Text(
-              'Checkout',
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ),
-        ),
-      ),
+      appBar: AppBar(),
+      body: FutureBuilder(
+        future: Provider.of<DBHelper>(context).getCartItems(),
+        builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return ListView.builder(
+              itemCount: (snapshot.data as List).length,
+              itemBuilder: ((context, index) {
+                return ListTile(
+                  // title: ,
+                );
+              }));
+        }
+      })),
     );
   }
 }

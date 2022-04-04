@@ -55,6 +55,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
+            var isLoading = false;
             return Dialog(
               backgroundColor: Colors.black.withOpacity(0),
               child: Card(
@@ -109,6 +110,21 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                       ),
                                       IconButton(
                                           onPressed: () {
+                                            // isLoading = true;
+                                            print(DummyLists.dummyPrescs[index]
+                                                ['id']);
+                                            (DummyLists.dummyPrescs[index]
+                                                        ['type'] ==
+                                                    'medicine')
+                                                ? Provider.of<DBHelper>(context,
+                                                        listen: false)
+                                                    .addMedToCart(DummyLists
+                                                            .dummyPrescs[index]
+                                                        ['id'])
+                                                    .then((value) {
+                                                    // isLoading = false;
+                                                  })
+                                                : null;
                                             // final price = Provider.of<DBHelper>(
                                             //         context,
                                             //         listen: false)
@@ -145,12 +161,14 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                             //     DummyLists.dummyPrescs[index]);
                                             // widget.notifyParent();
                                           },
-                                          icon: Icon(
-                                              DummyLists.dummyPrescs[index]
-                                                          ['type'] ==
-                                                      'test'
-                                                  ? Icons.book_online
-                                                  : Icons.shopping_cart)),
+                                          icon: isLoading
+                                              ? const CircularProgressIndicator()
+                                              : Icon(
+                                                  DummyLists.dummyPrescs[index]
+                                                              ['type'] ==
+                                                          'test'
+                                                      ? Icons.book_online
+                                                      : Icons.shopping_cart)),
                                     ])),
                             ],
                           ),

@@ -41,6 +41,7 @@ class HeartBeat extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => DBHelper(),
       child: MaterialApp(
+        // theme: ThemeData.dark(),
         home:
             //  PatientHomePage(),
             FutureBuilder(

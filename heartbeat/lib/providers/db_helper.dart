@@ -3,6 +3,7 @@ import 'dart:io';
 
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/constants/dummy_lists.dart';
 // import 'package:flutter/services.dart';
 // import 'package:heartbeat/models/dummy_lists.dart';
@@ -394,5 +395,23 @@ class DBHelper extends ChangeNotifier {
     }).toList();
     // final res = await post(Uri.parse(urlS + 'prescriprions.php'),
     // body: {'prescriptions': presc});
+  }
+
+  Future<void> addMedToCart(String prescId) async {
+    final res = await post(Uri.parse(urlS + 'priscription_cart.php'),
+        body: {'priscription_id': prescId});
+    if (jsonDecode(res.body)['result'] == 'Add to cart') {
+      Fluttertoast.showToast(msg: 'Added to cart');
+    }
+    print(res.body);
+  }
+
+  Future<dynamic> getCartItems() async {
+    final pref = await SharedPreferences.getInstance();
+    final patientId = pref.getString('patient_id');
+    final res = await post(Uri.parse(urlS + 'cart_view.php'),
+        body: {'patient_id': patientId});
+    print(res.body);
+    return jsonDecode(res.body);
   }
 }
