@@ -34,7 +34,9 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Leave application'),
+      ),
       body: FutureBuilder(
         future: Provider.of<DBHelper>(context).getLeaveStatus(),
         builder: (context, snap) {
@@ -44,12 +46,19 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
             );
           } else if (!snap.hasData) {
             return const Center(
+              child: Text('Something went wrong'),
+            );
+          } else if ((snap.data as dynamic)['message'] == 'Failed to View') {
+            return const Center(
               child: Text('No data'),
             );
           } else {
-            return ListView.builder(itemBuilder: ((context, index) {
-              return ListTile();
-            }));
+            return Center(
+              child: ListTile(
+                title: Text((snap.data as dynamic)['date']),
+                subtitle: Text((snap.data as dynamic)['status']),
+              ),
+            );
           }
         },
       ),
@@ -78,7 +87,7 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
                       Fluttertoast.showToast(msg: 'No date selected');
                     } else {
                       final slDate =
-                          DateFormat('DD/MM/yyyy').format(selectedDate!);
+                          DateFormat('yyyy-MM-dd').format(selectedDate!);
                       Provider.of<DBHelper>(context, listen: false)
                           .applyLeave(slDate);
                       Fluttertoast.showToast(msg: 'leave applied for  $slDate');

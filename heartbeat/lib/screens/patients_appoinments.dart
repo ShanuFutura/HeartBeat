@@ -21,9 +21,21 @@ class PatientsAppoinments extends StatelessWidget {
               return ListView.builder(
                   itemCount: 1,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Text((snapshot.data as dynamic)['doc_name']),
-                      trailing: Text((snapshot.data as dynamic)['time_slot']),
+                    return Column(
+                      children: [
+                        ListTile(
+                            leading: Text(
+                              (snapshot.data as dynamic)['doc_name'],
+                              style: TextStyle(fontSize: 23),
+                            ),
+                            trailing: Chip(
+                              label: Text(
+                                (snapshot.data as dynamic)['time_slot'],
+                                style: TextStyle(fontSize: 23),
+                              ),
+                            )),
+                        Divider(),
+                      ],
                     );
                   });
             }

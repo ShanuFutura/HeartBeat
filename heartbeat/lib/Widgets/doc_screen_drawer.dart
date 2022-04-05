@@ -11,9 +11,9 @@ class DocScreenDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getDocName() async {
+    Future<String> getDocName() async {
       final spref = await SharedPreferences.getInstance();
-      spref.getString('docName');
+      return spref.getString('docName') ?? 'HeartBeat';
     }
 
     return Drawer(
@@ -38,12 +38,13 @@ class DocScreenDrawer extends StatelessWidget {
                 future: getDocName(),
                 builder: (context, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
-                    return Center(child:Text('.'));
-                  }else{return Text(
-                    'DocName',
-                    style: Theme.of(context).textTheme.headline6,
-                  );}
-                  
+                    return Center(child: Text('.'));
+                  } else {
+                    return Text(
+                      snap.data.toString(),
+                      style: Theme.of(context).textTheme.headline6,
+                    );
+                  }
                 }),
           ),
           const SizedBox(

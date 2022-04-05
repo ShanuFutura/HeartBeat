@@ -5,11 +5,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heartbeat/constants/dummy_lists.dart';
+import 'package:heartbeat/providers/image_upload.dart';
 // import 'package:flutter/services.dart';
 // import 'package:heartbeat/models/dummy_lists.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 // import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +30,7 @@ class DBHelper extends ChangeNotifier {
     String password,
   ) async {
     print('inside login page');
-    final url = Uri.parse(urlS + 'Login.php');
+    final url = Uri.parse(urlS + 'login.php');
     final loginResponse =
         await post(url, body: {'username': username, 'password': password});
     print('login res' + json.decode(loginResponse.body).toString());
@@ -37,6 +39,7 @@ class DBHelper extends ChangeNotifier {
         'User Successfully LoggedIn') {
       final spref = await SharedPreferences.getInstance();
       if (json.decode(loginResponse.body)['type'] == 'patient') {
+        print('++++++++' + json.decode(loginResponse.body)['patient_id']);
         spref.setString(
             'patient_id', json.decode(loginResponse.body)['patient_id']);
         //  print('id' + loginId);
@@ -45,6 +48,7 @@ class DBHelper extends ChangeNotifier {
         // final pref = await SharedPreferences.getInstance();
         spref.setString('authTok', 'patient');
       } else {
+        getTestsAndMedicines();
         getDocDetails();
         print('user type :' + json.decode(loginResponse.body)['type']);
         spref.setString('authTok', 'doc');
@@ -225,7 +229,7 @@ class DBHelper extends ChangeNotifier {
     final spref = await SharedPreferences.getInstance();
     final url = Uri.parse(urlS + 'leave_request.php');
     final res = await post(url,
-        body: {'doctor_id': spref.getString('doc_id'), 'date': 'date'});
+        body: {'doctor_id': spref.getString('doc_id'), 'date': date});
     print('leave request response:' + res.body);
   }
 
@@ -367,14 +371,14 @@ class DBHelper extends ChangeNotifier {
 
   Future<dynamic> getLeaveStatus() async {
     final spref = await SharedPreferences.getInstance();
-    final docId = spref.getString('doc_id');
-    print(docId);
+    // final docId = spref.getString('doc_id');
+    // print(docId);
 
     final res = await post(Uri.parse(urlS + 'doctor_status.php'),
-        body: {'doctor_id': '2'});
+        body: {'doctor_id': spref.getString('doc_id')});
     print(res.body);
 
-    print('getting leave status');
+    return jsonDecode(res.body);
     // print(err);
 
     // print('leave statuc' + res.body);
@@ -412,6 +416,25 @@ class DBHelper extends ChangeNotifier {
     final res = await post(Uri.parse(urlS + 'cart_view.php'),
         body: {'patient_id': patientId});
     print(res.body);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> uploadImagePresc(
+      File imageFile, String name, DateTime date) async {
+    final spref = await SharedPreferences.getInstance();
+
+    final res = await ImageUpload.upload(
+        imageFile: imageFile,
+        url: Uri.parse('uri'),
+        name: name,
+        date: date,
+        patientId: spref.getString('patient_id')!);
+  }
+
+  Future<dynamic> getUploadedPrecs() async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse('uri'),
+        body: {'patient_id': spref.getString('patient_id')});
     return jsonDecode(res.body);
   }
 }

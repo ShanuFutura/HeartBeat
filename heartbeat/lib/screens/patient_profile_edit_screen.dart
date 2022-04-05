@@ -91,13 +91,16 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                         onSaved: (vl) {
                           _name = vl!;
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Name',
                           labelStyle:
                               TextStyle(color: Colors.black, fontSize: 12),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          // enabledBorder: UnderlineInputBorder(
+                          //   borderSide: BorderSide(color: Colors.black),
+                          // ),
+
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                           ),
@@ -107,7 +110,7 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                            width: 90,
+                            width: 60,
                             child: TextFormField(
                               initialValue: (snap.data as dynamic)['age'],
                               keyboardType: TextInputType.number,
@@ -125,13 +128,12 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                               onSaved: (v) {
                                 _age = v!;
                               },
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'age',
                                 labelStyle: TextStyle(
                                     color: Colors.black, fontSize: 12),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30)),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.black),
                                 ),
@@ -169,14 +171,13 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                         onSaved: (vl) {
                           _email = vl!;
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'patient email',
                           labelText: 'email',
                           labelStyle:
                               TextStyle(color: Colors.black, fontSize: 12),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40)),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                           ),
@@ -198,13 +199,12 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                         onSaved: (vl) {
                           _phone = vl!;
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'phone',
                           labelStyle:
                               TextStyle(color: Colors.black, fontSize: 12),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40)),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                           ),

@@ -12,22 +12,32 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: FutureBuilder(
-        future: Provider.of<DBHelper>(context).getCartItems(),
-        builder: ((context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return ListView.builder(
-              itemCount: (snapshot.data as List).length,
-              itemBuilder: ((context, index) {
-                return ListTile(
-                  // title: ,
-                );
-              }));
-        }
-      })),
+          future: Provider.of<DBHelper>(context).getCartItems(),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (!snapshot.hasData) {
+              return const Center(
+                child: Text('Something went wrong'),
+              );
+            } else if ((snapshot.data as dynamic)['message'] ==
+                'Failed to View') {
+              return const Center(
+                child: Text('No data'),
+              );
+            }
+            {
+              return ListView.builder(
+                  itemCount: (snapshot.data as List).length,
+                  itemBuilder: ((context, index) {
+                    return ListTile(
+                        // title: ,
+                        );
+                  }));
+            }
+          })),
     );
   }
 }

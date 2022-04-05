@@ -12,8 +12,12 @@ import 'package:provider/provider.dart';
 class PatientPrescListView extends StatefulWidget {
   final Function() notifyParent;
   final bool isDoc;
+  final String docId;
   const PatientPrescListView(
-      {Key? key, required this.notifyParent, required this.isDoc})
+      {Key? key,
+      required this.notifyParent,
+      required this.isDoc,
+      String this.docId = ''})
       : super(key: key);
 
   @override
@@ -28,7 +32,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
     }
 
     final imagePresc = Provider.of<DBHelper>(context).imagePresc;
-    final dummyPrescsList = Provider.of<DBHelper>(context).dummyPrescs;
+    final dummyPrescsList = widget.docId == ''
+        ? Provider.of<DBHelper>(context).dummyPrescs
+        : Provider.of<DBHelper>(context)
+            .dummyPrescs
+            .where((element) => element['doctor'] == widget.docId);
 
     final todaysList = dummyPrescsList.where((element) {
       final date =

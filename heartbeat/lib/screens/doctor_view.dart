@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/Widgets/feedback.dart';
+import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 // import 'package:heartbeat/Widgets/patient_presc_listview.dart';
 import 'package:heartbeat/Widgets/time_slot_card.dart';
 import 'package:heartbeat/constants/dummy_lists.dart';
@@ -108,16 +109,17 @@ class _DoctorViewState extends State<DoctorView> {
                 children: [
                   Text('Prescriptions by ' + (docName)),
                   Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
-                      height: 300,
-                      // child: PatientPrescListView(
-                      //   notifyParent: notifyParent,
-                      //   isDoc: false,
-                      // ),
-                      ),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    height: 300,
+                    child: PatientPrescListView(
+                      notifyParent: notifyParent,
+                      isDoc: false,
+                      docId: docId,
+                    ),
+                  ),
                 ],
               ),
             ),

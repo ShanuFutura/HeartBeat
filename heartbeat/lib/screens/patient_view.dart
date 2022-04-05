@@ -167,14 +167,15 @@ class _PatientViewState extends State<PatientView> {
                                 onPressed: () async {
                                   final pref =
                                       await SharedPreferences.getInstance();
-                                  final docId =pref.getString('doc_id');
+                                  final docId = pref.getString('doc_id');
                                   tempPrescList.addAll(tempMedicinesList.map(
                                     (e) => {
-                                      'doctor_id': docId??'',
+                                      'doctor_id': docId ?? '',
                                       'patient_id': arg,
                                       'type': 'medicine',
                                       'name': e['medicine']!,
-                                      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()) ,
+                                      'date': DateFormat('yyyy-MM-dd')
+                                          .format(DateTime.now()),
                                       'count': e['count']!.toString(),
                                     },
                                     // MedicinePrescription(
@@ -187,11 +188,12 @@ class _PatientViewState extends State<PatientView> {
 
                                   tempPrescList
                                       .addAll(tempTestsList.map((e) => {
-                                            'doctor_id': docId??'',
+                                            'doctor_id': docId ?? '',
                                             'patient_id': arg,
                                             'type': 'test',
                                             'name': e['test_name']!,
-                                            'date': DateFormat('yyyy-MM-dd').format(DateTime.now()) ,
+                                            'date': DateFormat('yyyy-MM-dd')
+                                                .format(DateTime.now()),
                                             'count': '1',
                                           }));
 
@@ -204,6 +206,7 @@ class _PatientViewState extends State<PatientView> {
                                   Provider.of<DBHelper>(context, listen: false)
                                       .prescribe(tempPrescList);
                                   Navigator.pop(context);
+                                  refresh();
                                 },
                                 child: const Text('Prescribe')),
                           ],
