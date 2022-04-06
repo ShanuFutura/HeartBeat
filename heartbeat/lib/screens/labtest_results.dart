@@ -25,6 +25,10 @@ class LabtestsResults extends StatelessWidget {
             return Center(
               child: Text('something went wrong'),
             );
+          } else if ((snap.data as dynamic)[0]['message'] == 'null') {
+            return Center(
+              child: Text('No data'),
+            );
           } else {
             return Padding(
               padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
@@ -40,7 +44,8 @@ class LabtestsResults extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       ImageViewScreen.routeName,
-                                      arguments: Provider.of<DBHelper>(context,listen: false)
+                                      arguments: Provider.of<DBHelper>(context,
+                                                  listen: false)
                                               .urlsForLabResultImage +
                                           (snap.data as dynamic)[index]
                                               ['result']);
@@ -54,8 +59,8 @@ class LabtestsResults extends StatelessWidget {
                                           (snap.data as dynamic)[index]
                                               ['result']),
                                 ),
-                                title: Text(
-                                    (snap.data as dynamic)[index]['result']),
+                                title:
+                                    Text((snap.data as dynamic)[index]['test']),
                                 // subtitle: Text(DateFormat('dd/MM/yyyy')
                                 //     .format(imagePresc[index]['date'])),
                                 // trailing: Text(

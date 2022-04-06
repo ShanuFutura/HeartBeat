@@ -244,9 +244,13 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                       child: Text('No datas'),
                                     );
                                   } else {
-                                    return PatientPrescListView(
-                                      notifyParent: refresh,
-                                      isDoc: false,
+                                    return ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20)),
+                                      child: PatientPrescListView(
+                                        notifyParent: refresh,
+                                        isDoc: false,
+                                      ),
                                     );
                                   }
                                 }),

@@ -27,6 +27,7 @@ class PatientPrescListView extends StatefulWidget {
 class _PatientPrescListViewState extends State<PatientPrescListView> {
   @override
   Widget build(BuildContext context) {
+    // print('asdasdasdadasd');
     refresh() {
       setState(() {});
     }
@@ -301,6 +302,10 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  print(Provider.of<DBHelper>(context, listen: false)
+                          .urlsForImage +
+                      imagePresc[index]['image']);
+                  // print('asdasdasdasdasda');
                   return ListTile(
                     onTap: () {
                       Navigator.of(context).pushNamed(ImageViewScreen.routeName,

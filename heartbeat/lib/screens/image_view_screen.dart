@@ -20,8 +20,10 @@ class ImageViewScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: PhotoView(
+          minScale: PhotoViewComputedScale.contained,
+          // maxScale: PhotoViewComputedScale.contained,
           basePosition: Alignment.center,
-          enableRotation: true,
+          // enableRotation: true,
           imageProvider: NetworkImage(
             arg.toString(),
           ),

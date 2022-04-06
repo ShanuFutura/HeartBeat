@@ -111,8 +111,13 @@ class _CartScreenState extends State<CartScreen> {
                           ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                Provider.of<DBHelper>(context, listen: false)
-                                    .checkout();
+                                Provider.of<DBHelper>(context,listen: false)
+                                    .sendGgrandTotal(grandTotal)
+                                    .then((value) => Provider.of<DBHelper>(
+                                            context,
+                                            listen: false)
+                                        .checkout());
+
                                 setState(() {});
                               },
                               child: Text('proceed'))

@@ -300,10 +300,11 @@ class DBHelper extends ChangeNotifier {
   Future<dynamic> getPrescForPatientWithId(String id) async {
     // final spref = await SharedPreferences.getInstance();
     // final id = spref.getString('patient_id');
-    print(id);
+    // print(id);
+
     final res = await post(Uri.parse(urlS + 'priscription_list.php'),
         body: {'patient_id': id});
-    print('presc' + res.body);
+    print('presc_' + res.body);
     prescForPatients = jsonDecode(res.body) as List;
     DummyLists.dummyPrescs = jsonDecode(res.body) as List;
     await getUploadedPrecs();
@@ -316,7 +317,7 @@ class DBHelper extends ChangeNotifier {
     print('id while getting prescriptopnd' + id.toString());
     final res = await post(Uri.parse(urlS + 'priscription_list.php'),
         body: {'patient_id': id});
-    print('presc' + res.body);
+    print('received presc' + res.body);
     prescForPatients = jsonDecode(res.body) as List;
     DummyLists.dummyPrescs = jsonDecode(res.body) as List;
     await getUploadedPrecs();
@@ -507,5 +508,15 @@ class DBHelper extends ChangeNotifier {
         body: {'patient_id': spref.getString('patient_id')});
     print(res.body);
     return jsonDecode(res.body);
+  }
+
+  Future<dynamic> sendGgrandTotal(int totalAmount) async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'total.php'), body: {
+      'patient_id': spref.getString('patient_id'),
+      'total': totalAmount.toString()
+    });
+    print(res.body);
+    return null;
   }
 }
