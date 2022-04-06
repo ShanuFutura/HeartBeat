@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heartbeat/providers/db_helper.dart';
 import 'package:heartbeat/screens/cart_screen.dart';
 import 'package:heartbeat/screens/labtest_booking_screen.dart';
+import 'package:heartbeat/screens/labtest_results.dart';
 import 'package:heartbeat/screens/labtests.dart';
 // import 'package:heartbeat/screens/patient_home_page.dart';
 import 'package:heartbeat/screens/patient_profile_edit_screen.dart';
@@ -67,6 +68,15 @@ class PatientScreenDrawer extends StatelessWidget {
               },
               title: const Text('Appoinments'),
               trailing: const Icon(Icons.event),
+            ),
+            const Divider(),
+
+            ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed(LabtestsResults.routeName);
+              },
+              title: const Text('test results'),
+              trailing: const Icon(Icons.assignment),
             ),
             const Divider(),
             ListTile(

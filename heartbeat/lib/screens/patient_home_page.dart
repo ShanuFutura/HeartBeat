@@ -44,8 +44,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
     });
     final picker = ImagePicker();
 
-    final imageFile =
-        await picker.pickImage(source: ImageSource.camera, maxWidth: 600);
+    final imageFile = await picker.pickImage(source: ImageSource.camera);
     if (imageFile == null) {
       setState(() {
         isLoading = false;
@@ -122,33 +121,36 @@ class _PatientHomePageState extends State<PatientHomePage> {
                       context: context,
                       builder: (BuildContext context) {
                         return Dialog(
-                          child: ListView.builder(
-                              itemCount: DummyLists.docsList.length,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pushNamed(
-                                            DoctorView.routeName,
-                                            arguments: index);
-                                      },
-                                      title: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(DummyLists.docsList[index]
-                                              ['doc_name'] as String),
-                                          Text(DummyLists.docsList[index]
-                                              ['department_name'] as String)
-                                        ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                                itemCount: DummyLists.docsList.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      ListTile(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pushNamed(
+                                              DoctorView.routeName,
+                                              arguments: index);
+                                        },
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(DummyLists.docsList[index]
+                                                ['doc_name'] as String),
+                                            Text(DummyLists.docsList[index]
+                                                ['department_name'] as String)
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const Divider(),
-                                  ],
-                                );
-                              }),
+                                      const Divider(),
+                                    ],
+                                  );
+                                }),
+                          ),
                         );
                       });
                 },

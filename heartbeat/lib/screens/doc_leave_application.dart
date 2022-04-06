@@ -55,9 +55,9 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
           } else {
             return ListTile(
               title: Text((snap.data as dynamic)['date']),
-              subtitle: Text((snap.data as dynamic)['status'] == 0
+              subtitle: Text((snap.data as dynamic)['status'] == '0'
                   ? 'pending'
-                  : (snap.data as dynamic)['status'] == 0
+                  : (snap.data as dynamic)['status'] == '1'
                       ? 'accepted'
                       : 'rejected'),
             );

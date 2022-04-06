@@ -75,161 +75,188 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
                 padding: const EdgeInsets.all(26.0),
                 child: Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      TextFormField(
-                        initialValue: (snap.data as dynamic)['name'],
-                        style: const TextStyle(color: Colors.black),
-                        key: const ValueKey('nm'),
-                        validator: (v) {
-                          if (v!.trim().isEmpty) {
-                            return 'patient name cannot be empty';
-                          } else if (v.trim().length < 3) {
-                            return 'enter a valid name';
-                          }
-                        },
-                        onSaved: (vl) {
-                          _name = vl!;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          labelStyle:
-                              TextStyle(color: Colors.black, fontSize: 12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          // enabledBorder: UnderlineInputBorder(
-                          //   borderSide: BorderSide(color: Colors.black),
-                          // ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                            width: double.infinity,
+                            child: const Text(
+                              'Edit Your Profile',
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.blue),
+                            )),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        TextFormField(
+                          initialValue: (snap.data as dynamic)['name'],
+                          style: const TextStyle(color: Colors.black),
+                          key: const ValueKey('nm'),
+                          validator: (v) {
+                            if (v!.trim().isEmpty) {
+                              return 'patient name cannot be empty';
+                            } else if (v.trim().length < 3) {
+                              return 'enter a valid name';
+                            }
+                          },
+                          onSaved: (vl) {
+                            _name = vl!;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            labelStyle:
+                                TextStyle(color: Colors.black, fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            // enabledBorder: UnderlineInputBorder(
+                            //   borderSide: BorderSide(color: Colors.black),
+                            // ),
 
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            width: 60,
-                            child: TextFormField(
-                              initialValue: (snap.data as dynamic)['age'],
-                              keyboardType: TextInputType.number,
-                              style: const TextStyle(color: Colors.black),
-                              key: const ValueKey('ag'),
-                              validator: (v) {
-                                if (v!.trim().isEmpty) {
-                                  return 'age cannot be empty';
-                                } else if (v.trim().length > 2 || v == '0') {
-                                  return 'enter a valid age';
-                                }
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              width: 60,
+                              child: TextFormField(
+                                initialValue: (snap.data as dynamic)['age'],
+                                keyboardType: TextInputType.number,
+                                style: const TextStyle(color: Colors.black),
+                                key: const ValueKey('ag'),
+                                validator: (v) {
+                                  if (v!.trim().isEmpty) {
+                                    return 'age cannot be empty';
+                                  } else if (v.trim().length > 2 || v == '0') {
+                                    return 'enter a valid age';
+                                  }
 
-                                return null;
-                              },
-                              onSaved: (v) {
-                                _age = v!;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'age',
-                                labelStyle: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
+                                  return null;
+                                },
+                                onSaved: (v) {
+                                  _age = v!;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'age',
+                                  labelStyle: TextStyle(
+                                      color: Colors.black, fontSize: 12),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          DropdownButton(
-                            hint: Text(_gender == null ? 'gender' : _gender!),
-                            value: (snap.data as dynamic)['gender'],
-                            items: const [
-                              DropdownMenuItem(
-                                child: Text('male'),
-                                value: 'male',
-                              ),
-                              DropdownMenuItem(
-                                child: Text('female'),
-                                value: 'female',
-                              )
-                            ],
-                            onChanged: (val) {
-                              setState(() {
-                                _gender = val.toString();
-                              });
-                            },
-                          )
-                        ],
-                      ),
-                      TextFormField(
-                        initialValue: (snap.data as dynamic)['email'],
-                        style: const TextStyle(color: Colors.black),
-                        key: const ValueKey('em'),
-                        validator: (v) {
-                          return v!.isEmpty ? 'email cannot be empty' : null;
-                        },
-                        onSaved: (vl) {
-                          _email = vl!;
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'patient email',
-                          labelText: 'email',
-                          labelStyle:
-                              TextStyle(color: Colors.black, fontSize: 12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      TextFormField(
-                        initialValue: (snap.data as dynamic)['mobile'],
-                        keyboardType: TextInputType.number,
-                        style: const TextStyle(color: Colors.black),
-                        key: const ValueKey('mob'),
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return 'phone number cannot be empty';
-                          } else if (v.length > 10 || v.length < 10) {
-                            return 'Enter valid phone number';
-                          }
-                          return null;
-                        },
-                        onSaved: (vl) {
-                          _phone = vl!;
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'phone',
-                          labelStyle:
-                              TextStyle(color: Colors.black, fontSize: 12),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                trySubmit(context);
+                            DropdownButton(
+                              hint: Text(_gender == null ? 'gender' : _gender!),
+                              value: (snap.data as dynamic)['gender'],
+                              items: const [
+                                DropdownMenuItem(
+                                  child: Text('male'),
+                                  value: 'male',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('female'),
+                                  value: 'female',
+                                )
+                              ],
+                              onChanged: (val) {
+                                setState(() {
+                                  _gender = val.toString();
+                                });
                               },
-                              child: Text('EDIT'))
-                        ],
-                      )
-                    ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        TextFormField(
+                          initialValue: (snap.data as dynamic)['email'],
+                          style: const TextStyle(color: Colors.black),
+                          key: const ValueKey('em'),
+                          validator: (v) {
+                            return v!.isEmpty ? 'email cannot be empty' : null;
+                          },
+                          onSaved: (vl) {
+                            _email = vl!;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'patient email',
+                            labelText: 'email',
+                            labelStyle:
+                                TextStyle(color: Colors.black, fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        TextFormField(
+                          initialValue: (snap.data as dynamic)['mobile'],
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(color: Colors.black),
+                          key: const ValueKey('mob'),
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return 'phone number cannot be empty';
+                            } else if (v.length > 10 || v.length < 10) {
+                              return 'Enter valid phone number';
+                            }
+                            return null;
+                          },
+                          onSaved: (vl) {
+                            _phone = vl!;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'phone',
+                            labelStyle:
+                                TextStyle(color: Colors.black, fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 80,
+                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //   children: [
+                        //     ElevatedButton(
+                        //         onPressed: () {
+                        //           trySubmit(context);
+                        //         },
+                        //         child: Text('EDIT'))
+                        //   ],
+                        // )
+                      ],
+                    ),
                   ),
                 ),
               );
             }
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          trySubmit(context);
+        },
+        child: Icon(Icons.save),
+      ),
     );
   }
 }

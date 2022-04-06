@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:heartbeat/constants/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:provider/provider.dart';
 
 class ImageViewScreen extends StatelessWidget {
   // final imageLoc;
@@ -18,10 +20,12 @@ class ImageViewScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: PhotoView(
-            basePosition: Alignment.center,
-            enableRotation: true,
-            imageProvider:
-                NetworkImage(DummyLists.urlsForImage + arg.toString())),
+          basePosition: Alignment.center,
+          enableRotation: true,
+          imageProvider: NetworkImage(
+            arg.toString(),
+          ),
+        ),
       ),
     );
   }

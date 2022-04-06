@@ -82,7 +82,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                     as DateTime)
                                 .toString()),
                             Text('Dr. ' +
-                                DummyLists.dummyPrescs[index]['doctor']
+                                DummyLists.dummyPrescs[index]['doctor_name']
                                     .toString()),
                           ],
                         ),
@@ -224,7 +224,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                             : ''),
                       ],
                     ),
-                    trailing: Text('Dr. ' + todaysList[index]['doctor']),
+                    trailing: Text('Dr. ' + todaysList[index]['doctor_name']),
                     subtitle: Text(DateFormat('dd/MM/yyyy')
                         .format(DateTime.parse(todaysList[index]['date']))),
                   );
@@ -255,7 +255,8 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                             : ''),
                       ],
                     ),
-                    trailing: Text('Dr. ' + todays_1_List[index]['doctor']),
+                    trailing:
+                        Text('Dr. ' + todays_1_List[index]['doctor_name']),
                     subtitle: Text(DateFormat('dd/MM/yyyy')
                         .format(DateTime.parse(todays_1_List[index]['date']))),
                   );
@@ -284,7 +285,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                             : ''),
                       ],
                     ),
-                    trailing: Text('Dr. ' + olderList[index]['doctor']),
+                    trailing: Text('Dr. ' + olderList[index]['doctor_name']),
                     subtitle: Text(DateFormat('dd/MM/yyyy')
                         .format(DateTime.parse(olderList[index]['date']))),
                   );
@@ -303,13 +304,17 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                   return ListTile(
                     onTap: () {
                       Navigator.of(context).pushNamed(ImageViewScreen.routeName,
-                          arguments: imagePresc[index]['image']);
+                          arguments:
+                              Provider.of<DBHelper>(context, listen: false)
+                                      .urlsForImage +
+                                  imagePresc[index]['image']);
 
                       print('tap');
                     },
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          DummyLists.urlsForImage + imagePresc[index]['image']),
+                          Provider.of<DBHelper>(context).urlsForImage +
+                              imagePresc[index]['image']),
                     ),
                     title: Text(imagePresc[index]['image']),
                     // subtitle: Text(DateFormat('dd/MM/yyyy')

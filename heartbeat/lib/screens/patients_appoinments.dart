@@ -9,7 +9,9 @@ class PatientsAppoinments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Your appointments'),
+        ),
         body: FutureBuilder(
           future: Provider.of<DBHelper>(context).viewPatientAppoinments(),
           builder: (context, snapshot) {

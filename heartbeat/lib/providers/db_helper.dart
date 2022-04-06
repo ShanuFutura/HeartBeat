@@ -20,6 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DBHelper extends ChangeNotifier {
   var urlS = 'http://192.168.29.191/Doctor_Patient/api/';
   var urlsForImage = 'http://192.168.29.191/Doctor_Patient/img/';
+  var urlsForLabResultImage =
+      'http://192.168.29.191/Doctor_Patient/loginpanel/assets/img/';
   // static bool authTok=false;
   var prescForPatients;
   var loginId;
@@ -179,9 +181,14 @@ class DBHelper extends ChangeNotifier {
     });
     print(res.body);
     //FILL THE POST BODY....!!!!!
-
-    print('{$name,$age,$gender,$email,$gender,$mobile,}');
-    return true;
+    if (jsonDecode(res.body)['message'] == 'Successfully Updated') {
+      Fluttertoast.showToast(msg: 'Successfully updated');
+      return true;
+    } else {
+      return false;
+    }
+    // print('{$name,$age,$gender,$email,$gender,$mobile,}');
+    // return true;
   }
 
   // static feedBack
@@ -489,6 +496,14 @@ class DBHelper extends ChangeNotifier {
   Future<dynamic> labtests() async {
     final spref = await SharedPreferences.getInstance();
     final res = await post(Uri.parse(urlS + 'view_test_booking.php'),
+        body: {'patient_id': spref.getString('patient_id')});
+    print(res.body);
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> getResults() async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'view_result.php'),
         body: {'patient_id': spref.getString('patient_id')});
     print(res.body);
     return jsonDecode(res.body);

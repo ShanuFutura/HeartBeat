@@ -16,14 +16,14 @@ class _CartScreenState extends State<CartScreen> {
   Future<dynamic> refresh() async {
     setState(() {});
     await Future.delayed(Duration.zero);
-    
+
     return null;
   }
 
   bool isCartEmpty = true;
   @override
   Widget build(BuildContext context) {
-  var grandTotal = 0;
+    var grandTotal = 0;
     return Scaffold(
         appBar: AppBar(title: const Text('Your Cart')),
         body: FutureBuilder(
@@ -95,9 +95,18 @@ class _CartScreenState extends State<CartScreen> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Center(
-                            child:
-                                Text('Grand total ' + grandTotal.toString())),
+                        title: Center(child: Text('Grand total ')),
+                        content: Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: Center(
+                            child: Text(
+                              '₹ ' + grandTotal.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 40),
+                            ),
+                          ),
+                        ),
                         actions: [
                           ElevatedButton(
                               onPressed: () {

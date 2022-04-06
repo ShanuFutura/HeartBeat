@@ -9,7 +9,9 @@ class LabTests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Labtests'),
+        ),
         body: FutureBuilder(
           future: Provider.of<DBHelper>(context).labtests(),
           builder: (context, snapshot) {
