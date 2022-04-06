@@ -5,7 +5,7 @@ class Carousel extends StatelessWidget {
   final partHeight;
   Carousel(
     this.itemList, {
-    this.partHeight = 260.0,
+    this.partHeight = 160.0,
   });
   final List<Widget> itemList;
 
@@ -21,7 +21,7 @@ class Carousel extends StatelessWidget {
 
         viewportFraction: .85,
         aspectRatio: 3 / 4,
-        height: 260.0,
+        height: partHeight,
       ),
     );
   }

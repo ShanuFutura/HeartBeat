@@ -65,6 +65,10 @@ class _PatientProfilEditScreenState extends State<PatientProfilEditScreen> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
+            } else if (!snap.hasData) {
+              return const Center(
+                child: Text('Something went wrong'),
+              );
             } else {
               _gender = (snap.data as dynamic)['gender'];
               return Padding(

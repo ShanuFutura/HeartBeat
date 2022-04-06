@@ -62,14 +62,18 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
     final savedImage =
         await File(imageFile.path).copy('${appDir.path}/$fileName');
+    // Provider.of<DBHelper>(context,listen: false).uploadImagePresc(savedImage,'',DateTime.now());
+    Provider.of<DBHelper>(context, listen: false).uploadImagePresc(
+      savedImage,
+    );
     setState(() {
       isLoading = false;
     });
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return imageFileInputDialog(savedImage);
-        });
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext ctx) {
+    //       return imageFileInputDialog(savedImage);
+    //     });
 
     print(DummyLists.oldPrescImages.toString());
   }
@@ -79,6 +83,8 @@ class _PatientHomePageState extends State<PatientHomePage> {
   Widget build(BuildContext context) {
     // Provider.of<DBHelper>(context, listen: false)
     //     .fetchAndSetDoctorsList(context);
+    final deviceHeight = MediaQuery.of(context).size.height;
+    final deviceWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -194,19 +200,20 @@ class _PatientHomePageState extends State<PatientHomePage> {
                   onRefresh: () async {
                     await refresh();
                   },
-                  child: SingleChildScrollView(
-                    child: Column(
+                  child: ListView(children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.all(10),
+                        Padding(
+                          padding: EdgeInsets.all(deviceHeight * .012),
                           child: Text(
                             'Heartbeat',
-                            style: TextStyle(fontSize: 40),
+                            style: TextStyle(fontSize: deviceHeight * .05),
                           ),
                         ),
-                        Carousel(CarouselImages.itemsList),
+                        Carousel(CarouselImages.itemsList,
+                            partHeight: deviceHeight * .31),
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Container(
@@ -214,7 +221,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                                 border: Border.all(width: .5),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(20))),
-                            height: 300,
+                            height: deviceHeight * .46,
                             child: FutureBuilder(
                                 future: Provider.of<DBHelper>(context)
                                     .getPrescForPatient(),
@@ -245,7 +252,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                         ),
                       ],
                     ),
-                  ),
+                  ]),
                 ),
     );
   }

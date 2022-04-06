@@ -18,7 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // final url = Uri.parse('http://192.168.29.77/Doctor_patient/api/');
 
 class DBHelper extends ChangeNotifier {
-  var urlS = 'http://192.168.29.78/Doctor_Patient/api/';
+  var urlS = 'http://192.168.29.191/Doctor_Patient/api/';
+  var urlsForImage = 'http://192.168.29.191/Doctor_Patient/img/';
   // static bool authTok=false;
   var prescForPatients;
   var loginId;
@@ -39,9 +40,9 @@ class DBHelper extends ChangeNotifier {
         'User Successfully LoggedIn') {
       final spref = await SharedPreferences.getInstance();
       if (json.decode(loginResponse.body)['type'] == 'patient') {
-        print('++++++++' + json.decode(loginResponse.body)['patient_id']);
         spref.setString(
             'patient_id', json.decode(loginResponse.body)['patient_id']);
+        print('++++++++' + json.decode(loginResponse.body)['patient_id']);
         //  print('id' + loginId);
         print('user type:' + json.decode(loginResponse.body)['type']);
 
@@ -84,6 +85,7 @@ class DBHelper extends ChangeNotifier {
     String password,
     BuildContext context,
   ) async {
+    final spref = await SharedPreferences.getInstance();
     final url = Uri.parse(urlS + 'register.php');
     try {
       final res = await post(url, body: {
@@ -107,7 +109,8 @@ class DBHelper extends ChangeNotifier {
       // print(res.body);
       if (jsonDecode(res.body)['message'] == 'registration successfull') {
         setToken();
-
+        spref.setString('patient_id', jsonDecode(res.body)['reg_id']);
+        print('regid' + spref.getString('patient_id').toString());
         Navigator.of(context).pushNamed(PatientHomePage.routeName);
       }
       return 'ok';
@@ -134,7 +137,7 @@ class DBHelper extends ChangeNotifier {
       // print(res.body);
       final tempList = jsonDecode(res.body) as List;
       print('doctor list length:' + tempList.length.toString());
-      DummyLists.docsList.addAll(tempList);
+      DummyLists.docsList = (tempList);
       print(DummyLists.docsList);
       return tempList;
     } on SocketException catch (error) {
@@ -162,9 +165,12 @@ class DBHelper extends ChangeNotifier {
     String email,
     String mobile,
   ) async {
+    final spref = await SharedPreferences.getInstance();
+    print('id while updating patient profile' +
+        spref.getString('patient_id').toString());
     final url = Uri.parse(urlS + 'patient_profile_edit.php');
     final res = await post(url, body: {
-      'patient_id': loginId,
+      'patient_id': spref.getString('patient_id'),
       'name': name,
       'email': email,
       'phone': mobile,
@@ -203,16 +209,16 @@ class DBHelper extends ChangeNotifier {
     // print('appointments in prvider:' + DummyLists.appoinments.toString());
   }
 
-  addImagePresc(File img, DateTime timestamp, String name) {
-    DummyLists.oldPrescImages.add(
-      {
-        'image': img,
-        'date': timestamp,
-        'name': name,
-      },
-    );
-    notifyListeners();
-  }
+  // addImagePresc(File img, DateTime timestamp, String name) {
+  //   DummyLists.oldPrescImages.add(
+  //     {
+  //       'image': img,
+  //       'date': timestamp,
+  //       'name': name,
+  //     },
+  //   );
+  //   notifyListeners();
+  // }
 
   // bool isImagePoppedWithoutName = true;
 
@@ -287,22 +293,26 @@ class DBHelper extends ChangeNotifier {
   Future<dynamic> getPrescForPatientWithId(String id) async {
     // final spref = await SharedPreferences.getInstance();
     // final id = spref.getString('patient_id');
+    print(id);
     final res = await post(Uri.parse(urlS + 'priscription_list.php'),
         body: {'patient_id': id});
     print('presc' + res.body);
     prescForPatients = jsonDecode(res.body) as List;
     DummyLists.dummyPrescs = jsonDecode(res.body) as List;
+    await getUploadedPrecs();
     return jsonDecode(res.body);
   }
 
   Future<dynamic> getPrescForPatient() async {
     final spref = await SharedPreferences.getInstance();
     final id = spref.getString('patient_id');
+    print('id while getting prescriptopnd' + id.toString());
     final res = await post(Uri.parse(urlS + 'priscription_list.php'),
         body: {'patient_id': id});
     print('presc' + res.body);
     prescForPatients = jsonDecode(res.body) as List;
     DummyLists.dummyPrescs = jsonDecode(res.body) as List;
+    await getUploadedPrecs();
     return jsonDecode(res.body);
   }
 
@@ -332,6 +342,7 @@ class DBHelper extends ChangeNotifier {
   Future<dynamic> viewPatient() async {
     final spref = await SharedPreferences.getInstance();
     final id = spref.getString('patient_id');
+    print('id while viewing patient' + id.toString());
     final res = await post(Uri.parse(urlS + 'patient_view.php'),
         body: {'patient_id': id});
     print(res.body);
@@ -410,31 +421,76 @@ class DBHelper extends ChangeNotifier {
     print(res.body);
   }
 
+  var gTotal;
   Future<dynamic> getCartItems() async {
     final pref = await SharedPreferences.getInstance();
     final patientId = pref.getString('patient_id');
     final res = await post(Uri.parse(urlS + 'cart_view.php'),
         body: {'patient_id': patientId});
     print(res.body);
+    // (jsonDecode(res.body) as List).map((el) {});
     return jsonDecode(res.body);
   }
 
   Future<dynamic> uploadImagePresc(
-      File imageFile, String name, DateTime date) async {
+    File imageFile,
+    // String name,
+    // DateTime date
+  ) async {
     final spref = await SharedPreferences.getInstance();
 
     final res = await ImageUpload.upload(
         imageFile: imageFile,
-        url: Uri.parse('uri'),
-        name: name,
-        date: date,
+        url: Uri.parse(urlS + 'upload_priscription.php'),
+        // name: name,
+        // date: date,
         patientId: spref.getString('patient_id')!);
   }
 
   Future<dynamic> getUploadedPrecs() async {
+    print('doing');
     final spref = await SharedPreferences.getInstance();
-    final res = await post(Uri.parse('uri'),
+    final res = await post(Uri.parse(urlS + 'view_previous.php'),
         body: {'patient_id': spref.getString('patient_id')});
+    DummyLists.oldPrescImages = jsonDecode(res.body);
+    print('old prescse' + DummyLists.oldPrescImages.toString());
+    // return jsonDecode(res.body);
+    return null;
+  }
+
+  Future<dynamic> bookTest(String prescId) async {
+    print('perscid' + prescId);
+    final res = await post(Uri.parse(urlS + 'test_booking.php'),
+        body: {'priscription_id': prescId});
+    print('test booking' + res.body);
+    if (jsonDecode(res.body)['result'] == 'Add to cart') {
+      Fluttertoast.showToast(msg: 'Booked for medical test');
+    }
+  }
+
+  Future<dynamic> viewBookedTests() async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'view_test_booking.php'),
+        body: {'patient_id': spref.getString('patient_id')});
+    print(res.body);
+
+    return jsonDecode(res.body);
+  }
+
+  Future<dynamic> checkout() async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'checkout.php'), body: {
+      'patient_id': spref.getString(
+        'patient_id',
+      )
+    });
+  }
+
+  Future<dynamic> labtests() async {
+    final spref = await SharedPreferences.getInstance();
+    final res = await post(Uri.parse(urlS + 'view_test_booking.php'),
+        body: {'patient_id': spref.getString('patient_id')});
+    print(res.body);
     return jsonDecode(res.body);
   }
 }

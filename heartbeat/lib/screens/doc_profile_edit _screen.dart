@@ -33,7 +33,7 @@ class _PatientProfilEditScreenState extends State<DocProfileeditScreen> {
     if (isValid) {
       _formKey.currentState!.save();
       Provider.of<DBHelper>(context, listen: false)
-          .docProfileUpdate(_name, _email, _phone);
+          .docProfileUpdate(_name, _email, _phone).then((value) => Navigator.of(context).pop());
       // if (_gender == null) {
       //   showDialog(
       //       context: context,

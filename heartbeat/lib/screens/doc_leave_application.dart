@@ -53,11 +53,13 @@ class _DocLeaveApplicationState extends State<DocLeaveApplication> {
               child: Text('No data'),
             );
           } else {
-            return Center(
-              child: ListTile(
-                title: Text((snap.data as dynamic)['date']),
-                subtitle: Text((snap.data as dynamic)['status']),
-              ),
+            return ListTile(
+              title: Text((snap.data as dynamic)['date']),
+              subtitle: Text((snap.data as dynamic)['status'] == 0
+                  ? 'pending'
+                  : (snap.data as dynamic)['status'] == 0
+                      ? 'accepted'
+                      : 'rejected'),
             );
           }
         },

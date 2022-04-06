@@ -132,7 +132,11 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                                                     .then((value) {
                                                     // isLoading = false;
                                                   })
-                                                : null;
+                                                : Provider.of<DBHelper>(context,
+                                                        listen: false)
+                                                    .bookTest(DummyLists
+                                                            .dummyPrescs[index]
+                                                        ['id']);
                                             // final price = Provider.of<DBHelper>(
                                             //         context,
                                             //         listen: false)
@@ -194,7 +198,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
       return Center(
         child: Text('no data'),
       );
-    } else
+    } else {
       return ListView(
         shrinkWrap: true,
         children: [
@@ -208,6 +212,7 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () {
+                      print(DummyLists.dummyPrescs.indexOf(todaysList[index]));
                       prescCard(
                           DummyLists.dummyPrescs.indexOf(todaysList[index]));
                     },
@@ -303,14 +308,14 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
                       print('tap');
                     },
                     leading: CircleAvatar(
-                      backgroundImage:
-                          FileImage(imagePresc[index]['image'] as File),
+                      backgroundImage: NetworkImage(
+                          DummyLists.urlsForImage + imagePresc[index]['image']),
                     ),
-                    title: Text(imagePresc[index]['name'] as String),
-                    subtitle: Text(DateFormat('dd/MM/yyyy')
-                        .format(imagePresc[index]['date'])),
-                    trailing: Text(
-                        DateFormat('h:m').format(imagePresc[index]['date'])),
+                    title: Text(imagePresc[index]['image']),
+                    // subtitle: Text(DateFormat('dd/MM/yyyy')
+                    //     .format(imagePresc[index]['date'])),
+                    // trailing: Text(
+                    //     DateFormat('h:m').format(imagePresc[index]['date'])),
                   );
                 },
               )
@@ -318,5 +323,6 @@ class _PatientPrescListViewState extends State<PatientPrescListView> {
           ),
         ],
       );
+    }
   }
 }

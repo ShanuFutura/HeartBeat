@@ -10,8 +10,8 @@ class ImageUpload {
   static Future<bool> upload({
     required File imageFile,
     required Uri url,
-    required String name,
-    required DateTime date,
+    // required String name,
+    // required DateTime date,
     required String patientId,
   }) async {
     var ret;
@@ -23,11 +23,11 @@ class ImageUpload {
 
     var request = MultipartRequest("POST", uri);
     var multipartFile =
-        MultipartFile('image', stream, length, filename: basename(imageFile.path));
+        MultipartFile('f1', stream, length, filename: basename(imageFile.path));
     //contentType: new MediaType('image', 'png'));
-    request.fields['presc_name'] = name;
-    request.fields['prisoner_id'] = patientId;
-    request.fields['date'] = DateFormat('dd/MM/yyyy').format(date);
+    // request.fields['presc_name'] = name;
+    request.fields['patient_id'] = patientId;
+    // request.fields['date'] = DateFormat('dd/MM/yyyy').format(date);
 
     // request.fields['crime'] = crime;
     // request.fields['entry_date'] = DateFormat('dd/MM/yyyy').format(entryDate);

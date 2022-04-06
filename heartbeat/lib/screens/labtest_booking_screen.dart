@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heartbeat/constants/dummy_lists.dart';
+import 'package:heartbeat/providers/db_helper.dart';
+import 'package:provider/provider.dart';
 // import 'package:heartbeat/models/dummy_lists.dart';
 
 class LabtestBookingScreen extends StatelessWidget {
@@ -10,25 +12,39 @@ class LabtestBookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('labtests'),
-        ),
-        body: DummyLists.lab.isEmpty
-            ? Center(child: Text('No tests pending empty'))
-            : ListView.builder(
-                itemCount: DummyLists.lab.length,
+      appBar: AppBar(
+        title: const Text('Labtests'),
+      ),
+      body: FutureBuilder(
+        future: Provider.of<DBHelper>(context).viewBookedTests(),
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (!snap.hasData) {
+            return Center(
+              child: Text('something went wrong'),
+            );
+          } else {
+            return ListView.builder(
+                itemCount: (snap.data as List).length,
                 itemBuilder: (context, index) {
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       ListTile(
-                        title: Text(DummyLists.lab[index]['prescription']),
-                        trailing: Container(
-                          child: const Text('waiting'),
+                        title: Text(
+                          (snap.data as dynamic)[index]['medicine'],
+                          style: TextStyle(fontSize: 20),
                         ),
+                        trailing: Text((snap.data as dynamic)[index]['price']),
                       ),
-                      const Divider(),
+                      Divider(),
                     ],
                   );
-                }));
+                });
+          }
+        },
+      ),
+    );
   }
 }

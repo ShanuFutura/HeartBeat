@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class DocHomePage extends StatelessWidget {
   static const routeName = 'dec home page';
+
   // const DocHomePage({ Key? key }) : super(key: key);
 
   @override
@@ -46,8 +47,8 @@ class DocHomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Container(),
-            Carousel(CarouselImages.itemsList, partHeight: fullHeight * .5),
-            const SizedBox(height: 10),
+            Carousel(CarouselImages.itemsList, partHeight: fullHeight * .3),
+            // const SizedBox(height: 10),
             const Text(
               'Patients',
               style: TextStyle(fontSize: 20),
@@ -66,7 +67,7 @@ class DocHomePage extends StatelessWidget {
                     // print(patientsList);
                     // print(snap.data);
                     return Container(
-                      height: fullHeight * .4,
+                      height: fullHeight * .45,
                       child: ListView.builder(
                           itemCount: (snap.data as List).length,
                           itemBuilder: (context, index) {

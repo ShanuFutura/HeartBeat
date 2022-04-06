@@ -8,6 +8,7 @@ import 'package:heartbeat/screens/doc_profile_edit%20_screen.dart';
 import 'package:heartbeat/screens/doctor_view.dart';
 import 'package:heartbeat/screens/image_view_screen.dart';
 import 'package:heartbeat/screens/labtest_booking_screen.dart';
+import 'package:heartbeat/screens/labtests.dart';
 import 'package:heartbeat/screens/loading_screen.dart';
 
 // import 'package:heartbeat/screens/patient_external_prescription.dart';
@@ -18,7 +19,7 @@ import 'package:heartbeat/screens/patient_signup_page.dart';
 import 'package:heartbeat/screens/login_screen.dart';
 import 'package:heartbeat/screens/patient_view.dart';
 import 'package:heartbeat/screens/patients_appoinments.dart';
-import 'package:heartbeat/screens/payment_screen.dart';
+// import 'package:heartbeat/screens/payment_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:provider';
@@ -81,9 +82,9 @@ class HeartBeat extends StatelessWidget {
           //     const PatientExternalPrescriptios(),
           DocProfileeditScreen.routeName: (ctx) => DocProfileeditScreen(),
           DocLeaveApplication.routeName: (ctx) => const DocLeaveApplication(),
-          CartScreen.routeName: (ctx) => const CartScreen(),
+          CartScreen.routeName: (ctx) =>  CartScreen(),
           PatientsAppoinments.routeName: (ctx) => const PatientsAppoinments(),
-          PayemntScreen.routeName: (ctx) => const PayemntScreen(),
+          LabTests.routeName: (ctx) => const LabTests(),
           ImageViewScreen.routeName: (ctx) => ImageViewScreen(),
           LabtestBookingScreen.routeName: (ctx) => const LabtestBookingScreen(),
 

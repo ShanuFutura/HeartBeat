@@ -43,9 +43,7 @@ class _imageFileInputDialogState extends State<imageFileInputDialog> {
                         // Provider.of<DBHelper>(context, listen: false)
                         //         .isImagePoppedWithoutName ==
                         //     false;
-                        Provider.of<DBHelper>(context, listen: false)
-                            .addImagePresc(widget.savedImage, DateTime.now(),
-                                initialFileName);
+                        
                         // setState(() {
                         //   DummyLists.oldPrescImages.add(
                         //     {
